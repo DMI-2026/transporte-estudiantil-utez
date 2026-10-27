@@ -17,21 +17,20 @@ Fuente versionada:
 - QR: `salidas/{id}/privado/qr` legible por operador asignado o admin; escritura denegada al cliente (regla `match /privado/{docId}`).
 - `reportes`: operador solo lee los de salidas asignadas a él (`salidaId`); admin lee todo.
 - Cliente Flutter: un rol o estado desconocido en `usuarios/{uid}` se trata como perfil inválido (no se asume `estudiante`).
-- Storage `documentacion/publico/{archivo}`: lo lee cualquier cuenta autenticada (avisos del catálogo). Escritura denegada al cliente.
-- Storage `documentacion/{uid}/{archivo}`: solo el dueño. Escritura denegada al cliente.
+- Storage `documentacion/publico/{archivo}`: lectura de cualquier cuenta autenticada; escritura solo admin.
+- Storage `documentacion/{uid}/{archivo}`: solo el dueño lee/escribe.
+- Storage `credenciales/{uid}/{archivo}`: solo el dueño lee/escribe (subida de credencial de estudiante).
+- Storage `reportes/{uid}/{archivo}`: solo el dueño escribe; admin lee todo.
+- Storage `privado/{ruta=**}`: denegado al cliente (QR, secretos).
 - Storage no consulta Firestore. El panel admin lee y escribe archivos con Admin SDK (ignora estas reglas). Un custom claim de rol queda para cuando existan Cloud Functions.
 
-## Pruebas
+## Archivos versionados
 
-Las reglas se verifican contra el emulador local, sin tocar producción:
-
-```powershell
-cd firebase\tests
-npm install
-npm run test:emulator
-```
-
-Detalle: [firebase/tests/README.md](../../firebase/tests/README.md).
+| Recurso | Archivo |
+|---------|---------|
+| Firestore | `firebase/firestore.rules` |
+| Storage | `firebase/storage.rules` |
+| Índices | `firebase/firestore.indexes.json` |
 
 ## Despliegue
 
@@ -41,3 +40,7 @@ firebase deploy --only storage --project utebus-4435b
 ```
 
 Proyecto por defecto: `.firebaserc` → `utebus-4435b`.
+
+Desplegar reglas solo tras revisar y probar en el emulador local. Las pruebas de reglas contra emulador (`firebase/tests/`) están pendientes de creación.
+
+Desplegar reglas solo tras revisar y probar en el emulador. No desplegar directamente a producción sin pruebas locales.

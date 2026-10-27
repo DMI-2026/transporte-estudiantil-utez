@@ -13,9 +13,7 @@ presentation (widgets + Cubit)  →  domain (contratos)  →  data (datasources 
 - Estados de pantalla: `lib/src/core/widgets/ui_state.dart` (`UiState`) y `UiStateView`; errores y vacíos con `MensajeEstado`.
 - Estado de la app: `flutter_bloc`. La sesión global es `AuthSessionCubit`; cada formulario tiene su propio Cubit.
 
-![Capas](media/arquitectura-capas.png)
-
-Nota sobre el diagrama: la imagen describe la arquitectura objetivo. En el código ya aplica el flujo de capas; `core/services/` sigue vacío. El diagrama menciona OpenRouteService, pero la decisión vigente del issue #46 (ver [servicios.md](servicios.md)) es Google Maps SDK y Google Routes API, ambos pendientes.
+Nota: `core/services/` sigue vacío; aquí irán `CamaraService`, `UbicacionService`, etc. La decisión vigente del issue #46 (ver [servicios.md](servicios.md)) es Google Maps SDK y Google Routes API, ambos pendientes.
 
 ## Árbol real de `lib/`
 

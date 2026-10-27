@@ -116,10 +116,4 @@ Definidos en `firebase/firestore.indexes.json` (consultas por ruta, operador, es
 
 En **producción** hay documentos `demo-*` (estudiante, operador, admin, ruta, paradas, salida, reserva, pago, reporte). Los uids demo **no** crean usuarios en Authentication automáticamente.
 
-Volver a cargar (requiere service account en `env/firebase-admin-sa.json` o `GOOGLE_APPLICATION_CREDENTIALS`; las reglas no se tocan):
-
-```powershell
-.\scripts\seed-firestore-prod.ps1
-```
-
-Último recurso sin service account: `.\scripts\seed-firestore-prod.ps1 -AbrirReglas` abre Firestore temporalmente y restaura las reglas al terminar. No usar con datos reales.
+La carga de datos demo requiere un script de seed con service account (pendiente de crear en `scripts/`). No usar reglas abiertas en producción.
