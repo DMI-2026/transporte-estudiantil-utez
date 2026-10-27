@@ -13,7 +13,7 @@ Actualizado según el repositorio y el proyecto Firebase `utebus-4435b` (2026-10
 | Firestore: modelo, reglas, índices, datos demo | Hecho | [arquitectura-y-datos/](arquitectura-y-datos/) |
 | Storage: reglas y bucket | Hecho | |
 | Sensor `check.ps1`, hook pre-commit, pruebas con fakes | Hecho | `flutter test` |
-| Pruebas de reglas Firestore y Storage (`firebase/tests/`) | Hecho | Emulador local; `npm run test:emulator` |
+| Pruebas de reglas Firestore y Storage (`firebase/tests/`) | Pendiente | Carpeta `firebase/tests/` no existe aún |
 | Prueba de integración del arranque (`integration_test/`) | Hecho | Flujo login y registro sin Firebase |
 | Repositorios de las demás features | Pendiente | Copiar el patrón de `auth` |
 | Cloud Functions | Pendiente | Pagos, QR, notificaciones |
@@ -29,9 +29,9 @@ Conclusión: el equipo puede abrir issues de `profile`, `reservations`, `routes_
 - Un rol o estado de verificación desconocido en Firestore se trata como perfil inválido; la app nunca asume un rol por defecto.
 - Router: `/login`, `/registro`, `/verificacion`, `/inicio`, con redirección según el estado de la sesión.
 - Modelo Firestore, reglas, índices y documentos de demostración `demo-*`.
-- Scripts: `scripts/setup-local.ps1` (configuración local), `scripts/seed-firestore-prod.ps1` (datos demo con service account).
+- Scripts: `scripts/setup-local.ps1` (configuración local). Carga de datos demo: pendiente (script de seed con service account no creado).
 - `flutter analyze` y `flutter test` en verde mediante `scripts/check.ps1`.
-- Pruebas de reglas contra el emulador (`firebase/tests/`) y prueba de integración del arranque (`integration_test/`).
+- Pruebas de reglas contra el emulador: pendiente (carpeta `firebase/tests/` no existe). Prueba de integración del arranque (`integration_test/`).
 
 ## Configuración local de cada desarrollador
 
