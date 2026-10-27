@@ -15,6 +15,9 @@ Código canónico: `lib/` en la raíz del repositorio.
 | 5 | [arquitectura.md](arquitectura.md) | Cuando cambia la estructura de carpetas, rutas o datos |
 | 6 | [estado.md](estado.md) | Para saber qué está hecho y qué bloquea una feature |
 | 7 | [referencia-dmi.md](referencia-dmi.md) | Cuando el issue cita historias de usuario o requisitos del enunciado |
+| 8 | [pantallas/](pantallas/README.md) | Cuando el issue toca una pantalla o widget específico |
+| 9 | [flujos/](flujos/README.md) | Cuando el issue implica navegación entre pantallas |
+| 10 | [arquitectura/diseno-componentes.md](arquitectura/diseno-componentes.md) | Cuando se crea o reorganiza UI de una feature |
 
 ## Protocolo de tarea
 
@@ -56,6 +59,9 @@ Verificación: .\scripts\check.ps1 (y .\scripts\verify-activity.ps1 -Tipo <base|
 | Este README | Cambia el procedimiento general, el arranque o el reparto del equipo | Tarea puntual ya cubierta en el módulo |
 | [referencia-dmi.md](referencia-dmi.md) | Se corrige la trazabilidad con el enunciado (issue de alcance) | La implementación ya corresponde a una fila existente |
 | [ia/bitacora.md](ia/bitacora.md) | Decisión técnica importante (motivo y consecuencia) | Commits rutinarios o cambios menores |
+| [pantallas/](pantallas/README.md) | Cambian pantallas, widgets, rutas o flujos de navegación | Refactor interno sin cambio de comportamiento documentado |
+| [flujos/](flujos/README.md) | Cambian recorridos entre pantallas, guards o redirecciones | Cambio de texto dentro de una pantalla |
+| [arquitectura/diseno-componentes.md](arquitectura/diseno-componentes.md) | Cambian niveles de composición UI o árbol de widgets | Cambio de estilo visual sin mover archivos |
 
 Nunca marcar como hecho algo que solo está propuesto. Usar los estados de la siguiente sección.
 
@@ -156,8 +162,10 @@ Trazabilidad con el enunciado: [referencia-dmi.md](referencia-dmi.md). Necesidad
 | [servicios.md](servicios.md) | Integraciones hechas y pendientes (issue #46) |
 | [modulos/](modulos/) | Features por rol y funcionalidades transversales |
 | [referencia-dmi.md](referencia-dmi.md) | Trazabilidad con funcionalidades, permisos e historias del enunciado |
-| [media/arquitectura-capas.png](media/arquitectura-capas.png) | Diagrama de capas |
 | [ia/bitacora.md](ia/bitacora.md) | Decisiones técnicas relevantes del curso |
+| [pantallas/](pantallas/README.md) | Documentación por pantalla (propósito, ruta, acceso, archivos, guía) |
+| [flujos/](flujos/README.md) | Flujos de navegación y negocio entre pantallas |
+| [arquitectura/diseno-componentes.md](arquitectura/diseno-componentes.md) | Niveles de composición UI (átomo → página) por feature |
 
 ## Reparto sugerido (seis integrantes)
 

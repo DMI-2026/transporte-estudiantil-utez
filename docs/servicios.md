@@ -57,7 +57,7 @@ Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `pubspec.
 | Authentication | Hecho en la app; Local en consola | Habilitar el proveedor correo y contraseña en la consola de Firebase |
 | Storage | Hecho | Bucket `utebus-4435b.firebasestorage.app`; `credenciales/{uid}/`, `documentacion/publico/`, `documentacion/{uid}/`, `reportes/{uid}/` |
 | Cloud Functions | Pendiente | Pagos, QR, notificaciones; carpeta `functions/` |
-| Emuladores | Hecho para reglas | `firebase/tests` usa Firestore 8781 y Storage 9781. Datos demo de producción: `scripts/seed-firestore-prod.ps1` (service account; `-AbrirReglas` solo como último recurso) |
+| Emuladores | Pendiente | Carpeta `firebase/tests/` no existe aún; pruebas de reglas contra emulador local pendientes |
 
 Nunca commitear: `google-services.json`, `GoogleService-Info.plist`, `lib/firebase_options.dart`, `env/dev.json`, claves de Mercado Pago o Google Routes, service accounts.
 
