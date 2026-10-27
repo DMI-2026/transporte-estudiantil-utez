@@ -1,46 +1,60 @@
 # Transporte exclusivo estudiantil UTEZ
 
-Aplicación Flutter para que estudiantes de la UTEZ reserven asiento en combis aliadas, sigan la unidad y aborden con un código QR. El backend previsto es Firebase. El cálculo de rutas y de ETA es OpenRouteService, y el mapa es Google Maps.
+App para que estudiantes y operadores reserven asiento, sigan la combi y aborden con QR. El administrador verifica cuentas y catálogo desde un panel web (pendiente).
 
-Este repositorio contiene la arquitectura base: capas `data`, `domain` y `presentation`, inyección con get_it, navegación con go_router y el tema institucional.
+Proyecto del curso Desarrollo Móvil Integral (UTEZ). App Flutter con backend Firebase (proyecto `utebus-4435b`). Código canónico: `lib/`.
 
-## Documentación
+## Qué hay aquí
 
-- [Enunciado del proyecto](docs/proyecto-integrador.md)
-- [Manual de desarrollador](docs/manual-desarrollador.md)
+| Carpeta o archivo | Qué es |
+|-------------------|--------|
+| `lib/` | App Flutter (estudiante y operador) |
+| `firebase/` | Reglas e índices de Firestore y Storage |
+| `docs/` | Documentación del equipo: módulos, servicios, datos, convenciones |
+| `CONTRIBUIDORES.md` | Integrantes y control de cambios |
+| `AGENTS.md` y `CLAUDE.md` | Guía para agentes de IA |
+| `scripts/check.ps1` y `.githooks/` | Sensor único de verificación (convención C-04) |
 
-## Requisitos
+Índice completo y protocolo para IA: [docs/README.md](docs/README.md). Qué está hecho y qué falta: [docs/estado.md](docs/estado.md).
 
-- Flutter 3.47.7 (Dart 3.13.5)
-- Android SDK para emulador Android
-- Xcode para simulador iOS
+## Roles
 
-## Arranque
+| Persona | Enfoque |
+|---------|---------|
+| Juan | `routes_map` |
+| Hanna | `auth`, `profile` |
+| David | `home`, `trip` |
+| Coordinación | PR, `reservations` |
+| Alison | `firebase/`, Cloud Functions |
+| Jesús | `functions/`, `admin-web` |
 
-```bash
+Detalle: [CONTRIBUIDORES.md](CONTRIBUIDORES.md).
+
+## Cómo correrlo
+
+Requisitos: Git y Flutter estable (Dart 3). No hay API Node: el backend es Firebase (convención C-07).
+
+```powershell
+git clone <url> transporte-estudiantil-utez
+cd transporte-estudiantil-utez
+git checkout develop
+git config core.hooksPath .githooks
 flutter pub get
-flutter run
+.\scripts\setup-local.ps1
+.\scripts\check.ps1
+flutter run --dart-define-from-file=env/dev.json
 ```
 
-La pantalla de inicio abre con el tema de la UTEZ. Firebase no se inicializa hasta configurar el proyecto nativo. Los pasos, las variables de `env/` y el flujo de ramas están en el manual.
+`env/dev.json` y `lib/firebase_options.dart` no se versionan. Guía de configuración local: [docs/estado.md](docs/estado.md).
 
-## Estructura
+## Verificar todo
 
-```
-lib/
-  main.dart
-  src/
-    app/            MaterialApp y tema
-    core/           dependencias, router, Firebase, logger y tema
-    features/       auth, home, routes_map, reservations, boarding,
-                    trip, incidents, operator, admin, profile
-```
+El único comando de "listo" es el sensor `check.ps1` (analyze + test). El hook pre-commit lo ejecuta; no uses `--no-verify`.
 
-Cada feature se parte en `data`, `domain` y `presentation`.
+| Qué | Comando |
+|-----|---------|
+| Verificar todo | `.\scripts\check.ps1` |
+| Correr la app | `flutter run --dart-define-from-file=env/dev.json` |
+| Extra al cerrar un issue (secretos, Firebase) | `.\scripts\verify-activity.ps1 -Tipo base` |
 
-## Comprobaciones
-
-```bash
-flutter analyze
-flutter test
-```
+`verify-activity.ps1` no sustituye a `check.ps1`.

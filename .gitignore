@@ -50,8 +50,19 @@ app.*.map.json
 # Secretos y configuración local (S3)
 env/*.json
 !env/example.json
+env/firebase-admin-sa.json
+lib/firebase_options.dart
 **/google-services.json
 **/GoogleService-Info.plist
 **/key.properties
+/android/local.properties
 *.jks
 *.keystore
+
+# Firebase tools (seed script) y pruebas de reglas
+firebase/tools/node_modules/
+firebase/tests/node_modules/
+firebase-debug.log
+firestore-debug.log
+storage-debug.log
+ui-debug.log

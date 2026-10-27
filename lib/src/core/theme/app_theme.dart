@@ -8,11 +8,11 @@ abstract final class AppTheme {
     const colorScheme = ColorScheme(
       brightness: Brightness.light,
       primary: AppColors.primary,
-      onPrimary: Color(0xFFFFFFFF),
+      onPrimary: AppColors.onPrimary,
       secondary: AppColors.ink,
-      onSecondary: Color(0xFFFFFFFF),
+      onSecondary: AppColors.onPrimary,
       error: AppColors.error,
-      onError: Color(0xFFFFFFFF),
+      onError: AppColors.onPrimary,
       surface: AppColors.surface,
       onSurface: AppColors.ink,
     );
@@ -27,13 +27,28 @@ abstract final class AppTheme {
       textTheme: AppTypography.textTheme(base.textTheme),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.ink,
-        foregroundColor: Color(0xFFFFFFFF),
+        foregroundColor: AppColors.onPrimary,
         centerTitle: false,
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: const Color(0xFFFFFFFF),
+          foregroundColor: AppColors.onPrimary,
+          minimumSize: const Size(0, 48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadii.sm),
+          ),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.onPrimary,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: 16,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppRadii.sm),
         ),
       ),
     );
