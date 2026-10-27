@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 
+import '../../../firebase_options.dart';
 import '../logging/app_logger.dart';
 
 /// Arranque de Firebase. Solo llama a [Firebase.initializeApp] cuando el
@@ -22,7 +23,9 @@ abstract final class FirebaseBootstrap {
       return;
     }
 
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     isReady = true;
     AppLogger.info('Firebase inicializado.');
   }
