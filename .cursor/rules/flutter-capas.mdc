@@ -1,0 +1,29 @@
+---
+description: Dart/Flutter — capas, tema y estados de pantalla
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Reglas para código en `lib/`
+
+## Capas
+
+Cada feature vive en `lib/src/features/<nombre>/` con tres carpetas: `domain/` (entidades, contratos de repositorio, validadores), `data/` (datasources, mappers, implementación del repositorio) y `presentation/` (pantallas y Cubits).
+
+- Los widgets y Cubits de `presentation/` nunca importan `cloud_firestore`, `firebase_auth`, `http` ni SDKs de mapas. Hablan solo con el repositorio del dominio.
+- El SDK de Firebase se usa únicamente en `data/`. Los errores se traducen a `AppFailure` (en `lib/src/core/errors/`) para que la UI muestre un mensaje de usuario y nunca un stack trace.
+- El estado de UI se maneja con `flutter_bloc` (Cubit + estado `Equatable`). No introduzcas `ChangeNotifier`, `setState` para lógica de negocio ni otro gestor de estado.
+- La sesión global está en `AuthSessionCubit`; las pantallas la leen con `context.read` / `context.watch`, no desde `get_it`.
+
+## Tema y pantallas
+
+- Colores, espaciados y radios salen de `AppColors`, `AppSpacing` y `AppRadii` (`lib/src/core/theme/`). Nada de valores hex o píxeles sueltos.
+- Toda pantalla que carga datos remotos usa `UiState` + `UiStateView`, y muestra errores o vacíos con `MensajeEstado` (`lib/src/core/widgets/`).
+- Responsividad: usa `Theme.of(context)` y `MediaQuery`; listas largas con `ListView`; prueba en un ancho de unos 360 píxeles lógicos.
+
+## Pruebas
+
+- Cada clase con lógica (repositorio, Cubit, mapper, validador) tiene su prueba en `test/`, espejo de `lib/`.
+- Las dependencias se sustituyen con los fakes de `test/fakes/`; no se levanta Firebase en pruebas.
+
+Detalle y ejemplos: `docs/reglas-desarrollo.md` y el documento del módulo en `docs/modulos/`.

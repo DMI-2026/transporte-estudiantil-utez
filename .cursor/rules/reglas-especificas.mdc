@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+---
+
+# Transporte UTEZ: reglas generales para el agente
+
+Este repositorio sigue el **Protocolo de tarea** de `docs/README.md` (diez pasos). Es el mismo flujo que describen `AGENTS.md` y `CLAUDE.md`; no lo repitas, léelo.
+
+## Dónde buscar cada cosa
+
+- Convenciones de código, capas Flutter y seguridad: `docs/reglas-desarrollo.md`.
+- Módulo afectado por el issue: `docs/modulos/README.md` te lleva al documento del rol (estudiante, operador, administrador) o de la funcionalidad transversal (reservas, rutas, pagos, QR).
+- Integraciones y paquetes: `docs/servicios.md`. Los estados se expresan con palabras (Hecho, Local, Pendiente, Propuesto, No usar); su significado está en `docs/README.md`, sección Estados de decisión.
+
+## Límites del trabajo
+
+- No reviertas cambios del usuario. Si un archivo tiene trabajo ajeno al issue, déjalo como está.
+- Diff mínimo: solo lo que el issue pide. No borres archivos fuera del alcance.
+- No marques como hecho nada que no esté en el código y verificado.
+
+## Cierre
+
+- Valida con `.\scripts\check.ps1` (criterio único de "listo", convención C-04) y entrega el reporte con el formato de `docs/README.md`, sección Reporte final.
+
+## Reglas adicionales por carpeta
+
+Se activan solo si editas esos archivos:
+
+- `lib/**`: `flutter-capas.mdc` (capas, tema, estados de pantalla).
+- `firebase/**` y `functions/**`: `firebase-backend.mdc` (privilegio mínimo, pagos, QR, secretos).

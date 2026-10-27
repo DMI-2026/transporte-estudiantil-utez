@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- helpers ----------
+    function isAuthed() {
+      return request.auth != null;
+    }
+
+    function getUserRole(uid) {
+      return get(/databases/$(database)/documents/usuarios/$(uid)).data.rol;
+    }
+
+    function isAdmin() {
+      return isAuthed() && getUserRole(request.auth.uid) == 'administrador';
+    }
+
+    function isOperador() {
+      return isAuthed() && getUserRole(request.auth.uid) == 'operador';
+    }
+
+    function isEstudiante() {
+      return isAuthed() && getUserRole(request.auth.uid) == 'estudiante';
+    }
+
+    function cuentaAprobada() {
+      return isAuthed() &&
+             get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.estadoVerificacion == 'aprobada';
+    }
+
+    function esPropioDocumento(uid) {
+      return isAuthed() && request.auth.uid == uid;
+    }
+
+    // ---------- usuarios ----------
+    match /usuarios/{uid} {
+      allow read: if isAuthed();
+      allow create: if isAuthed() && esPropioDocumento(uid);
+      allow update: if esPropioDocumento(uid) &&
+                    request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+                      'nombreCompleto', 'actualizadoEn'
+                    ]) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- rutas ----------
+    match /rutas/{rutaId} {
+      allow read: if isAuthed();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ---------- paradas ----------
+    match /paradas/{paradaId} {
+      allow read: if isAuthed();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ---------- salidas ----------
+    match /salidas/{salidaId} {
+      allow read: if isAuthed() && cuentaAprobada();
+      allow create: if isOperador() || isAdmin();
+      allow update: if isOperador() && resource.data.operadorId == request.auth.uid || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- reservas ----------
+    match /reservas/{reservaId} {
+      allow read: if isAuthed() && cuentaAprobada();
+      allow create: if isEstudiante() && cuentaAprobada();
+      allow update: if isEstudiante() && resource.data.estudianteId == request.auth.uid || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ---------- pagos ----------
+    match /pagos/{pagoId} {
+      allow read: if isAuthed() && (resource.data.estudianteId == request.auth.uid || isAdmin());
+      allow create: if isAuthed() && request.resource.data.estado == 'pendiente';
+      allow update: if false; // solo Admin SDK / Cloud Functions (vía SDK de servidor)
+      allow delete: if isAdmin();
+    }
+
+    // ---------- reportes ----------
+    match /reportes/{reporteId} {
+      allow read: if isAuthed() && cuentaAprobada();
+      allow create: if isEstudiante() && cuentaAprobada();
+      allow update: if isAdmin() || (isOperador() && resource.data.salidaId in get(/databases/$(database)/documents/salidas/$(resource.data.salidaId)).data.operadoresAsignados);
+      allow delete: if isAdmin();
+    }
+
+    // ---------- subcolección dispositivos ----------
+    match /usuarios/{uid}/dispositivos/{deviceId} {
+      allow read, write: if esPropioDocumento(uid);
+    }
+
+    // ---------- subcolección QR privado ----------
+    match /salidas/{salidaId}/privado/qr/{docId} {
+      allow read: if isAuthed() && (isOperador() || isAdmin());
+      allow write: if false; // solo Cloud Functions / Admin SDK
+    }
+  }
+}

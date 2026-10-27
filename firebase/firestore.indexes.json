@@ -1,0 +1,73 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "usuarios",
+      "fields": [
+        {"field": "rol", "order": "ASCENDING"},
+        {"field": "estadoVerificacion", "order": "ASCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "salidas",
+      "fields": [
+        {"field": "operadorId", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"},
+        {"field": "fechaHoraSalida", "order": "DESCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "reservas",
+      "fields": [
+        {"field": "estudianteId", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"},
+        {"field": "creadaEn", "order": "DESCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "reservas",
+      "fields": [
+        {"field": "salidaId", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "reportes",
+      "fields": [
+        {"field": "reportadoPor", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"},
+        {"field": "creadoEn", "order": "DESCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "reportes",
+      "fields": [
+        {"field": "salidaId", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "paradas",
+      "fields": [
+        {"field": "rutaId", "order": "ASCENDING"},
+        {"field": "orden", "order": "ASCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    },
+    {
+      "collectionGroup": "pagos",
+      "fields": [
+        {"field": "estudianteId", "order": "ASCENDING"},
+        {"field": "estado", "order": "ASCENDING"},
+        {"field": "creadoEn", "order": "DESCENDING"}
+      ],
+      "queryScope": "COLLECTION"
+    }
+  ],
+  "fieldOverrides": []
+}

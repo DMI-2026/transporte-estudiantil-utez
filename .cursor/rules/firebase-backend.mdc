@@ -1,0 +1,28 @@
+---
+description: Firebase — reglas de seguridad, índices y Cloud Functions
+globs: "{firebase/**,functions/**}"
+alwaysApply: false
+---
+
+# Reglas para el backend Firebase
+
+## Seguridad en reglas de Firestore y Storage
+
+- Privilegio mínimo: cada regla concede solo lo que la pantalla necesita. El rol se lee del documento `usuarios/{uid}`; la cuenta debe estar en `estadoVerificacion == 'aprobada'` para leer catálogo y reservar.
+- El cliente nunca modifica `rol`, `estadoVerificacion`, `email` ni `creadoEn` de su propio perfil.
+- `pagos`: el cliente solo crea documentos en estado `pendiente`. El estado `aprobado` lo escribe únicamente el Admin SDK desde Cloud Functions tras validar el webhook.
+- El secreto del QR vive en `salidas/{salidaId}/privado/qr`. Lo lee el operador asignado o el administrador; ningún cliente lo escribe.
+- Storage no consulta Firestore. `documentacion/publico/` lo lee cualquier autenticado; `documentacion/{uid}/` y `credenciales/{uid}/` solo el dueño. El panel admin usa Admin SDK (ignora reglas).
+- Antes de desplegar, revisa que el documento que la app usa coincida con el `match` de la regla (un `match` a un nivel equivocado deja el documento en denegación por defecto).
+
+## Secretos
+
+- No hay secretos en el repositorio: ni service accounts, ni client secrets, ni claves de Mercado Pago o Google Routes. Van en variables de entorno o en archivos ignorados por git (`env/firebase-admin-sa.json`).
+- Los scripts de seed usan una service account. Abrir reglas temporalmente es último recurso y requiere la bandera explícita `-AbrirReglas`.
+
+## Después de cambiar reglas
+
+- Actualiza `docs/arquitectura-y-datos/reglas-seguridad.md` si cambia un principio.
+- Despliega con `firebase deploy --only firestore:rules` o `--only storage` sobre el proyecto `utebus-4435b`.
+
+Detalle: `docs/arquitectura.md`, `docs/servicios.md`, `docs/modulos/funcionalidades/pagos.md`, `docs/modulos/funcionalidades/qr.md`.

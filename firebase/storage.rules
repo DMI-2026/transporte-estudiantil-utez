@@ -1,0 +1,48 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthed() {
+      return request.auth != null;
+    }
+
+    function getUserRole(uid) {
+      return get(/databases/(default)/documents/usuarios/$(uid)).data.rol;
+    }
+
+    function isAdmin() {
+      return isAuthed() && getUserRole(request.auth.uid) == 'administrador';
+    }
+
+    function esPropioDocumento(uid) {
+      return isAuthed() && request.auth.uid == uid;
+    }
+
+    // documentacion/publico/{archivo}: lectura de cualquier cuenta autenticada
+    match /documentacion/publico/{archivo} {
+      allow read: if isAuthed();
+      allow write: if isAdmin();
+    }
+
+    // documentacion/{uid}/{archivo}: solo el dueño lee/escribe
+    match /documentacion/{uid}/{archivo=**} {
+      allow read, write: if esPropioDocumento(uid);
+    }
+
+    // credenciales/{uid}/{archivo}: solo el dueño (subida de credencial de estudiante)
+    match /credenciales/{uid}/{archivo=**} {
+      allow read, write: if esPropioDocumento(uid);
+    }
+
+    // reportes/{uid}/{archivo}: solo el dueño escribe, admin lee todo
+    match /reportes/{uid}/{archivo=**} {
+      allow write: if esPropioDocumento(uid);
+      allow read: if isAuthed() && (esPropioDocumento(uid) || isAdmin());
+    }
+
+    // privado/{ruta=**}: denegado al cliente (QR, secretos)
+    match /privado/{ruta=**} {
+      allow read, write: if false;
+    }
+  }
+}
