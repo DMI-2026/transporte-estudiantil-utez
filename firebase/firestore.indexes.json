@@ -1,0 +1,77 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "paradas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "rutaId", "order": "ASCENDING" },
+        { "fieldPath": "orden", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "salidas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "rutaId", "order": "ASCENDING" },
+        { "fieldPath": "fechaHoraSalida", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "salidas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "operadorId", "order": "ASCENDING" },
+        { "fieldPath": "fechaHoraSalida", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "salidas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "estado", "order": "ASCENDING" },
+        { "fieldPath": "fechaHoraSalida", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "reservas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "estudianteId", "order": "ASCENDING" },
+        { "fieldPath": "creadaEn", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "reservas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "salidaId", "order": "ASCENDING" },
+        { "fieldPath": "estado", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "pagos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "estudianteId", "order": "ASCENDING" },
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "reportes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "estado", "order": "ASCENDING" },
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "usuarios",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "estadoVerificacion", "order": "ASCENDING" },
+        { "fieldPath": "creadoEn", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
