@@ -1,4 +1,36 @@
 rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    match /credenciales/{userId}/{fileName} {
+      allow read: if isSignedIn() && (request.auth.uid == userId);
+      allow write: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    match /documentacion/publico/{fileName} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    match /documentacion/{userId}/{fileName} {
+      allow read: if isSignedIn() && (request.auth.uid == userId);
+      allow write: if false;
+    }
+
+    match /reportes/{userId}/{reporteId}/{fileName} {
+      allow read: if isSignedIn() && (request.auth.uid == userId);
+      allow write: if isSignedIn()
+        && request.auth.uid == userId
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
 service firebase.storage {
   match /b/{bucket}/o {
 

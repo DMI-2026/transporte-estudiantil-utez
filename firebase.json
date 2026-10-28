@@ -1,0 +1,36 @@
+{
+  "firestore": {
+    "rules": "firebase/firestore.rules",
+    "indexes": "firebase/firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "firebase/storage.rules",
+    "bucket": "utebus-4435b.firebasestorage.app"
+  },
+  "emulators": {
+    "firestore": { "port": 8781 },
+    "storage": { "port": 9781 },
+    "ui": { "enabled": false },
+    "singleProjectMode": true
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "utebus-4435b",
+          "appId": "1:943454714643:android:e89af9fa818a22b365b8e6",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "utebus-4435b",
+          "configurations": {
+            "android": "1:943454714643:android:e89af9fa818a22b365b8e6",
+            "ios": "1:943454714643:ios:7acc2cb1a2469d7f65b8e6"
+          }
+        }
+      }
+    }
+  }
+}

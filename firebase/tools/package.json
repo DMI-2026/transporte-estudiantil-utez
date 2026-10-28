@@ -1,0 +1,11 @@
+{
+  "name": "utebus-firebase-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "seed": "node seed-demo-data.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.4.0"
+  }
+}

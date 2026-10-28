@@ -1,4 +1,173 @@
 rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function uid() {
+      return request.auth.uid;
+    }
+
+    function userPath() {
+      return /databases/$(database)/documents/usuarios/$(uid());
+    }
+
+    function userData() {
+      return isSignedIn() && exists(userPath())
+        ? get(userPath()).data
+        : null;
+    }
+
+    function hasRole(rol) {
+      return userData() != null && userData().rol == rol;
+    }
+
+    function isAdmin() {
+      return hasRole('administrador');
+    }
+
+    function isOperador() {
+      return hasRole('operador');
+    }
+
+    function isEstudiante() {
+      return hasRole('estudiante');
+    }
+
+    function cuentaAprobada() {
+      return userData() != null && userData().estadoVerificacion == 'aprobada';
+    }
+
+    function salidaAsignadaAOperador(salidaId) {
+      return exists(/databases/$(database)/documents/salidas/$(salidaId))
+        && get(/databases/$(database)/documents/salidas/$(salidaId)).data.operadorId == uid();
+    }
+
+    match /usuarios/{userId} {
+      allow read: if isSignedIn() && (userId == uid() || isAdmin());
+
+      allow create: if isSignedIn()
+        && userId == uid()
+        && request.resource.data.keys().hasAll(['email', 'rol', 'estadoVerificacion', 'creadoEn'])
+        && request.resource.data.rol in ['estudiante', 'operador']
+        && request.resource.data.estadoVerificacion == 'pendiente';
+
+      allow update: if isSignedIn() && (
+        (userId == uid()
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['rol', 'estadoVerificacion', 'email', 'creadoEn']))
+        || isAdmin()
+      );
+
+      allow delete: if isAdmin() || (userId == uid());
+
+      match /dispositivos/{deviceId} {
+        allow read, write: if isSignedIn() && userId == uid();
+      }
+    }
+
+    match /rutas/{rutaId} {
+      allow read: if isSignedIn() && cuentaAprobada();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /paradas/{paradaId} {
+      allow read: if isSignedIn() && cuentaAprobada();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /salidas/{salidaId} {
+      allow read: if isSignedIn() && cuentaAprobada();
+
+      allow create, delete: if isAdmin();
+
+      allow update: if isAdmin() || (
+        isOperador()
+        && resource.data.operadorId == uid()
+        && request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['estado', 'ubicacionActual', 'actualizadoEn'])
+        && request.resource.data.estado in ['programada', 'enCurso', 'finalizada', 'cancelada']
+      );
+
+      // Documento secreto: salidas/{salidaId}/privado/qr (escritura solo Admin SDK / Functions)
+      match /privado/{docId} {
+        allow read: if isAdmin() || (isOperador() && salidaAsignadaAOperador(salidaId));
+        allow write: if false;
+      }
+    }
+
+    match /reservas/{reservaId} {
+      allow read: if isSignedIn() && (
+        resource.data.estudianteId == uid()
+        || isAdmin()
+        || (isOperador() && salidaAsignadaAOperador(resource.data.salidaId))
+      );
+
+      allow create: if isSignedIn()
+        && isEstudiante()
+        && cuentaAprobada()
+        && request.resource.data.estudianteId == uid()
+        && reservaId == request.resource.data.salidaId + '_' + uid()
+        && request.resource.data.estado in ['pendientePago', 'reservada']
+        && request.resource.data.keys().hasAll(['salidaId', 'estudianteId', 'paradaId', 'estado', 'creadaEn']);
+
+      allow update: if isSignedIn() && (
+        isAdmin()
+        || (resource.data.estudianteId == uid()
+          && request.resource.data.estudianteId == uid()
+          && request.resource.data.estado in ['pendientePago', 'reservada', 'cancelada']
+          && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['salidaId', 'estudianteId'])
+          && request.resource.data.estado != 'abordada')
+        || (isOperador()
+          && salidaAsignadaAOperador(resource.data.salidaId)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['estado', 'actualizadoEn'])
+          && request.resource.data.estado in ['reservada', 'abordada', 'cancelada'])
+      );
+
+      allow delete: if isAdmin();
+    }
+
+    match /pagos/{pagoId} {
+      allow read: if isSignedIn() && (
+        resource.data.estudianteId == uid() || isAdmin()
+      );
+
+      allow create: if isSignedIn()
+        && isEstudiante()
+        && cuentaAprobada()
+        && request.resource.data.estudianteId == uid()
+        && request.resource.data.estado == 'pendiente'
+        && request.resource.data.keys().hasAll(['reservaId', 'salidaId', 'estudianteId', 'estado', 'creadoEn']);
+
+      allow update, delete: if false;
+    }
+
+    match /reportes/{reporteId} {
+      allow read: if isSignedIn() && (
+        resource.data.reportadoPor == uid()
+        || isAdmin()
+        || (isOperador()
+          && 'salidaId' in resource.data
+          && salidaAsignadaAOperador(resource.data.salidaId))
+      );
+
+      allow create: if isSignedIn()
+        && cuentaAprobada()
+        && request.resource.data.reportadoPor == uid()
+        && request.resource.data.estado == 'abierto'
+        && request.resource.data.keys().hasAll(['reportadoPor', 'tipo', 'descripcion', 'estado', 'creadoEn']);
+
+      allow update: if isSignedIn() && (
+        isAdmin()
+        || (resource.data.reportadoPor == uid()
+          && request.resource.data.reportadoPor == uid()
+          && request.resource.data.estado in ['abierto', 'cerrado'])
+      );
+
+      allow delete: if isAdmin();
+    }
 service cloud.firestore {
   match /databases/{database}/documents {
 
