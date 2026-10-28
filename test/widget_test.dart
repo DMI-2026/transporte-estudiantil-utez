@@ -12,7 +12,8 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(const TransporteApp());
+    await tester.pumpAndSettle();
 
-    expect(find.text('Transporte Estudiantil UTEZ'), findsOneWidget);
+    expect(find.text('Iniciar sesión'), findsOneWidget);
   });
 }
