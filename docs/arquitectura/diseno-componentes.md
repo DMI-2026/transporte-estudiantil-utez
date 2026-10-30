@@ -16,6 +16,7 @@ Cada feature vive en `lib/src/features/<nombre>/` con las capas `domain/`, `data
 | Nivel | Ubicación | Responsabilidad |
 |-------|-----------|-----------------|
 | Átomos | `presentation/widgets/atoms/` | Elementos mínimos de UI, sin lógica de negocio |
+| Compartidos | `lib/src/core/widgets/` | Componentes base del sistema de diseño reutilizables entre features (`AppButton`, `AppStatusChip`, `AppAlert`, `AppCard`, `AppTripCard`, `AppBottomNav`, `MensajeEstado`, `UiStateView`) |
 | Moléculas | `presentation/widgets/molecules/` | Combinaciones simples de átomos con función concreta |
 | Organismos | `presentation/widgets/organisms/` | Secciones completas de interfaz (formularios, listas) |
 | Templates | `presentation/widgets/templates/` | Estructuras con slots, sin datos ni rutas |
@@ -33,15 +34,15 @@ Elementos mínimos de UI. Sin lógica de negocio ni llamadas a repositorio.
 
 | Ejemplo | Descripción |
 |---------|-------------|
-| `AppTextField` | Campo de texto con label y error |
-| `AppButton` | Botón primario con tema UTEZ |
-| `AppBadge` | Badge de estado |
-| `AppIcon` | Icono de la app |
+| `AppTextField` | Campo de texto con label, error e iconos |
+| `AppButton` | Botón con variantes primaria, secundaria y peligro |
+| `AppStatusChip` | Etiqueta compacta de estado |
 
 **Reglas:**
 - No importan moléculas, organismos ni pages.
 - Props genéricas (label, onPressed, enabled…).
 - Usan colores del tema (`AppColors`, `AppSpacing`, `AppRadii`) de `lib/src/core/theme/`.
+- Los átomos compartidos del sistema de diseño viven en `lib/src/core/widgets/`; los específicos de una sola feature permanecen en su `presentation/widgets/atoms/`.
 
 ### 2.2 Moléculas
 
@@ -54,6 +55,7 @@ Combinaciones simples de átomos con una función UI concreta.
 | `AuthFormField` | Campo con label, icono y mensaje de error |
 | `EstadoVacíoPanel` | Estado vacío con icono y botón Reintentar |
 | `ItemReserva` | Fila de reserva con datos y estado |
+| `AppCard` | Contenedor base con borde, padding y acción opcional |
 
 **Reglas:**
 - Pueden importar átomos de la misma feature o de `core/`.
