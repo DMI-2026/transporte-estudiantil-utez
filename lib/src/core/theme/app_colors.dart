@@ -9,6 +9,12 @@ abstract final class AppColors {
   static const surface = Color(0xFFF4F7F6);
   static const error = Color(0xFFB3261E);
   static const onPrimary = Color(0xFFFFFFFF);
+  static const outline = Color(0xFFE2E8E6);
+  static const warning = Color(0xFFB77900);
+  static const warningSoft = Color(0xFFFFF3D6);
+  static const errorSoft = Color(0xFFFBE9E7);
+  static const info = Color(0xFF2F6FEB);
+  static const infoSoft = Color(0xFFEAF2FE);
 }
 
 /// Espaciados base (múltiplos de 4).
