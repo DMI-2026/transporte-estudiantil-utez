@@ -34,18 +34,18 @@ lib/
       services/                  # vacío; aquí irán CamaraService, UbicacionService, etc.
     features/
       auth/          domain | data | presentation  (activo: login, registro, verificación, sesión)
-      home/          presentation/home_page.dart   (activo: saludo y cerrar sesión)
-      profile/       stub
-      routes_map/    stub
-      reservations/  stub
-      boarding/      stub
-      trip/          stub
-      incidents/     stub
-      operator/      stub
-      admin/         stub; la administración oficial será el panel web (pendiente)
+      home/          presentation/                 (activo: saludo y cerrar sesión; sin domain/data aún)
+      profile/       domain | data | presentation  (stub: solo .gitkeep)
+      routes_map/    domain | data | presentation  (stub: solo .gitkeep)
+      reservations/  domain | data | presentation  (stub: solo .gitkeep)
+      boarding/      domain | data | presentation  (stub: solo .gitkeep)
+      trip/          domain | data | presentation  (stub: solo .gitkeep)
+      incidents/     domain | data | presentation  (stub: solo .gitkeep)
+      operator/      domain | data | presentation  (stub: solo .gitkeep)
+      admin/         domain | data | presentation  (stub: solo .gitkeep; admin oficial será panel web)
 ```
 
-Cada feature tiene `domain/`, `data/` y `presentation/`.
+Cada feature tiene carpetas `domain/`, `data/` y `presentation/` (las stubs solo con `.gitkeep`; `home` solo tiene `presentation/` por ahora).
 
 ## Navegación
 

@@ -24,6 +24,7 @@ Pantalla principal del estudiante tras iniciar sesión. Muestra saludo y permite
 
 ## Diseño y secciones
 
+- Tarjeta con el rol del usuario y el estado de verificación de la cuenta.
 - Saludo personalizado con el nombre del estudiante.
 - Información de la próxima salida (pendiente de implementar).
 - Botón de cerrar sesión.

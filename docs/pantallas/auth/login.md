@@ -30,7 +30,7 @@ Si ya hay sesión activa y aprobada, el router redirige al home correspondiente.
 - Botón de "Iniciar sesión".
 - Enlace a "¿No tienes cuenta? Regístrate" → `/registro`.
 - Mensajes de error genéricos para el usuario (sin detalles técnicos).
-- Estados de carga y error mediante `UiState` + `UiStateView` + `MensajeEstado`.
+- Estado de carga en el botón y avisos en línea con `AppAlert`.
 
 ---
 
