@@ -16,15 +16,21 @@ final getIt = GetIt.instance;
 Future<void> configureDependencies() async {
   await FirebaseBootstrap.initialize();
 
+  _configureCore();
+  await _configureAuth();
+  _configureRouter();
+}
+
+void _configureCore() {
   getIt.registerLazySingleton<FirebaseFirestore>(() {
     if (!FirebaseBootstrap.isReady) {
-      throw StateError(
-        'Cloud Firestore no está disponible. Activa USE_FIREBASE cuando el proyecto tenga google-services.json o GoogleService-Info.plist.',
-      );
+      return UnavailableFirestore();
     }
     return FirebaseFirestore.instance;
   });
+}
 
+Future<void> _configureAuth() async {
   getIt.registerLazySingleton<AuthRepository>(() {
     if (!FirebaseBootstrap.isReady) {
       return UnavailableAuthRepository();
@@ -37,6 +43,17 @@ Future<void> configureDependencies() async {
 
   final session = AuthSessionCubit(getIt<AuthRepository>())..start();
   getIt.registerSingleton<AuthSessionCubit>(session);
+}
 
-  getIt.registerLazySingleton<AppRouter>(() => AppRouter(getIt()));
+void _configureRouter() {
+  getIt.registerLazySingleton<AppRouter>(() => AppRouter(getIt<AuthSessionCubit>()));
+}
+
+/// Firestore no disponible cuando USE_FIREBASE=false.
+/// Evita runtime error en _configureAuth al inyectar en FirestoreUserRemoteDataSource.
+class UnavailableFirestore implements FirebaseFirestore {
+  @override
+  noSuchMethod(Invocation invocation) => throw StateError(
+        'Firestore no disponible. Activa USE_FIREBASE con google-services.json / GoogleService-Info.plist.',
+      );
 }

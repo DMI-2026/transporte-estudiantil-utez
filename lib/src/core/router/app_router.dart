@@ -1,10 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/auth/presentation/login/login_page.dart';
-import '../../features/auth/presentation/register/register_page.dart';
+import '../../features/auth/domain/entities/user_role.dart';
+import '../../features/auth/presentation/auth_routes.dart';
 import '../../features/auth/presentation/session/auth_session_cubit.dart';
-import '../../features/auth/presentation/splash/auth_loading_page.dart';
-import '../../features/auth/presentation/verification/verification_page.dart';
 import '../../features/home/presentation/home_page.dart';
 import 'app_routes.dart';
 import 'stream_listenable.dart';
@@ -15,31 +14,24 @@ class AppRouter {
         initialLocation: AppRoutes.loading,
         refreshListenable: StreamListenable(session.stream),
         redirect: (context, state) =>
-            session.state.redirect(state.matchedLocation),
+            session.state.redirectWithRole(state.matchedLocation),
         routes: [
-          GoRoute(
-            path: AppRoutes.loading,
-            builder: (context, state) => const AuthLoadingPage(),
-          ),
-          GoRoute(
-            path: AppRoutes.login,
-            name: 'login',
-            builder: (context, state) => const LoginPage(),
-          ),
-          GoRoute(
-            path: AppRoutes.register,
-            name: 'registro',
-            builder: (context, state) => const RegisterPage(),
-          ),
-          GoRoute(
-            path: AppRoutes.verification,
-            name: 'verificacion',
-            builder: (context, state) => const VerificationPage(),
-          ),
+          ...authRoutes(session),
           GoRoute(
             path: AppRoutes.home,
             name: 'inicio',
             builder: (context, state) => const HomePage(),
+          ),
+          // Rutas por rol (placeholders hasta que existan features)
+          GoRoute(
+            path: AppRoutes.operatorDashboard,
+            name: 'operador',
+            builder: (context, state) => const _PlaceholderPage(title: 'Dashboard Operador'),
+          ),
+          GoRoute(
+            path: AppRoutes.adminDashboard,
+            name: 'admin',
+            builder: (context, state) => const _PlaceholderPage(title: 'Panel Admin'),
           ),
         ],
       );
@@ -47,8 +39,25 @@ class AppRouter {
   final GoRouter router;
 }
 
+class _PlaceholderPage extends StatelessWidget {
+  const _PlaceholderPage({required this.title});
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(child: Text('$title - En construcción')),
+    );
+  }
+}
+
+/// Extension con redirección por estado de auth + rol.
+/// Mantenida en core/router para que los tests existentes sigan funcionando.
 extension AuthSessionRedirect on AuthSessionState {
-  String? redirect(String location) {
+  String? redirect(String location) => redirectWithRole(location);
+
+  String? redirectWithRole(String location) {
     const authPaths = {
       AppRoutes.login,
       AppRoutes.register,
@@ -56,24 +65,42 @@ extension AuthSessionRedirect on AuthSessionState {
       AppRoutes.loading,
     };
 
+    // 1. Redirección por estado de autenticación
+    String? authRedirect;
     switch (status) {
       case AuthSessionStatus.loading:
-        return location == AppRoutes.loading ? null : AppRoutes.loading;
+        authRedirect = location == AppRoutes.loading ? null : AppRoutes.loading;
+        break;
       case AuthSessionStatus.unauthenticated:
-        if (location == AppRoutes.login || location == AppRoutes.register) {
-          return null;
-        }
-        return AppRoutes.login;
+        authRedirect = (location == AppRoutes.login || location == AppRoutes.register)
+            ? null
+            : AppRoutes.login;
+        break;
       case AuthSessionStatus.pendingVerification:
       case AuthSessionStatus.rejected:
-        return location == AppRoutes.verification
-            ? null
-            : AppRoutes.verification;
+        authRedirect = location == AppRoutes.verification ? null : AppRoutes.verification;
+        break;
       case AuthSessionStatus.authenticated:
-        if (authPaths.contains(location)) {
-          return AppRoutes.home;
-        }
-        return null;
+        authRedirect = authPaths.contains(location) ? AppRoutes.home : null;
+        break;
     }
+    if (authRedirect != null) return authRedirect;
+
+    // 2. Redirección por rol (solo si autenticado)
+    if (status == AuthSessionStatus.authenticated) {
+      final user = this.user;
+      if (user != null) {
+        // Operador va a su dashboard en lugar de /inicio
+        if (user.role == UserRole.operador && location == AppRoutes.home) {
+          return AppRoutes.operatorDashboard;
+        }
+        // Admin va a panel web (externo), pero si accede a app móvil:
+        if (user.role == UserRole.administrador && location == AppRoutes.home) {
+          return AppRoutes.adminDashboard;
+        }
+      }
+    }
+
+    return null;
   }
 }

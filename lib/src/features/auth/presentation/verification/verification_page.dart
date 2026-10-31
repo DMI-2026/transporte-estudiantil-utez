@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/mensaje_estado.dart';
 import '../session/auth_session_cubit.dart';
 
@@ -38,10 +39,12 @@ class VerificationPage extends StatelessWidget {
                     : 'Estamos verificando tu credencial. Recibirás acceso cuando un administrador apruebe tu cuenta.',
               ),
             ),
-            OutlinedButton(
+            AppButton(
+              label: 'Cerrar sesión',
+              variant: AppButtonVariant.secondary,
+              expand: true,
               onPressed:
                   onSignOut ?? () => context.read<AuthSessionCubit>().signOut(),
-              child: const Text('Cerrar sesión'),
             ),
           ],
         ),

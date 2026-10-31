@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/di/injection.dart';
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/mensaje_estado.dart';
+import '../../../../core/widgets/app_alert.dart';
+import '../../../../core/widgets/app_button.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../widgets/atoms/app_primary_button.dart';
+import '../widgets/atoms/app_text_field.dart';
 import 'login_cubit.dart';
 
 class LoginPage extends StatelessWidget {
@@ -16,7 +18,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repo = repository ?? getIt<AuthRepository>();
+    final repo = repository ?? context.read<AuthRepository>();
     return BlocProvider(
       create: (_) => LoginCubit(repo),
       child: _LoginView(backendDisponible: repo.isAvailable),
@@ -54,21 +56,23 @@ class _LoginViewState extends State<_LoginView> {
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
-              if (!widget.backendDisponible)
-                const MensajeEstado(
-                  compact: true,
-                  icono: Icons.cloud_off_outlined,
-                  titulo: 'Firebase desactivado',
-                  detalle:
-                      'Copia env/example.json a env/dev.json con USE_FIREBASE true y añade firebase_options.dart.',
+              if (!widget.backendDisponible) ...[
+                const AppAlert(
+                  tone: AppAlertTone.warning,
+                  title: 'Firebase desactivado',
+                  message: 'Copia env/example.json a env/dev.json con USE_FIREBASE true y añade firebase_options.dart.',
                 ),
-              if (state.status == LoginStatus.failure && state.message != null)
-                MensajeEstado(
-                  compact: true,
-                  icono: Icons.error_outline,
-                  titulo: 'No pudimos iniciar sesión',
-                  detalle: state.message!,
+                const SizedBox(height: AppSpacing.md),
+              ],
+              if (state.status == LoginStatus.failure &&
+                  state.message != null) ...[
+                AppAlert(
+                  tone: AppAlertTone.danger,
+                  title: 'No pudimos iniciar sesión',
+                  message: state.message!,
                 ),
+                const SizedBox(height: AppSpacing.md),
+              ],
               Text(
                 'Transporte Estudiantil UTEZ',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -77,43 +81,36 @@ class _LoginViewState extends State<_LoginView> {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              TextField(
+              AppTextField(
                 key: const Key('campo-correo'),
+                label: 'Correo',
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 autofillHints: const [AutofillHints.email],
-                decoration: const InputDecoration(labelText: 'Correo'),
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
+              AppTextField(
                 key: const Key('campo-contrasena'),
+                label: 'Contraseña',
                 controller: _passwordController,
                 obscureText: true,
                 autofillHints: const [AutofillHints.password],
-                decoration: const InputDecoration(labelText: 'Contraseña'),
               ),
               const SizedBox(height: AppSpacing.lg),
-              FilledButton(
-                onPressed: loading
-                    ? null
-                    : () => context.read<LoginCubit>().submit(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      ),
-                child: loading
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator.adaptive(
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : const Text('Entrar'),
+              AppPrimaryButton(
+                label: 'Entrar',
+                loading: loading,
+                onPressed: () => context.read<LoginCubit>().submit(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                ),
               ),
               const SizedBox(height: AppSpacing.md),
-              TextButton(
+              AppButton(
+                label: 'Crear cuenta',
+                variant: AppButtonVariant.secondary,
+                expand: true,
                 onPressed: () => context.push(AppRoutes.register),
-                child: const Text('Crear cuenta'),
               ),
             ],
           );

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/di/injection.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/mensaje_estado.dart';
+import '../../../../core/widgets/app_alert.dart';
 import '../../domain/entities/user_role.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../widgets/atoms/app_primary_button.dart';
+import '../widgets/atoms/app_text_field.dart';
 import 'register_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -16,7 +17,8 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RegisterCubit(repository ?? getIt<AuthRepository>()),
+      create: (_) =>
+          RegisterCubit(repository ?? context.read<AuthRepository>()),
       child: const _RegisterView(),
     );
   }
@@ -54,35 +56,34 @@ class _RegisterViewState extends State<_RegisterView> {
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
               if (state.status == RegisterStatus.failure &&
-                  state.message != null)
-                MensajeEstado(
-                  compact: true,
-                  icono: Icons.error_outline,
-                  titulo: 'No pudimos crear la cuenta',
-                  detalle: state.message!,
+                  state.message != null) ...[
+                AppAlert(
+                  tone: AppAlertTone.danger,
+                  title: 'No pudimos crear la cuenta',
+                  message: state.message!,
                 ),
-              TextField(
+                const SizedBox(height: AppSpacing.md),
+              ],
+              AppTextField(
                 key: const Key('campo-nombre'),
+                label: 'Nombre completo',
                 controller: _nameController,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(labelText: 'Nombre completo'),
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
+              AppTextField(
                 key: const Key('campo-correo'),
+                label: 'Correo',
+                helperText: 'Estudiantes: @utez.edu.mx',
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Correo',
-                  helperText: 'Estudiantes: @utez.edu.mx',
-                ),
               ),
               const SizedBox(height: AppSpacing.md),
-              TextField(
+              AppTextField(
                 key: const Key('campo-contrasena'),
+                label: 'Contraseña',
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'Contraseña'),
               ),
               const SizedBox(height: AppSpacing.md),
               SegmentedButton<UserRole>(
@@ -100,24 +101,15 @@ class _RegisterViewState extends State<_RegisterView> {
                 onSelectionChanged: (set) => setState(() => _role = set.first),
               ),
               const SizedBox(height: AppSpacing.lg),
-              FilledButton(
-                onPressed: loading
-                    ? null
-                    : () => context.read<RegisterCubit>().submit(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        displayName: _nameController.text,
-                        role: _role,
-                      ),
-                child: loading
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator.adaptive(
-                          strokeWidth: 2,
-                        ),
-                      )
-                    : const Text('Registrarme'),
+              AppPrimaryButton(
+                label: 'Registrarme',
+                loading: loading,
+                onPressed: () => context.read<RegisterCubit>().submit(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  displayName: _nameController.text,
+                  role: _role,
+                ),
               ),
             ],
           );
