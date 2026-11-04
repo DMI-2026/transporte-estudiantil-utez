@@ -2,7 +2,7 @@
 
 Para personas y agentes de IA. Prioridad: mismo patrón que el código existente, cambio mínimo, sin secretos.
 
-Git, sensor de verificación y la tabla de convenciones C-01 a C-12 están en [convenciones.md](convenciones.md), que manda sobre este archivo en ramas, commits y cómo verificar. Este archivo cubre las capas Flutter, los nombres de Firestore y la seguridad en el código.
+Git, sensor de verificación y la tabla de convenciones C-01 a C-12 están en [06-convenciones.md](06-convenciones.md), que manda sobre este archivo en ramas, commits y cómo verificar. Este archivo cubre las capas Flutter, los nombres de Firestore y la seguridad en el código.
 
 Flujo de tarea, validación, reporte y cuándo tocar documentación: [README.md](README.md). Estados (Hecho, Local, Pendiente, Propuesto, No usar): [README, sección Estados de decisión](README.md#estados-de-decisión).
 
@@ -51,7 +51,7 @@ Registrar las dependencias nuevas en `apps/mobile/lib/src/core/di/injection.dart
 
 ## Seguridad
 
-- Sin secretos en git (lista en [servicios.md](servicios.md)).
+- Sin secretos en git (lista en [03-integraciones.md](03-integraciones.md)).
 - `pagos.estado = aprobado` lo escribe solo el Admin SDK desde Cloud Functions.
 - El secreto del QR vive en `salidas/{salidaId}/privado/qr`; el cliente nunca lo escribe.
 - Un rol o estado de verificación desconocido se trata como perfil inválido; nunca se asume un rol por defecto.

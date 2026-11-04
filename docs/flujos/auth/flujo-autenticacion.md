@@ -94,10 +94,10 @@ pendiente/rechazada                                    aprobada
 
 ## Documentación relacionada
 
-- [../pantallas/auth/login.md](../pantallas/auth/login.md)
-- [../pantallas/auth/registro.md](../pantallas/auth/registro.md)
-- [../pantallas/auth/verificacion.md](../pantallas/auth/verificacion.md)
-- [../pantallas/home.md](../pantallas/home.md)
-- [../pantallas/operator.md](../pantallas/operator.md)
-- [../arquitectura.md](../arquitectura.md) — Router y redirecciones.
-- [../reglas-desarrollo.md](../reglas-desarrollo.md) — Sesión global y redirección.
+- [../../pantallas/auth/login.md](../../pantallas/auth/login.md)
+- [../../pantallas/auth/registro.md](../../pantallas/auth/registro.md)
+- [../../pantallas/auth/verificacion.md](../../pantallas/auth/verificacion.md)
+- [../../pantallas/home.md](../../pantallas/home.md)
+- [../../pantallas/operator.md](../../pantallas/operator.md)
+- [../../04-arquitectura.md](../../04-arquitectura.md) — Router y redirecciones.
+- [../../reglas-desarrollo.md](../../reglas-desarrollo.md) — Sesión global y redirección.

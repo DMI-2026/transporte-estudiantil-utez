@@ -79,5 +79,5 @@ test/
 
 - [../estado.md](../estado.md) — Feature `incidents`: stub.
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección incidents.
-- [../servicios.md](../servicios.md) — Cloud Storage y CamaraService (pendientes).
+- [../03-integraciones.md](../03-integraciones.md) — Cloud Storage y CamaraService (pendientes).
 - [../referencia-dmi.md](../referencia-dmi.md) — Permisos del dispositivo.

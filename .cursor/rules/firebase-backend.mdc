@@ -25,4 +25,4 @@ alwaysApply: false
 - Actualiza `docs/arquitectura-y-datos/reglas-seguridad.md` si cambia un principio.
 - Despliega con `firebase deploy --only firestore:rules` o `--only storage` sobre el proyecto `utebus-4435b`.
 
-Detalle: `docs/arquitectura.md`, `docs/servicios.md`, `docs/modulos/funcionalidades/pagos.md`, `docs/modulos/funcionalidades/qr.md`.
+Detalle: `docs/04-arquitectura.md`, `docs/03-integraciones.md`, `docs/modulos/funcionalidades/pagos.md`, `docs/modulos/funcionalidades/qr.md`.

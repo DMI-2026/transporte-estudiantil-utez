@@ -94,7 +94,7 @@ Los datos demo se cargan con `scripts/seed-firestore-prod.ps1` o `scripts/seed-f
 
 ## Documentación relacionada
 
-- [../estado.md](../estado.md) — Hecho frente a pendiente.
-- [../arquitectura.md](../arquitectura.md) — Router y redirección por sesión.
-- [../reglas-desarrollo.md](../reglas-desarrollo.md) — Seguridad y mensajes de error.
-- [../flujos/auth/flujo-autenticacion.md](../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.
+- [../../estado.md](../../estado.md) — Hecho frente a pendiente.
+- [../../04-arquitectura.md](../../04-arquitectura.md) — Router y redirección por sesión.
+- [../../reglas-desarrollo.md](../../reglas-desarrollo.md) — Seguridad y mensajes de error.
+- [../../flujos/auth/flujo-autenticacion.md](../../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.

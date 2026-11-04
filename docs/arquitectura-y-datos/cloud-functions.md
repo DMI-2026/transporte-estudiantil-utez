@@ -74,6 +74,6 @@ Requiere plan **Blaze** de Firebase para Cloud Functions y webhooks externos.
 
 ## Documentación relacionada
 
-- [modelo-firestore.md](./modelo-firestore.md) — Colecciones y campos.
+- [05-datos.md](../05-datos.md) — Colecciones y campos.
 - [reglas-seguridad.md](./reglas-seguridad.md) — Reglas de Firestore y Storage.
-- [servicios.md](../servicios.md) — Integraciones y estado de servicios.
+- [03-integraciones.md](../03-integraciones.md) — Integraciones y estado de servicios.

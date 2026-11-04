@@ -86,7 +86,7 @@ Ver [auth/login.md](./login.md).
 
 ## Documentación relacionada
 
-- [../estado.md](../estado.md) — Autenticación: login, registro, perfil en Firestore.
-- [../arquitectura.md](../arquitectura.md) — Redirección según estado de sesión.
-- [../reglas-desarrollo.md](../reglas-desarrollo.md) — Nombres de campos de Firestore.
-- [../flujos/auth/flujo-autenticacion.md](../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.
+- [../../estado.md](../../estado.md) — Autenticación: login, registro, perfil en Firestore.
+- [../../04-arquitectura.md](../../04-arquitectura.md) — Redirección según estado de sesión.
+- [../../reglas-desarrollo.md](../../reglas-desarrollo.md) — Nombres de campos de Firestore.
+- [../../flujos/auth/flujo-autenticacion.md](../../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.

@@ -76,6 +76,6 @@ Ver [auth/login.md](./login.md).
 
 ## Documentación relacionada
 
-- [../estado.md](../estado.md) — Router: `/login`, `/registro`, `/verificacion`, `/inicio`.
-- [../arquitectura.md](../arquitectura.md) — Redirecciones por `AuthSessionState`.
-- [../flujos/auth/flujo-autenticacion.md](../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.
+- [../../estado.md](../../estado.md) — Router: `/login`, `/registro`, `/verificacion`, `/inicio`.
+- [../../04-arquitectura.md](../../04-arquitectura.md) — Redirecciones por `AuthSessionState`.
+- [../../flujos/auth/flujo-autenticacion.md](../../flujos/auth/flujo-autenticacion.md) — Flujo completo de autenticación.

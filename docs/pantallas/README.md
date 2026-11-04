@@ -82,7 +82,7 @@ Cada documento de pantalla sigue esta estructura:
 
 ## Documentación relacionada
 
-- [../arquitectura.md](../arquitectura.md) — Capas, árbol de `apps/mobile/lib/`, router, Firestore.
+- [../04-arquitectura.md](../04-arquitectura.md) — Capas, árbol de `apps/mobile/lib/`, router, Firestore.
 - [../reglas-desarrollo.md](../reglas-desarrollo.md) — Capas Flutter, nombres de Firestore, seguridad.
 - [../flujos/](../flujos/README.md) — Flujos de navegación entre pantallas.
 - [../modulos/](../modulos/README.md) — Índice de módulos por rol y funcionalidad.

@@ -59,6 +59,6 @@ Aquí se documenta el **recorrido** entre pantallas; en `pantallas/` se document
 ## Documentación relacionada
 
 - [../pantallas/](../pantallas/README.md) — Documentación por pantalla.
-- [../arquitectura.md](../arquitectura.md) — Router, redirecciones, `AuthSessionCubit`.
+- [../04-arquitectura.md](../04-arquitectura.md) — Router, redirecciones, `AuthSessionCubit`.
 - [../modulos/](../modulos/README.md) — Índice de módulos por rol.
 - [../estado.md](../estado.md) — Hecho frente a pendiente por feature.

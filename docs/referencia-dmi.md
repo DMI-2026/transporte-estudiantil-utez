@@ -24,7 +24,7 @@ Estados: ver [README, sección Estados de decisión](README.md#estados-de-decisi
 |-------------|-----------------|
 | Mensajes de error genéricos para el usuario, sin detalles técnicos | [reglas-desarrollo.md](reglas-desarrollo.md); `AppFailure.userMessage` |
 | Perfil, privacidad y baja de cuenta (derechos ARCO) | `profile` (pendiente) |
-| Dependencias solo de publishers verificados | [servicios.md](servicios.md) y revisión en PR |
+| Dependencias solo de publishers verificados | [03-integraciones.md](03-integraciones.md) y revisión en PR |
 
 Otras restricciones del enunciado se enlazan en cada issue al criterio concreto; no se amplían aquí sin un issue de alcance.
 

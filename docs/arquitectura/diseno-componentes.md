@@ -1,6 +1,6 @@
 # Diseño de Componentes (UI) — transporte-estudiantil-utez
 
-Guía de organización de widgets UI de la app Flutter. Complementa [arquitectura.md](../arquitectura.md) con reglas concretas sobre **dónde colocar** cada pieza de interfaz dentro de una feature.
+Guía de organización de widgets UI de la app Flutter. Complementa [04-arquitectura.md](../04-arquitectura.md) con reglas concretas sobre **dónde colocar** cada pieza de interfaz dentro de una feature.
 
 ---
 
@@ -207,7 +207,7 @@ Registrar dependencias nuevas en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ## 10. Documentación relacionada
 
-- [../arquitectura.md](../arquitectura.md) — Capas, árbol de `apps/mobile/lib/`, router, Firestore.
+- [../04-arquitectura.md](../04-arquitectura.md) — Capas, árbol de `apps/mobile/lib/`, router, Firestore.
 - [../reglas-desarrollo.md](../reglas-desarrollo.md) — Capas Flutter, nombres de Firestore, seguridad.
 - [../pantallas/](../pantallas/README.md) — Documentación por pantalla.
 - [../flujos/](../flujos/README.md) — Flujos de navegación entre pantallas.

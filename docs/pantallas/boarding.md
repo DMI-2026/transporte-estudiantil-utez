@@ -80,4 +80,4 @@ ar QR).
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección boarding.
 - [../modulos/operador.md](../modulos/operador.md) — Módulo operador, sección abordaje.
 - [../modulos/funcionalidades/qr.md](../modulos/funcionalidades/qr.md) — Secreto del QR y validación de abordaje.
-- [../servicios.md](../servicios.md) — Cloud Functions para QR (pendiente).
+- [../03-integraciones.md](../03-integraciones.md) — Cloud Functions para QR (pendiente).

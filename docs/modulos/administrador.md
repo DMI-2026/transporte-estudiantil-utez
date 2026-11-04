@@ -18,4 +18,4 @@ La implementación canónica es el panel web `admin-web/` (pendiente), junto con
 | Webhooks de pago, QR, notificaciones | `apps/firebase/functions/` | Pendiente |
 | Interfaz de administración | `admin-web/` | Pendiente |
 
-Datos y colecciones: [arquitectura.md](../arquitectura.md). Pagos: [funcionalidades/pagos.md](funcionalidades/pagos.md).
+Datos y colecciones: [04-arquitectura.md](../04-arquitectura.md). Pagos: [funcionalidades/pagos.md](funcionalidades/pagos.md).

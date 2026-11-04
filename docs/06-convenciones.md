@@ -10,11 +10,11 @@ El curso de Desarrollo Móvil Integral propone seis documentos numerados (alcanc
 
 | Documento de la plantilla | Dónde está aquí |
 |---------------------------|-----------------|
-| 01 Alcance | [README.md](README.md), sección Propósito, y [referencia-dmi.md](referencia-dmi.md) |
-| 02 PRD | [modulos/](modulos/) y [estado.md](estado.md) |
-| 03 Integraciones | [servicios.md](servicios.md) |
-| 04 Arquitectura | [arquitectura.md](arquitectura.md) |
-| 05 Datos | [arquitectura-y-datos/](arquitectura-y-datos/) |
+| 01 Alcance | [01-alcance.md](01-alcance.md) |
+| 02 PRD | [02-prd.md](02-prd.md) |
+| 03 Integraciones | [03-integraciones.md](03-integraciones.md) |
+| 04 Arquitectura | [04-arquitectura.md](04-arquitectura.md) |
+| 05 Datos | [05-datos.md](05-datos.md) |
 | 06 Convenciones | este archivo |
 
 Protocolo para agentes de IA: [README.md](README.md).

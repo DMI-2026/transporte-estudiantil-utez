@@ -79,4 +79,4 @@ test/
 - [../estado.md](../estado.md) — Feature `trip`: stub.
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección trip.
 - [../modulos/operador.md](../modulos/operador.md) — Módulo operador, sección salidas.
-- [../servicios.md](../servicios.md) — Google Maps SDK, Google Routes API, Firebase Cloud Messaging (pendientes).
+- [../03-integraciones.md](../03-integraciones.md) — Google Maps SDK, Google Routes API, Firebase Cloud Messaging (pendientes).

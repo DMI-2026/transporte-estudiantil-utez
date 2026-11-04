@@ -79,4 +79,4 @@ Ver [auth/login.md](./auth/login.md).
 
 - [../estado.md](../estado.md) — Feature `home`: activo (saludo y cerrar sesión).
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección home.
-- [../arquitectura.md](../arquitectura.md) — Router y redirección por sesión.
+- [../04-arquitectura.md](../04-arquitectura.md) — Router y redirección por sesión.

@@ -67,5 +67,5 @@ apps/firebase/
 
 - [../estado.md](../estado.md) — Administración: pendiente.
 - [../modulos/administrador.md](../modulos/administrador.md) — Módulo administrador.
-- [../arquitectura.md](../arquitectura.md) — Backend: `admin-web/` pendiente.
-- [../servicios.md](../servicios.md) — Administración: panel web sobre Firebase (pendiente).
+- [../04-arquitectura.md](../04-arquitectura.md) — Backend: `admin-web/` pendiente.
+- [../03-integraciones.md](../03-integraciones.md) — Administración: panel web sobre Firebase (pendiente).
