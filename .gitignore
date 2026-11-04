@@ -30,8 +30,8 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
-/coverage/
+**/build/
+/apps/mobile/coverage/
 
 # Symbolication related
 app.*.symbols
@@ -40,28 +40,30 @@ app.*.symbols
 app.*.map.json
 
 # Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+/apps/mobile/android/app/debug
+/apps/mobile/android/app/profile
+/apps/mobile/android/app/release
 
 # Widget Preview related
 .widget_preview/
 
 # Secretos y configuración local (S3)
-env/*.json
-!env/example.json
-env/firebase-admin-sa.json
-lib/firebase_options.dart
+apps/mobile/env/*.json
+!apps/mobile/env/example.json
+apps/firebase/env/
+apps/mobile/lib/firebase_options.dart
 **/google-services.json
 **/GoogleService-Info.plist
 **/key.properties
-/android/local.properties
+/apps/mobile/android/local.properties
 *.jks
 *.keystore
 
 # Firebase tools (seed script) y pruebas de reglas
-firebase/tools/node_modules/
-firebase/tests/node_modules/
+node_modules/
+.env
+*-adminsdk-*.json
+serviceAccount*.json
 firebase-debug.log
 firestore-debug.log
 storage-debug.log

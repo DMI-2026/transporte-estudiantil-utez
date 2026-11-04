@@ -1,6 +1,6 @@
 # Modelo Firestore — UTEBus
 
-Proyecto Firebase: **utebus-4435b**. Reglas versionadas en `firebase/firestore.rules`.
+Proyecto Firebase: **utebus-4435b**. Reglas versionadas en `apps/firebase/firestore.rules`.
 
 ## Colecciones raíz
 
@@ -110,7 +110,7 @@ Creación atómica con decremento de `asientosDisponibles` (app o Function).
 
 ## Índices compuestos
 
-Definidos en `firebase/firestore.indexes.json` (consultas por ruta, operador, estudiante, verificación).
+Definidos en `apps/firebase/firestore.indexes.json` (consultas por ruta, operador, estudiante, verificación).
 
 ## Datos de demostración
 

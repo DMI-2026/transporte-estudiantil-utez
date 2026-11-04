@@ -54,10 +54,10 @@ Recorrido del estudiante desde que inicia sesión hasta completar un viaje: cons
 
 ## Archivos clave
 
-- `lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global.
-- `lib/src/core/router/app_routes.dart` — Rutas del estudiante.
-- `lib/src/features/<feature>/presentation/` — Cubits de cada feature.
-- `lib/src/features/<feature>/data/` — Repositorios y datasources de Firestore.
+- `apps/mobile/lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global.
+- `apps/mobile/lib/src/core/router/app_routes.dart` — Rutas del estudiante.
+- `apps/mobile/lib/src/features/<feature>/presentation/` — Cubits de cada feature.
+- `apps/mobile/lib/src/features/<feature>/data/` — Repositorios y datasources de Firestore.
 
 ---
 

@@ -11,7 +11,7 @@ Proyecto: **utebus-4435b**.
 ## Archivos en repo
 
 ```text
-firebase/
+apps/firebase/
   firestore.rules          # reglas de Firestore (versionadas)
   firestore.indexes.json   # índices compuestos
   storage.rules            # reglas de Cloud Storage (versionadas)
@@ -19,4 +19,4 @@ firebase/
 
 > Los archivos `.firebaserc`, `firebase.json`, service accounts y scripts de seed **no se versionan** ni existen en el repositorio. Cada desarrollador los configura localmente.
 
-Capas Flutter y árbol `lib/`: [arquitectura.md](../arquitectura.md).
+Capas Flutter y árbol `apps/mobile/lib/`: [arquitectura.md](../arquitectura.md).

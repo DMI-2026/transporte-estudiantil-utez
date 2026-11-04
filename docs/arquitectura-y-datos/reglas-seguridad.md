@@ -4,9 +4,9 @@ Fuente versionada:
 
 | Recurso | Archivo |
 |---------|---------|
-| Firestore | `firebase/firestore.rules` |
-| Índices | `firebase/firestore.indexes.json` |
-| Storage | `firebase/storage.rules` · bucket `gs://utebus-4435b.firebasestorage.app` |
+| Firestore | `apps/firebase/firestore.rules` |
+| Índices | `apps/firebase/firestore.indexes.json` |
+| Storage | `apps/firebase/storage.rules` · bucket `gs://utebus-4435b.firebasestorage.app` |
 
 ## Principios
 
@@ -28,9 +28,9 @@ Fuente versionada:
 
 | Recurso | Archivo |
 |---------|---------|
-| Firestore | `firebase/firestore.rules` |
-| Storage | `firebase/storage.rules` |
-| Índices | `firebase/firestore.indexes.json` |
+| Firestore | `apps/firebase/firestore.rules` |
+| Storage | `apps/firebase/storage.rules` |
+| Índices | `apps/firebase/firestore.indexes.json` |
 
 ## Despliegue
 
@@ -41,6 +41,6 @@ firebase deploy --only storage --project utebus-4435b
 
 Proyecto por defecto: `.firebaserc` → `utebus-4435b`.
 
-Desplegar reglas solo tras revisar y probar en el emulador local. Las pruebas de reglas contra emulador (`firebase/tests/`) están pendientes de creación.
+Desplegar reglas solo tras revisar y probar en el emulador local. Las pruebas de reglas contra emulador (`apps/firebase/tests/`) están pendientes de creación.
 
 Desplegar reglas solo tras revisar y probar en el emulador. No desplegar directamente a producción sin pruebas locales.

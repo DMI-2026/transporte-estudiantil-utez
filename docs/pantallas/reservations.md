@@ -12,7 +12,7 @@ Permite al estudiante reservar un asiento en una salida con control de cupo medi
 | Rol | Estudiante |
 | Acceso | Solo con sesión aprobada |
 | Layout | Pantalla de selección de salida y asiento |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -69,7 +69,7 @@ test/
 4. Crear `ReservationsPage` con selección de salida y asiento.
 5. Integrar pagos mediante Cloud Functions (Mercado Pago, pendiente).
 6. Registrar dependencias en `injection.dart`.
-7. Escribir pruebas en `test/features/reservations/`.
+7. Escribir pruebas en `apps/mobile/test/features/reservations/`.
 8. Registrar la ruta en `app_routes.dart`.
 
 ---

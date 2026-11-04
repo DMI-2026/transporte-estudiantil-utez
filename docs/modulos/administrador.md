@@ -2,7 +2,7 @@
 
 La implementación canónica es el panel web `admin-web/` (pendiente), junto con las reglas de Firebase y las Cloud Functions (Alison y Jesús).
 
-`lib/src/features/admin/` es opcional, un prototipo; no duplicar lógica de administración en Flutter salvo issue explícito.
+`apps/mobile/lib/src/features/admin/` es opcional, un prototipo; no duplicar lógica de administración en Flutter salvo issue explícito.
 
 ## Responsabilidades
 
@@ -14,8 +14,8 @@ La implementación canónica es el panel web `admin-web/` (pendiente), junto con
 
 | Capa | Ruta en el repositorio | Estado |
 |------|------------------------|--------|
-| Reglas de Firestore y Storage | `firebase/` | Hecho; mantenimiento continuo |
-| Webhooks de pago, QR, notificaciones | `functions/` | Pendiente |
+| Reglas de Firestore y Storage | `apps/firebase/` | Hecho; mantenimiento continuo |
+| Webhooks de pago, QR, notificaciones | `apps/firebase/functions/` | Pendiente |
 | Interfaz de administración | `admin-web/` | Pendiente |
 
 Datos y colecciones: [arquitectura.md](../arquitectura.md). Pagos: [funcionalidades/pagos.md](funcionalidades/pagos.md).

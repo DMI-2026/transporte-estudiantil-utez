@@ -26,7 +26,7 @@ $badPatterns = @('api_key', 'API_KEY', 'private_key', 'BEGIN PRIVATE', 'mercadop
 $scanExt = @('.dart', '.json', '.yaml', '.yml', '.properties', '.plist', '.env', '.kt', '.swift', '.js', '.mjs', '.cjs', '.ts', '.ps1', '.sh')
 foreach ($f in $diff) {
     if (-not $f) { continue }
-    if ($f -match 'google-services\.json|firebase_options\.dart|env/dev\.json|env/prod\.json') {
+    if ($f -match 'google-services\.json|firebase_options\.dart|env/dev\.json|env/prod\.json|firebase-admin-sa\.json') {
         Fail "Archivo sensible en diff: $f (no debe commitearse)"
     }
     if ($f -replace '\\','/' -match '^docs/') { continue }
@@ -53,22 +53,22 @@ Ok "analyze + test"
 
 if ($Tipo -eq 'feature' -or $Tipo -eq 'full') {
     if (-not $Feature) { Fail "Tipo feature/full requiere -Feature <nombre>" }
-    $featPath = Join-Path $root "lib\src\features\$Feature"
+    $featPath = Join-Path $root "apps\mobile\lib\src\features\$Feature"
     if (-not (Test-Path $featPath)) { Fail "No existe carpeta feature: $featPath" }
     Ok "Feature folder: $Feature"
 }
 
 if ($Tipo -eq 'firebase' -or $Tipo -eq 'full') {
     Write-Step "Firebase / Functions"
-    $rules = Join-Path $root "firebase\firestore.rules"
+    $rules = Join-Path $root "apps\firebase\firestore.rules"
     if (-not (Test-Path $rules)) {
-        Write-Host "AVISO: falta firebase/firestore.rules (crear en tarea Alison)" -ForegroundColor Yellow
+        Write-Host "AVISO: falta apps/firebase/firestore.rules (crear en tarea Alison)" -ForegroundColor Yellow
     } else {
         Ok "firestore.rules presente"
     }
-    $fn = Join-Path $root "functions\package.json"
+    $fn = Join-Path $root "apps\firebase\functions\package.json"
     if (Test-Path $fn) {
-        Push-Location (Join-Path $root "functions")
+        Push-Location (Join-Path $root "apps\firebase\functions")
         if (Test-Path "package.json") {
             npm run lint --if-present 2>$null
             npm test --if-present 2>$null
@@ -76,21 +76,21 @@ if ($Tipo -eq 'firebase' -or $Tipo -eq 'full') {
         Pop-Location
         Ok "functions npm scripts (si existen)"
     } else {
-        Write-Host "AVISO: functions/ aún no creado" -ForegroundColor Yellow
+        Write-Host "AVISO: apps/firebase/functions/ aún no creado" -ForegroundColor Yellow
     }
 }
 
 if ($Tipo -eq 'rules' -or $Tipo -eq 'full') {
     Write-Step "Reglas Firestore/Storage"
-    foreach ($r in @('firebase\firestore.rules', 'firebase\storage.rules')) {
+    foreach ($r in @('apps\firebase\firestore.rules', 'apps\firebase\storage.rules')) {
         if (-not (Test-Path (Join-Path $root $r))) {
             Fail "Falta $r"
         }
     }
     Ok "Archivos de reglas presentes"
-    $rulesTest = Join-Path $root "firebase\tests"
+    $rulesTest = Join-Path $root "apps\firebase\tests"
     if (-not (Test-Path (Join-Path $rulesTest "package.json"))) {
-        Fail "Falta firebase/tests/package.json"
+        Fail "Falta apps/firebase/tests/package.json"
     }
     if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
         Write-Host "AVISO: Java no encontrado; el emulador de Firebase no puede arrancar. Pruebas de reglas omitidas." -ForegroundColor Yellow
@@ -109,12 +109,14 @@ if ($Tipo -eq 'rules' -or $Tipo -eq 'full') {
 
 if ($Tipo -eq 'full') {
     Write-Step "integration_test"
-    $it = Join-Path $root "integration_test"
+    $it = Join-Path $root "apps\mobile\integration_test"
     if (-not (Test-Path $it)) {
         Fail "Falta integration_test/"
     }
     # flutter-tester: no requiere celular ni Windows desktop.
+    Push-Location (Join-Path $root "apps\mobile")
     flutter test integration_test -d flutter-tester
+    Pop-Location
     if ($LASTEXITCODE -ne 0) { Fail "integration_test" }
     Ok "integration_test"
 }

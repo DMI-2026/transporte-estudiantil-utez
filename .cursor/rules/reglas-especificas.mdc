@@ -26,5 +26,5 @@ Este repositorio sigue el **Protocolo de tarea** de `docs/README.md` (diez pasos
 
 Se activan solo si editas esos archivos:
 
-- `lib/**`: `flutter-capas.mdc` (capas, tema, estados de pantalla).
-- `firebase/**` y `functions/**`: `firebase-backend.mdc` (privilegio mínimo, pagos, QR, secretos).
+- `apps/mobile/lib/**`: `flutter-capas.mdc` (capas, tema, estados de pantalla).
+- `apps/firebase/**`: `firebase-backend.mdc` (privilegio mínimo, pagos, QR, secretos).

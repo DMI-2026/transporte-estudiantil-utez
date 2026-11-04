@@ -2,14 +2,14 @@
 
 App para que estudiantes y operadores reserven asiento, sigan la combi y aborden con QR. El administrador verifica cuentas y catálogo desde un panel web (pendiente).
 
-Proyecto del curso Desarrollo Móvil Integral (UTEZ). App Flutter con backend Firebase (proyecto `utebus-4435b`). Código canónico: `lib/`.
+Proyecto del curso Desarrollo Móvil Integral (UTEZ). App Flutter con backend Firebase (proyecto `utebus-4435b`). Código canónico: `apps/mobile/lib/`.
 
 ## Qué hay aquí
 
 | Carpeta o archivo | Qué es |
 |-------------------|--------|
-| `lib/` | App Flutter (estudiante y operador) |
-| `firebase/` | Reglas e índices de Firestore y Storage |
+| `apps/mobile/lib/` | App Flutter (estudiante y operador) |
+| `apps/firebase/` | Reglas e índices de Firestore y Storage |
 | `docs/` | Documentación del equipo: módulos, servicios, datos, convenciones |
 | `CONTRIBUIDORES.md` | Integrantes y control de cambios |
 | `AGENTS.md` y `CLAUDE.md` | Guía para agentes de IA |
@@ -25,8 +25,8 @@ Proyecto del curso Desarrollo Móvil Integral (UTEZ). App Flutter con backend Fi
 | Hanna | `auth`, `profile` |
 | David | `home`, `trip` |
 | Coordinación | PR, `reservations` |
-| Alison | `firebase/`, Cloud Functions |
-| Jesús | `functions/`, `admin-web` |
+| Alison | `apps/firebase/`, Cloud Functions |
+| Jesús | `apps/firebase/functions/`, `admin-web` |
 
 Detalle: [CONTRIBUIDORES.md](CONTRIBUIDORES.md).
 
@@ -39,13 +39,13 @@ git clone <url> transporte-estudiantil-utez
 cd transporte-estudiantil-utez
 git checkout develop
 git config core.hooksPath .githooks
-flutter pub get
 .\scripts\setup-local.ps1
 .\scripts\check.ps1
+cd apps/mobile
 flutter run --dart-define-from-file=env/dev.json
 ```
 
-`env/dev.json` y `lib/firebase_options.dart` no se versionan. Guía de configuración local: [docs/estado.md](docs/estado.md).
+`apps/mobile/env/dev.json` y `apps/mobile/lib/firebase_options.dart` no se versionan. Guía de configuración local: [docs/estado.md](docs/estado.md).
 
 ## Verificar todo
 
@@ -54,7 +54,7 @@ El único comando de "listo" es el sensor `check.ps1` (analyze + test). El hook 
 | Qué | Comando |
 |-----|---------|
 | Verificar todo | `.\scripts\check.ps1` |
-| Correr la app | `flutter run --dart-define-from-file=env/dev.json` |
+| Correr la app (desde `apps/mobile/`) | `flutter run --dart-define-from-file=env/dev.json` |
 | Extra al cerrar un issue (secretos, Firebase) | `.\scripts\verify-activity.ps1 -Tipo base` |
 
 `verify-activity.ps1` no sustituye a `check.ps1`.

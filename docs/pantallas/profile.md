@@ -12,7 +12,7 @@ Permite al estudiante gestionar su perfil, privacidad, notificaciones y eliminar
 | Rol | Estudiante (cuenta aprobada) |
 | Acceso | Solo con sesión aprobada |
 | Layout | Pantalla de configuración de perfil |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -67,7 +67,7 @@ test/
 4. Crear `ProfilePage` con formulario de perfil y opciones de privacidad.
 5. Implementar eliminación de cuenta con confirmación.
 6. Registrar dependencias en `injection.dart`.
-7. Escribir pruebas en `test/features/profile/`.
+7. Escribir pruebas en `apps/mobile/test/features/profile/`.
 8. Registrar la ruta en `app_routes.dart`.
 
 ---

@@ -12,7 +12,7 @@ Permite al estudiante consultar rutas, paradas y salidas activas, con mapa y ubi
 | Rol | Estudiante |
 | Acceso | Solo con sesión aprobada |
 | Layout | Pantalla con mapa y lista de rutas |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -71,7 +71,7 @@ test/
 5. Integrar Google Maps SDK para mostrar mapa y marcadores.
 6. Agregar permiso de ubicación en `AndroidManifest.xml` e `Info.plist`.
 7. Registrar dependencias en `injection.dart`.
-8. Escribir pruebas en `test/features/routes_map/`.
+8. Escribir pruebas en `apps/mobile/test/features/routes_map/`.
 9. Registrar la ruta en `app_routes.dart`.
 
 ---

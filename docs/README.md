@@ -2,7 +2,7 @@
 
 Documentación mínima pensada para que una persona o un agente de IA pueda tomar un issue de GitHub, ubicar los archivos y resolverlo sin romper la arquitectura.
 
-Código canónico: `lib/` en la raíz del repositorio.
+Código canónico: `apps/mobile/lib/`.
 
 ## Orden de lectura según la tarea
 
@@ -51,7 +51,7 @@ Verificación: .\scripts\check.ps1 (y .\scripts\verify-activity.ps1 -Tipo <base|
 
 | Archivo | Actualizar cuando | No tocar cuando |
 |---------|-------------------|-----------------|
-| [arquitectura.md](arquitectura.md) | Cambian capas, el árbol de `lib/`, flujos de datos o una decisión arquitectónica confirmada | Solo cambia el aspecto o el texto de una pantalla |
+| [arquitectura.md](arquitectura.md) | Cambian capas, el árbol de `apps/mobile/lib/`, flujos de datos o una decisión arquitectónica confirmada | Solo cambia el aspecto o el texto de una pantalla |
 | [servicios.md](servicios.md) | Cambian integraciones, dependencias en `pubspec`, configuración verificada o el estado de un servicio | El issue no toca backend ni paquetes |
 | [modulos/](modulos/) | Cambian flujos, rutas, reglas de negocio, permisos o archivos clave de la feature | Refactor interno sin cambio de comportamiento documentado |
 | [convenciones.md](convenciones.md) | Cambia alguna convención C-01 a C-12 o el sensor de verificación | El issue ya sigue la convención |
@@ -126,16 +126,18 @@ Entregar al cerrar la tarea, con datos reales y sin relleno:
 ```powershell
 cd transporte-estudiantil-utez
 git checkout develop
-flutter pub get
 .\scripts\setup-local.ps1
+cd apps/mobile
+flutter pub get
 flutter run --dart-define-from-file=env/dev.json
+cd ../..
 git config core.hooksPath .githooks
 .\scripts\check.ps1
 .\scripts\verify-activity.ps1 -Tipo base
 ```
 
-- `env/dev.json` se copia de `env/example.json` y no se versiona. Claves nativas: [arquitectura.md, sección Configuración local](arquitectura.md#configuración-local).
-- Firebase: `USE_FIREBASE=true` solo cuando existan `lib/firebase_options.dart` y `android/app/google-services.json` en local.
+- `apps/mobile/env/dev.json` se copia de `apps/mobile/env/example.json` y no se versiona. Claves nativas: [arquitectura.md, sección Configuración local](arquitectura.md#configuración-local).
+- Firebase: `USE_FIREBASE=true` solo cuando existan `apps/mobile/lib/firebase_options.dart` y `apps/mobile/android/app/google-services.json` en local.
 
 ## Propósito del producto
 
@@ -154,7 +156,7 @@ Trazabilidad con el enunciado: [referencia-dmi.md](referencia-dmi.md). Necesidad
 
 | Archivo o carpeta | Contenido |
 |-------------------|-----------|
-| [arquitectura.md](arquitectura.md) | Capas, árbol de `lib/`, router, Firestore |
+| [arquitectura.md](arquitectura.md) | Capas, árbol de `apps/mobile/lib/`, router, Firestore |
 | [estado.md](estado.md) | Hecho frente a pendiente (Firebase y módulos) |
 | [arquitectura-y-datos/](arquitectura-y-datos/) | Modelo Firestore, reglas, seed |
 | [convenciones.md](convenciones.md) | Convenciones C-01 a C-12, mapa con la plantilla del curso, qué no se iguala |
@@ -175,7 +177,7 @@ Trazabilidad con el enunciado: [referencia-dmi.md](referencia-dmi.md). Necesidad
 | Hanna | Cursor | `auth`, `profile` |
 | David | Cursor | `home`, `trip`, modo sin conexión |
 | Coordinación | Cursor | PR, `verify-activity`, `reservations` |
-| Alison | Claude | `functions/`, emulador, mantenimiento de reglas |
-| Jesús | Claude | `functions/`, `admin-web/`, pagos |
+| Alison | Claude | `apps/firebase/functions/`, emulador, mantenimiento de reglas |
+| Jesús | Claude | `apps/firebase/functions/`, `admin-web/`, pagos |
 
 Los issues de GitHub deben enlazar el módulo en la plantilla (`docs/modulos/...`).

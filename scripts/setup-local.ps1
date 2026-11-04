@@ -4,24 +4,24 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$root = Split-Path -Parent $PSScriptRoot
+$root = Join-Path (Split-Path -Parent $PSScriptRoot) "apps\mobile"
 
 $devJson = Join-Path $root "env\dev.json"
 $exampleJson = Join-Path $root "env\example.json"
 if (-not (Test-Path $devJson)) {
   Copy-Item $exampleJson $devJson
-  Write-Host "Creado env/dev.json desde example.json"
+  Write-Host "Creado apps/mobile/env/dev.json desde example.json"
 } else {
-  Write-Host "env/dev.json ya existe"
+  Write-Host "apps/mobile/env/dev.json ya existe"
 }
 
 $options = Join-Path $root "lib\firebase_options.dart"
 $exampleOptions = Join-Path $root "lib\firebase_options.example.dart"
 if (-not (Test-Path $options)) {
   Copy-Item $exampleOptions $options
-  Write-Host "Creado lib/firebase_options.dart desde plantilla."
+  Write-Host "Creado apps/mobile/lib/firebase_options.dart desde plantilla."
 } else {
-  Write-Host "lib/firebase_options.dart ya existe"
+  Write-Host "apps/mobile/lib/firebase_options.dart ya existe"
 }
 
 if (Test-Path $devJson) {
@@ -29,7 +29,7 @@ if (Test-Path $devJson) {
   if ($raw -match '"USE_FIREBASE"\s*:\s*false') {
     $raw = $raw -replace '"USE_FIREBASE"\s*:\s*false', '"USE_FIREBASE": true'
     Set-Content -Path $devJson -Value $raw -NoNewline -Encoding utf8
-    Write-Host "Actualizado env/dev.json: USE_FIREBASE=true"
+    Write-Host "Actualizado apps/mobile/env/dev.json: USE_FIREBASE=true"
   }
 }
 
@@ -58,7 +58,7 @@ Write-Host "Listo. Pasos manuales si faltan:" -ForegroundColor Cyan
 Write-Host "  dart pub global activate flutterfire_cli"
 Write-Host "  PATH += %LOCALAPPDATA%\Pub\Cache\bin"
 Write-Host "  .\scripts\setup-local.ps1 -RunFlutterfire"
-Write-Host "  flutter run --dart-define-from-file=env/dev.json"
+Write-Host "  cd apps/mobile; flutter run --dart-define-from-file=env/dev.json"
 Write-Host "  docs/estado.md"
 Write-Host ""
 

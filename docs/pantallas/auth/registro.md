@@ -12,7 +12,7 @@ Permite crear una cuenta nueva de estudiante o operador. Tras el registro, la cu
 | Rol | Estudiante y operador |
 | Acceso | Solo sin sesión |
 | Layout | Pantalla de autenticación (sin sidebar) |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 

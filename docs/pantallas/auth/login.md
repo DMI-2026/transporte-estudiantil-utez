@@ -12,7 +12,7 @@ Permite que un usuario existente acceda a su área según su rol (estudiante o o
 | Rol | Estudiante y operador |
 | Acceso | Solo sin sesión (redirige a `/inicio` si ya hay sesión aprobada) |
 | Layout | Pantalla de autenticación (sin sidebar) |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 Si ya hay sesión activa y aprobada, el router redirige al home correspondiente.
 
@@ -20,7 +20,7 @@ Si ya hay sesión activa y aprobada, el router redirige al home correspondiente.
 
 ## Estado de implementación
 
-**Activo** — Implementado con Firebase Auth, `AuthRepositoryImpl`, `AuthSessionCubit` y pruebas en `test/`.
+**Activo** — Implementado con Firebase Auth, `AuthRepositoryImpl`, `AuthSessionCubit` y pruebas en `apps/mobile/test/`.
 
 ---
 
@@ -54,7 +54,7 @@ test/
     └── login_cubit_test.dart         # Pruebas del Cubit
 ```
 
-Dependencias registradas en `lib/src/core/di/injection.dart`.
+Dependencias registradas en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ---
 

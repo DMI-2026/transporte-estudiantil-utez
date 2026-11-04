@@ -22,18 +22,18 @@ Elegir un solo documento según el issue:
 
 | Feature | Ruta | Rol | Estado | Qué cubre |
 |---------|------|-----|--------|-----------|
-| auth | `lib/src/features/auth/` | Estudiante y operador | activo | Registro, acceso, verificación de cuenta, sesión |
-| home | `lib/src/features/home/` | Estudiante | activo | Pantalla de inicio (hoy saludo; después próxima salida) |
-| profile | `lib/src/features/profile/` | Estudiante | stub | Perfil, privacidad, baja de cuenta |
-| routes_map | `lib/src/features/routes_map/` | Estudiante | stub | Consultar rutas y paradas; mapa; ubicación del operador |
-| reservations | `lib/src/features/reservations/` | Estudiante | stub | Reservar asiento |
-| boarding | `lib/src/features/boarding/` | Estudiante | stub | Abordar con QR |
-| trip | `lib/src/features/trip/` | Estudiante | stub | Seguimiento del viaje y tiempo estimado |
-| incidents | `lib/src/features/incidents/` | Estudiante | stub | Reportar incidencias |
-| operator | `lib/src/features/operator/` | Operador | stub | Salidas, ruta, lista de abordaje, QR |
-| admin | `lib/src/features/admin/` | Administrador | stub | Verificación y catálogo; la implementación oficial será el panel web |
+| auth | `apps/mobile/lib/src/features/auth/` | Estudiante y operador | activo | Registro, acceso, verificación de cuenta, sesión |
+| home | `apps/mobile/lib/src/features/home/` | Estudiante | activo | Pantalla de inicio (hoy saludo; después próxima salida) |
+| profile | `apps/mobile/lib/src/features/profile/` | Estudiante | stub | Perfil, privacidad, baja de cuenta |
+| routes_map | `apps/mobile/lib/src/features/routes_map/` | Estudiante | stub | Consultar rutas y paradas; mapa; ubicación del operador |
+| reservations | `apps/mobile/lib/src/features/reservations/` | Estudiante | stub | Reservar asiento |
+| boarding | `apps/mobile/lib/src/features/boarding/` | Estudiante | stub | Abordar con QR |
+| trip | `apps/mobile/lib/src/features/trip/` | Estudiante | stub | Seguimiento del viaje y tiempo estimado |
+| incidents | `apps/mobile/lib/src/features/incidents/` | Estudiante | stub | Reportar incidencias |
+| operator | `apps/mobile/lib/src/features/operator/` | Operador | stub | Salidas, ruta, lista de abordaje, QR |
+| admin | `apps/mobile/lib/src/features/admin/` | Administrador | stub | Verificación y catálogo; la implementación oficial será el panel web |
 
-Al asignar un issue: localizar la fila, abrir el documento del rol o funcionalidad, buscar en `lib/src/features/<nombre>/` y repasar [reglas-desarrollo.md](../reglas-desarrollo.md).
+Al asignar un issue: localizar la fila, abrir el documento del rol o funcionalidad, buscar en `apps/mobile/lib/src/features/<nombre>/` y repasar [reglas-desarrollo.md](../reglas-desarrollo.md).
 
 ## Estados de dominio
 

@@ -12,7 +12,7 @@ Muestra el estado de verificación de la cuenta tras el registro. La cuenta qued
 | Rol | Estudiante y operador |
 | Acceso | Cuenta pendiente o rechazada |
 | Layout | Pantalla de autenticación (sin sidebar) |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 Las cuentas aprobadas no pueden acceder a esta pantalla; redirigen a `/inicio`.
 

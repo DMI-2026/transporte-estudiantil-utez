@@ -6,7 +6,7 @@ Estados: **Hecho** (en el repositorio y verificado) · **Local** (configurado en
 
 Objetivo del issue: definir la arquitectura Flutter y los servicios de Firebase y externos, y documentarlos.
 
-Estado en el repositorio: arquitectura base hecha; backend Firestore y Storage hecho en `firebase/`; feature `auth` completo con repositorio, Cubits y sesión; las demás features siguen pendientes.
+Estado en el repositorio: arquitectura base hecha; backend Firestore y Storage hecho en `apps/firebase/`; feature `auth` completo con repositorio, Cubits y sesión; las demás features siguen pendientes.
 
 | Decisión | Elección | Estado |
 |----------|----------|--------|
@@ -23,9 +23,9 @@ Estado en el repositorio: arquitectura base hecha; backend Firestore y Storage h
 | Administración | Panel web sobre el mismo Firebase | Pendiente (carpeta `admin-web/`) |
 | Estado de UI | `flutter_bloc` + `UiState` | Hecho (auth y core) |
 
-Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `pubspec.yaml` resuelven con `flutter pub get`. Storage, Functions y Maps en producción requieren el plan Blaze de Firebase.
+Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `apps/mobile/pubspec.yaml` resuelven con `flutter pub get`. Storage, Functions y Maps en producción requieren el plan Blaze de Firebase.
 
-## Dependencias Flutter (`pubspec.yaml`)
+## Dependencias Flutter (`apps/mobile/pubspec.yaml`)
 
 | Paquete | Versión declarada | Estado |
 |---------|-------------------|--------|
@@ -56,10 +56,10 @@ Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `pubspec.
 | Firestore | Hecho | Reglas, índices y datos demo en la nube; repositorio de `usuarios` en la app, los demás pendientes |
 | Authentication | Hecho en la app; Local en consola | Habilitar el proveedor correo y contraseña en la consola de Firebase |
 | Storage | Hecho | Bucket `utebus-4435b.firebasestorage.app`; `credenciales/{uid}/`, `documentacion/publico/`, `documentacion/{uid}/`, `reportes/{uid}/` |
-| Cloud Functions | Pendiente | Pagos, QR, notificaciones; carpeta `functions/` |
-| Emuladores | Pendiente | Carpeta `firebase/tests/` no existe aún; pruebas de reglas contra emulador local pendientes |
+| Cloud Functions | Pendiente | Pagos, QR, notificaciones; carpeta `apps/firebase/functions/` |
+| Emuladores | Pendiente | Carpeta `apps/firebase/tests/` no existe aún; pruebas de reglas contra emulador local pendientes |
 
-Nunca commitear: `google-services.json`, `GoogleService-Info.plist`, `lib/firebase_options.dart`, `env/dev.json`, claves de Mercado Pago o Google Routes, service accounts.
+Nunca commitear: `google-services.json`, `GoogleService-Info.plist`, `apps/mobile/lib/firebase_options.dart`, `apps/mobile/env/dev.json`, claves de Mercado Pago o Google Routes, service accounts.
 
 ## APIs externas (pendientes)
 
@@ -71,7 +71,7 @@ Nunca commitear: `google-services.json`, `GoogleService-Info.plist`, `lib/fireba
 
 El cliente Flutter no marca pagos como aprobados ni incluye llaves de Routes o Mercado Pago.
 
-## Servicios de dispositivo (pendientes, en `lib/src/core/services/`)
+## Servicios de dispositivo (pendientes, en `apps/mobile/lib/src/core/services/`)
 
 Un servicio por capacidad, con interfaz para poder sustituirlo por un fake en pruebas.
 

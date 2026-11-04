@@ -1,6 +1,6 @@
 # Arquitectura
 
-Describe el código actual de `lib/`. Las decisiones de servicios externos vienen del issue #46.
+Describe el código actual de `apps/mobile/lib/`. Las decisiones de servicios externos vienen del issue #46.
 
 ## Capas (feature-first)
 
@@ -9,13 +9,13 @@ presentation (widgets + Cubit)  →  domain (contratos)  →  data (datasources 
 ```
 
 - Regla: los widgets y Cubits de `presentation/` no importan `cloud_firestore`, `firebase_auth`, `http` ni SDKs de mapas.
-- Inyección de dependencias: `lib/src/core/di/injection.dart` con `get_it`.
-- Estados de pantalla: `lib/src/core/widgets/ui_state.dart` (`UiState`) y `UiStateView`; errores y vacíos con `MensajeEstado`.
+- Inyección de dependencias: `apps/mobile/lib/src/core/di/injection.dart` con `get_it`.
+- Estados de pantalla: `apps/mobile/lib/src/core/widgets/ui_state.dart` (`UiState`) y `UiStateView`; errores y vacíos con `MensajeEstado`.
 - Estado de la app: `flutter_bloc`. La sesión global es `AuthSessionCubit`; cada formulario tiene su propio Cubit.
 
 Nota: `core/services/` sigue vacío; aquí irán `CamaraService`, `UbicacionService`, etc. La decisión vigente del issue #46 (ver [servicios.md](servicios.md)) es Google Maps SDK y Google Routes API, ambos pendientes.
 
-## Árbol real de `lib/`
+## Árbol real de `apps/mobile/lib/`
 
 ```text
 lib/
@@ -51,9 +51,9 @@ Cada feature tiene carpetas `domain/`, `data/` y `presentation/` (las stubs solo
 
 | Archivo | Contenido |
 |---------|-----------|
-| `lib/src/core/router/app_routes.dart` | `/cargando`, `/login`, `/registro`, `/verificacion`, `/inicio` |
-| `lib/src/core/router/app_router.dart` | `GoRouter` con redirección según `AuthSessionState` |
-| `lib/src/core/router/stream_listenable.dart` | Adapta el stream del Cubit a `refreshListenable` |
+| `apps/mobile/lib/src/core/router/app_routes.dart` | `/cargando`, `/login`, `/registro`, `/verificacion`, `/inicio` |
+| `apps/mobile/lib/src/core/router/app_router.dart` | `GoRouter` con redirección según `AuthSessionState` |
+| `apps/mobile/lib/src/core/router/stream_listenable.dart` | Adapta el stream del Cubit a `refreshListenable` |
 
 Redirecciones: sin sesión solo se permiten login y registro; cuenta pendiente o rechazada va a verificación; cuenta aprobada entra a inicio y no puede volver a las pantallas de auth. Las rutas específicas por rol (operador) están pendientes.
 
@@ -63,11 +63,11 @@ Redirecciones: sin sesión solo se permiten login y registro; cuenta pendiente o
 main → configureDependencies() → FirebaseBootstrap.initialize() → runApp(TransporteApp)
 ```
 
-`FirebaseBootstrap` (`lib/src/core/firebase/firebase_bootstrap.dart`) lee `USE_FIREBASE` desde `--dart-define` o `env/*.json`. Si es `false`, no llama a `Firebase.initializeApp`; `injection.dart` registra entonces `UnavailableAuthRepository`, que responde con un fallo claro y hace que el login muestre un aviso.
+`FirebaseBootstrap` (`apps/mobile/lib/src/core/firebase/firebase_bootstrap.dart`) lee `USE_FIREBASE` desde `--dart-define` o `apps/mobile/env/*.json`. Si es `false`, no llama a `Firebase.initializeApp`; `injection.dart` registra entonces `UnavailableAuthRepository`, que responde con un fallo claro y hace que el login muestre un aviso.
 
 ## Datos (Firestore)
 
-Reglas en `firebase/firestore.rules`; campos en [arquitectura-y-datos/modelo-firestore.md](arquitectura-y-datos/modelo-firestore.md).
+Reglas en `apps/firebase/firestore.rules`; campos en [arquitectura-y-datos/modelo-firestore.md](arquitectura-y-datos/modelo-firestore.md).
 
 | Colección | Id | Notas |
 |-----------|----|-------|
@@ -84,8 +84,8 @@ El perfil (permanente) se separa de reservas y pagos (operación).
 ## Backend en el repositorio y pendiente
 
 ```text
-firebase/firestore.rules · firestore.indexes.json · storage.rules   # hecho
-functions/          # TypeScript: pagos, QR, notificaciones (pendiente)
+apps/firebase/firestore.rules · firestore.indexes.json · storage.rules   # hecho
+apps/firebase/functions/          # TypeScript: pagos, QR, notificaciones (pendiente)
 admin-web/          # panel de administración (pendiente)
 ```
 
@@ -93,13 +93,13 @@ admin-web/          # panel de administración (pendiente)
 
 | Archivo | Versionado | Uso |
 |---------|------------|-----|
-| `env/example.json` | Sí | Plantilla de `USE_FIREBASE` |
-| `env/dev.json` | No | Defines de arranque |
-| `android/local.properties` | No | `MAPS_API_KEY` (futuro) |
-| `android/app/google-services.json` | No | Firebase para Android |
-| `lib/firebase_options.dart` | No | Generado por FlutterFire |
+| `apps/mobile/env/example.json` | Sí | Plantilla de `USE_FIREBASE` |
+| `apps/mobile/env/dev.json` | No | Defines de arranque |
+| `apps/mobile/android/local.properties` | No | `MAPS_API_KEY` (futuro) |
+| `apps/mobile/android/app/google-services.json` | No | Firebase para Android |
+| `apps/mobile/lib/firebase_options.dart` | No | Generado por FlutterFire |
 
-Proyecto Firebase `utebus-4435b` (`.firebaserc` y `firebase.json` en la raíz). Detalle del backend: [arquitectura-y-datos/README.md](arquitectura-y-datos/README.md). Qué está hecho y qué falta: [estado.md](estado.md).
+Proyecto Firebase `utebus-4435b` (`.firebaserc` y `firebase.json` en `apps/firebase/`). Detalle del backend: [arquitectura-y-datos/README.md](arquitectura-y-datos/README.md). Qué está hecho y qué falta: [estado.md](estado.md).
 
 ## Responsividad
 
@@ -107,4 +107,4 @@ Tema Material 3 en `AppTheme` con `google_fonts` (Source Sans 3). Al agregar pan
 
 ## Repositorio
 
-Trabajar solo en `lib/` de la raíz.
+Trabajar solo en `apps/mobile/lib/`.

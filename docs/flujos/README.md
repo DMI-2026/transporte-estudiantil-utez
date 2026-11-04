@@ -2,7 +2,7 @@
 
 Esta carpeta documenta los **flujos de navegación y de negocio** de la app Flutter: recorridos del usuario entre pantallas, decisiones del router, guards y redirecciones según el estado de sesión y el rol.
 
-Código canónico: `lib/src/core/router/app_router.dart` (GoRouter con redirección por `AuthSessionState`).
+Código canónico: `apps/mobile/lib/src/core/router/app_router.dart` (GoRouter con redirección por `AuthSessionState`).
 
 ---
 

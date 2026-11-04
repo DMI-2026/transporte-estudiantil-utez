@@ -1,7 +1,7 @@
 # Suite mínima local (enunciado DMI) — extender cuando haya más tests
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-Set-Location $root
+Set-Location (Join-Path $root "apps\mobile")
 
 Write-Host "test.ps1: analyze + unit/widget + reglas (si existen)"
 flutter analyze
@@ -15,7 +15,7 @@ if (Test-Path "integration_test") {
     if ($LASTEXITCODE -ne 0) { exit 1 }
 }
 
-$rulesTest = Join-Path $root "firebase\tests"
+$rulesTest = Join-Path $root "apps\firebase\tests"
 if (Test-Path $rulesTest) {
     Push-Location $rulesTest
     npm test 2>$null

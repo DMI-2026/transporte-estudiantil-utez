@@ -12,7 +12,7 @@ Permite al estudiante crear y consultar reportes de incidencias, con foto opcion
 | Rol | Estudiante |
 | Acceso | Solo con sesión aprobada |
 | Layout | Pantalla de formulario y lista de reportes |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -70,7 +70,7 @@ test/
 5. Crear `IncidentsPage` con formulario y lista de reportes.
 6. Agregar permiso de cámara o galería en `AndroidManifest.xml` e `Info.plist`.
 7. Registrar dependencias en `injection.dart`.
-8. Escribir pruebas en `test/features/incidents/`.
+8. Escribir pruebas en `apps/mobile/test/features/incidents/`.
 9. Registrar la ruta en `app_routes.dart`.
 
 ---

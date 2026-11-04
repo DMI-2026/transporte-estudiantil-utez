@@ -44,10 +44,10 @@ Recorrido del operador desde que inicia sesión hasta completar un recorrido: ve
 
 ## Archivos clave
 
-- `lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global y rol.
-- `lib/src/core/router/app_routes.dart` — Rutas del operador.
-- `lib/src/features/operator/presentation/` — Cubit del operador (stub).
-- `lib/src/features/operator/data/` — Repositorio del operador (stub).
+- `apps/mobile/lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global y rol.
+- `apps/mobile/lib/src/core/router/app_routes.dart` — Rutas del operador.
+- `apps/mobile/lib/src/features/operator/presentation/` — Cubit del operador (stub).
+- `apps/mobile/lib/src/features/operator/data/` — Repositorio del operador (stub).
 
 ---
 
