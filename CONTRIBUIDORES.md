@@ -1,6 +1,6 @@
 # Contribuidores y control de cambios · Transporte estudiantil UTEZ
 
-Integrantes de la organización de GitHub **DMI-2026** (curso Desarrollo Móvil Integral) y reglas de Git. Las convenciones citadas como C-01, C-02, etc. están explicadas en [docs/convenciones.md](docs/convenciones.md).
+Integrantes de la organización de GitHub **DMI-2026** (curso Desarrollo Móvil Integral) y reglas de Git. Las convenciones citadas como C-01, C-02, etc. están explicadas en [docs/06-convenciones.md](docs/06-convenciones.md).
 
 **Docente / Coordinador:** [@carsimax](https://github.com/carsimax) · Maximiliano Carsi
 

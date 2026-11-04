@@ -13,7 +13,7 @@ presentation (widgets + Cubit)  →  domain (contratos)  →  data (datasources 
 - Estados de pantalla: `apps/mobile/lib/src/core/widgets/ui_state.dart` (`UiState`) y `UiStateView`; errores y vacíos con `MensajeEstado`.
 - Estado de la app: `flutter_bloc`. La sesión global es `AuthSessionCubit`; cada formulario tiene su propio Cubit.
 
-Nota: `core/services/` sigue vacío; aquí irán `CamaraService`, `UbicacionService`, etc. La decisión vigente del issue #46 (ver [servicios.md](servicios.md)) es Google Maps SDK y Google Routes API, ambos pendientes.
+Nota: `core/services/` sigue vacío; aquí irán `CamaraService`, `UbicacionService`, etc. La decisión vigente del issue #46 (ver [03-integraciones.md](03-integraciones.md)) es Google Maps SDK y Google Routes API, ambos pendientes.
 
 ## Árbol real de `apps/mobile/lib/`
 
@@ -67,7 +67,7 @@ main → configureDependencies() → FirebaseBootstrap.initialize() → runApp(T
 
 ## Datos (Firestore)
 
-Reglas en `apps/firebase/firestore.rules`; campos en [arquitectura-y-datos/modelo-firestore.md](arquitectura-y-datos/modelo-firestore.md).
+Reglas en `apps/firebase/firestore.rules`; campos en [05-datos.md](05-datos.md).
 
 | Colección | Id | Notas |
 |-----------|----|-------|

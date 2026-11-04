@@ -10,7 +10,7 @@ Este repositorio sigue el **Protocolo de tarea** de `docs/README.md` (diez pasos
 
 - Convenciones de código, capas Flutter y seguridad: `docs/reglas-desarrollo.md`.
 - Módulo afectado por el issue: `docs/modulos/README.md` te lleva al documento del rol (estudiante, operador, administrador) o de la funcionalidad transversal (reservas, rutas, pagos, QR).
-- Integraciones y paquetes: `docs/servicios.md`. Los estados se expresan con palabras (Hecho, Local, Pendiente, Propuesto, No usar); su significado está en `docs/README.md`, sección Estados de decisión.
+- Integraciones y paquetes: `docs/03-integraciones.md`. Los estados se expresan con palabras (Hecho, Local, Pendiente, Propuesto, No usar); su significado está en `docs/README.md`, sección Estados de decisión.
 
 ## Límites del trabajo
 

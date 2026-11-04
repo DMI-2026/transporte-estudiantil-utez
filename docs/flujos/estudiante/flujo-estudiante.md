@@ -76,15 +76,15 @@ Recorrido del estudiante desde que inicia sesión hasta completar un viaje: cons
 
 ## Documentación relacionada
 
-- [../pantallas/home.md](../pantallas/home.md)
-- [../pantallas/routes_map.md](../pantallas/routes_map.md)
-- [../pantallas/reservations.md](../pantallas/reservations.md)
-- [../pantallas/boarding.md](../pantallas/boarding.md)
-- [../pantallas/trip.md](../pantallas/trip.md)
-- [../pantallas/profile.md](../pantallas/profile.md)
-- [../pantallas/incidents.md](../pantallas/incidents.md)
-- [../modulos/estudiante.md](../modulos/estudiante.md)
-- [../modulos/funcionalidades/reservas.md](../modulos/funcionalidades/reservas.md)
-- [../modulos/funcionalidades/qr.md](../modulos/funcionalidades/qr.md)
-- [../modulos/funcionalidades/pagos.md](../modulos/funcionalidades/pagos.md)
-- [../referencia-dmi.md](../referencia-dmi.md) — Historias de usuario del estudiante.
+- [../../pantallas/home.md](../../pantallas/home.md)
+- [../../pantallas/routes_map.md](../../pantallas/routes_map.md)
+- [../../pantallas/reservations.md](../../pantallas/reservations.md)
+- [../../pantallas/boarding.md](../../pantallas/boarding.md)
+- [../../pantallas/trip.md](../../pantallas/trip.md)
+- [../../pantallas/profile.md](../../pantallas/profile.md)
+- [../../pantallas/incidents.md](../../pantallas/incidents.md)
+- [../../modulos/estudiante.md](../../modulos/estudiante.md)
+- [../../modulos/funcionalidades/reservas.md](../../modulos/funcionalidades/reservas.md)
+- [../../modulos/funcionalidades/qr.md](../../modulos/funcionalidades/qr.md)
+- [../../modulos/funcionalidades/pagos.md](../../modulos/funcionalidades/pagos.md)
+- [../../referencia-dmi.md](../../referencia-dmi.md) — Historias de usuario del estudiante.

@@ -81,4 +81,4 @@ test/
 - [../estado.md](../estado.md) — Feature `routes_map`: stub.
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección routes_map.
 - [../modulos/funcionalidades/rutas.md](../modulos/funcionalidades/rutas.md) — Reglas de rutas y paradas.
-- [../servicios.md](../servicios.md) — Google Maps SDK y Google Routes API (pendientes).
+- [../03-integraciones.md](../03-integraciones.md) — Google Maps SDK y Google Routes API (pendientes).

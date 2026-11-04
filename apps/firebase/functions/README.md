@@ -95,7 +95,7 @@ final initPoint = result.data['initPoint'] as String;
 
 ## Documentación relacionada
 
-- Arquitectura general: `../../../docs/arquitectura.md`
-- Modelos Firestore: `../../../docs/arquitectura-y-datos/modelo-firestore.md`
+- Arquitectura general: `../../../docs/04-arquitectura.md`
+- Modelos Firestore: `../../../docs/05-datos.md`
 - Reglas seguridad: `../../../docs/arquitectura-y-datos/reglas-seguridad.md`
-- Servicios/integraciones: `../../../docs/servicios.md`
+- Servicios/integraciones: `../../../docs/03-integraciones.md`

@@ -9,10 +9,10 @@ Código canónico: `apps/mobile/lib/`.
 | Paso | Documento | Cuándo leerlo |
 |------|-----------|---------------|
 | 1 | Este README (protocolo y cierre) | Siempre |
-| 2 | [reglas-desarrollo.md](reglas-desarrollo.md) y [convenciones.md](convenciones.md) | Siempre: capas Flutter, Git y sensor de verificación |
+| 2 | [reglas-desarrollo.md](reglas-desarrollo.md) y [06-convenciones.md](06-convenciones.md) | Siempre: capas Flutter, Git y sensor de verificación |
 | 3 | [modulos/README.md](modulos/README.md) | Cuando el issue toca una feature o un rol |
-| 4 | [servicios.md](servicios.md) | Cuando toca Firebase, paquetes o APIs externas |
-| 5 | [arquitectura.md](arquitectura.md) | Cuando cambia la estructura de carpetas, rutas o datos |
+| 4 | [03-integraciones.md](03-integraciones.md) | Cuando toca Firebase, paquetes o APIs externas |
+| 5 | [04-arquitectura.md](04-arquitectura.md) | Cuando cambia la estructura de carpetas, rutas o datos |
 | 6 | [estado.md](estado.md) | Para saber qué está hecho y qué bloquea una feature |
 | 7 | [referencia-dmi.md](referencia-dmi.md) | Cuando el issue cita historias de usuario o requisitos del enunciado |
 | 8 | [pantallas/](pantallas/README.md) | Cuando el issue toca una pantalla o widget específico |
@@ -39,7 +39,7 @@ Obligatorio para Cursor y Claude (entrada: [AGENTS.md](../AGENTS.md) y [CLAUDE.m
 ```markdown
 Issue: #N — <título>
 Rama: feat/N-slug
-Docs: docs/modulos/<rol | funcionalidades/...> y docs/servicios.md si aplica
+Docs: docs/modulos/<rol | funcionalidades/...> y docs/03-integraciones.md si aplica
 Alcance incluido: <lista>
 Alcance excluido: <lista>
 Archivos permitidos: <rutas>
@@ -51,10 +51,10 @@ Verificación: .\scripts\check.ps1 (y .\scripts\verify-activity.ps1 -Tipo <base|
 
 | Archivo | Actualizar cuando | No tocar cuando |
 |---------|-------------------|-----------------|
-| [arquitectura.md](arquitectura.md) | Cambian capas, el árbol de `apps/mobile/lib/`, flujos de datos o una decisión arquitectónica confirmada | Solo cambia el aspecto o el texto de una pantalla |
-| [servicios.md](servicios.md) | Cambian integraciones, dependencias en `pubspec`, configuración verificada o el estado de un servicio | El issue no toca backend ni paquetes |
+| [04-arquitectura.md](04-arquitectura.md) | Cambian capas, el árbol de `apps/mobile/lib/`, flujos de datos o una decisión arquitectónica confirmada | Solo cambia el aspecto o el texto de una pantalla |
+| [03-integraciones.md](03-integraciones.md) | Cambian integraciones, dependencias en `pubspec`, configuración verificada o el estado de un servicio | El issue no toca backend ni paquetes |
 | [modulos/](modulos/) | Cambian flujos, rutas, reglas de negocio, permisos o archivos clave de la feature | Refactor interno sin cambio de comportamiento documentado |
-| [convenciones.md](convenciones.md) | Cambia alguna convención C-01 a C-12 o el sensor de verificación | El issue ya sigue la convención |
+| [06-convenciones.md](06-convenciones.md) | Cambia alguna convención C-01 a C-12 o el sensor de verificación | El issue ya sigue la convención |
 | [reglas-desarrollo.md](reglas-desarrollo.md) | Cambian convenciones aprobadas por el equipo | Una pantalla sigue una regla ya escrita |
 | Este README | Cambia el procedimiento general, el arranque o el reparto del equipo | Tarea puntual ya cubierta en el módulo |
 | [referencia-dmi.md](referencia-dmi.md) | Se corrige la trazabilidad con el enunciado (issue de alcance) | La implementación ya corresponde a una fila existente |
@@ -136,7 +136,7 @@ git config core.hooksPath .githooks
 .\scripts\verify-activity.ps1 -Tipo base
 ```
 
-- `apps/mobile/env/dev.json` se copia de `apps/mobile/env/example.json` y no se versiona. Claves nativas: [arquitectura.md, sección Configuración local](arquitectura.md#configuración-local).
+- `apps/mobile/env/dev.json` se copia de `apps/mobile/env/example.json` y no se versiona. Claves nativas: [04-arquitectura.md, sección Configuración local](04-arquitectura.md#configuración-local).
 - Firebase: `USE_FIREBASE=true` solo cuando existan `apps/mobile/lib/firebase_options.dart` y `apps/mobile/android/app/google-services.json` en local.
 
 ## Propósito del producto
@@ -156,12 +156,12 @@ Trazabilidad con el enunciado: [referencia-dmi.md](referencia-dmi.md). Necesidad
 
 | Archivo o carpeta | Contenido |
 |-------------------|-----------|
-| [arquitectura.md](arquitectura.md) | Capas, árbol de `apps/mobile/lib/`, router, Firestore |
+| [04-arquitectura.md](04-arquitectura.md) | Capas, árbol de `apps/mobile/lib/`, router, Firestore |
 | [estado.md](estado.md) | Hecho frente a pendiente (Firebase y módulos) |
 | [arquitectura-y-datos/](arquitectura-y-datos/) | Modelo Firestore, reglas, seed |
-| [convenciones.md](convenciones.md) | Convenciones C-01 a C-12, mapa con la plantilla del curso, qué no se iguala |
+| [06-convenciones.md](06-convenciones.md) | Convenciones C-01 a C-12, mapa con la plantilla del curso, qué no se iguala |
 | [reglas-desarrollo.md](reglas-desarrollo.md) | Reutilización, seguridad, PR |
-| [servicios.md](servicios.md) | Integraciones hechas y pendientes (issue #46) |
+| [03-integraciones.md](03-integraciones.md) | Integraciones hechas y pendientes (issue #46) |
 | [modulos/](modulos/) | Features por rol y funcionalidades transversales |
 | [referencia-dmi.md](referencia-dmi.md) | Trazabilidad con funcionalidades, permisos e historias del enunciado |
 | [ia/bitacora.md](ia/bitacora.md) | Decisiones técnicas relevantes del curso |

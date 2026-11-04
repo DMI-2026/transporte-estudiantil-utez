@@ -10,6 +10,6 @@ Pago digital y confirmación del asiento con Mercado Pago Checkout Pro y webhook
 
 ## Secretos
 
-Las claves de Mercado Pago y la service account van en el entorno de Cloud Functions o de CI; nunca en el repositorio. Ver [servicios.md](../../servicios.md).
+Las claves de Mercado Pago y la service account van en el entorno de Cloud Functions o de CI; nunca en el repositorio. Ver [03-integraciones.md](../../03-integraciones.md).
 
 Flutter solo maneja el deep link de retorno del checkout. No se confía en parámetros de la URL como prueba de pago.

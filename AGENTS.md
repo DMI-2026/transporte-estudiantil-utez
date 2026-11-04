@@ -14,8 +14,8 @@ Normalmente la tarea llega como un issue de GitHub pegado en el chat. Sigue este
 2. Lee [docs/reglas-desarrollo.md](docs/reglas-desarrollo.md) para capas Flutter, nombres de Firestore y seguridad.
 3. Abre solo la documentación que el issue necesite:
    - [docs/modulos/README.md](docs/modulos/README.md) para ubicar el módulo por rol o funcionalidad.
-   - [docs/servicios.md](docs/servicios.md) si el issue toca Firebase, paquetes o APIs externas.
-   - [docs/arquitectura.md](docs/arquitectura.md) si cambia la estructura de carpetas o el modelo de datos.
+   - [docs/03-integraciones.md](docs/03-integraciones.md) si el issue toca Firebase, paquetes o APIs externas.
+   - [docs/04-arquitectura.md](docs/04-arquitectura.md) si cambia la estructura de carpetas o el modelo de datos.
    - [docs/referencia-dmi.md](docs/referencia-dmi.md) si el issue cita historias de usuario o requisitos del enunciado.
 
 ## Reglas que no se negocian
@@ -33,5 +33,5 @@ Normalmente la tarea llega como un issue de GitHub pegado en el chat. Sigue este
 
 ## Dónde están las demás reglas
 
-- Convenciones de Git, commits y organización: [docs/convenciones.md](docs/convenciones.md).
+- Convenciones de Git, commits y organización: [docs/06-convenciones.md](docs/06-convenciones.md).
 - Reglas específicas de Cursor por carpeta: [.cursor/rules/](.cursor/rules/).

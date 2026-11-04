@@ -64,9 +64,9 @@ Recorrido del operador desde que inicia sesión hasta completar un recorrido: ve
 
 ## Documentación relacionada
 
-- [../pantallas/operator.md](../pantallas/operator.md)
-- [../modulos/operador.md](../modulos/operador.md)
-- [../modulos/funcionalidades/qr.md](../modulos/funcionalidades/qr.md)
-- [../modulos/funcionalidades/reservas.md](../modulos/funcionalidades/reservas.md)
-- [../servicios.md](../servicios.md) — Cámara, ubicación, QR (pendientes).
-- [../referencia-dmi.md](../referencia-dmi.md) — Historias de usuario del operador.
+- [../../pantallas/operator.md](../../pantallas/operator.md)
+- [../../modulos/operador.md](../../modulos/operador.md)
+- [../../modulos/funcionalidades/qr.md](../../modulos/funcionalidades/qr.md)
+- [../../modulos/funcionalidades/reservas.md](../../modulos/funcionalidades/reservas.md)
+- [../../03-integraciones.md](../../03-integraciones.md) — Cámara, ubicación, QR (pendientes).
+- [../../referencia-dmi.md](../../referencia-dmi.md) — Historias de usuario del operador.

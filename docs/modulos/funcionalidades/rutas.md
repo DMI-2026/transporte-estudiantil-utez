@@ -16,4 +16,4 @@ Feature: `apps/mobile/lib/src/features/routes_map/`. Estado: pendiente. Cubre co
 
 - Transmite su ubicación mientras la salida está en `enCurso`; ver [operador.md](../operador.md).
 
-Integración con Google Maps: [servicios.md](../../servicios.md).
+Integración con Google Maps: [03-integraciones.md](../../03-integraciones.md).

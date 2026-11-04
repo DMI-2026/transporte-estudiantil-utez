@@ -3,7 +3,7 @@
 ## Antes de abrir un issue de feature
 
 1. Leer [estado.md](../estado.md) para saber qué está hecho en Firebase y qué falta en Flutter.
-2. Tener la configuración local de Firebase si el issue toca red: [arquitectura.md, sección Configuración local](../arquitectura.md#configuración-local).
+2. Tener la configuración local de Firebase si el issue toca red: [04-arquitectura.md, sección Configuración local](../04-arquitectura.md#configuración-local).
 3. El feature `auth` ya está hecho y es la referencia de estructura, pruebas y fakes. Sin sesión no aplican las reglas de negocio de Firestore.
 
 Elegir un solo documento según el issue:

@@ -79,4 +79,4 @@ test/
 - [../estado.md](../estado.md) — Feature `operator`: stub.
 - [../modulos/operador.md](../modulos/operador.md) — Módulo operador.
 - [../modulos/funcionalidades/qr.md](../modulos/funcionalidades/qr.md) — Validación de abordaje.
-- [../servicios.md](../servicios.md) — Ubicación, cámara y QR (pendientes).
+- [../03-integraciones.md](../03-integraciones.md) — Ubicación, cámara y QR (pendientes).
