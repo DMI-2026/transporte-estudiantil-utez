@@ -4,7 +4,7 @@ Este archivo es el punto de entrada para cualquier agente que trabaje en este re
 
 ## Qué es este proyecto
 
-App Flutter de transporte estudiantil para la UTEZ (roles estudiante y operador) con backend en Firebase (proyecto `utebus-4435b`). El panel de administración será una web aparte, aún pendiente. Todo el código Flutter canónico está en `lib/`.
+App Flutter de transporte estudiantil para la UTEZ (roles estudiante y operador) con backend en Firebase (proyecto `utebus-4435b`). El panel de administración será una web aparte, aún pendiente. Todo el código Flutter canónico está en `apps/mobile/lib/`.
 
 ## Cómo empezar una tarea
 
@@ -23,7 +23,7 @@ Normalmente la tarea llega como un issue de GitHub pegado en el chat. Sigue este
 - El único criterio de "listo" es `.\scripts\check.ps1` (analyze + test). El hook pre-commit lo ejecuta. Nunca uses `--no-verify`.
 - Diff mínimo: implementa solo lo que pide el issue. No refactorices ni agregues dependencias que nadie pidió.
 - No reviertas trabajo del usuario ni borres archivos fuera del alcance.
-- Nunca commitees `google-services.json`, `GoogleService-Info.plist`, `lib/firebase_options.dart`, `env/dev.json` ni claves de Mercado Pago o Google Routes.
+- Nunca commitees `google-services.json`, `GoogleService-Info.plist`, `apps/mobile/lib/firebase_options.dart`, `apps/mobile/env/dev.json` ni claves de Mercado Pago o Google Routes.
 - El cliente Flutter nunca marca un pago como aprobado ni escribe el secreto del QR; eso es trabajo de Cloud Functions.
 
 ## Cómo cerrar una tarea

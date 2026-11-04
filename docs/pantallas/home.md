@@ -12,7 +12,7 @@ Pantalla principal del estudiante tras iniciar sesión. Muestra saludo y permite
 | Rol | Estudiante (cuenta aprobada) |
 | Acceso | Solo con sesión aprobada |
 | Layout | Pantalla con barra superior y contenido principal |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 

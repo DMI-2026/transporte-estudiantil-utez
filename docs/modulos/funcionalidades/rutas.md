@@ -1,6 +1,6 @@
 # Funcionalidad: rutas y mapa
 
-Feature: `lib/src/features/routes_map/`. Estado: pendiente. Cubre consultar rutas y paradas, y seguir la combi en el mapa.
+Feature: `apps/mobile/lib/src/features/routes_map/`. Estado: pendiente. Cubre consultar rutas y paradas, y seguir la combi en el mapa.
 
 ## Datos
 

@@ -10,7 +10,7 @@ Protección del trabajo: no revertir cambios ajenos al issue, no borrar archivos
 
 ## Reutilización
 
-- Extender `lib/src/core/` (tema, router, logger, inyección de dependencias) antes de crear utilidades paralelas.
+- Extender `apps/mobile/lib/src/core/` (tema, router, logger, inyección de dependencias) antes de crear utilidades paralelas.
 - Las pantallas nuevas van dentro de su feature (`domain/`, `data/`, `presentation/`); nada de lógica en `main.dart`.
 - Tema: `AppColors`, `AppSpacing`, `AppRadii`, `AppTheme`. No usar colores hexadecimales sueltos salvo excepción documentada.
 - Toda pantalla que carga datos remotos usa `UiState` + `UiStateView` y muestra errores o vacíos con `MensajeEstado`.
@@ -30,7 +30,7 @@ Protección del trabajo: no revertir cambios ajenos al issue, no borrar archivos
 | domain | Entidades, contratos de repositorio, validadores | Widgets de Flutter, SDK de Firebase |
 | data | Datasources, mappers, implementación del repositorio | `BuildContext` |
 
-Registrar las dependencias nuevas en `lib/src/core/di/injection.dart`.
+Registrar las dependencias nuevas en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ## Estado de UI
 
@@ -73,7 +73,7 @@ Registrar las dependencias nuevas en `lib/src/core/di/injection.dart`.
 
 El único comando de "listo" (convención C-04) es `.\scripts\check.ps1`. El hook pre-commit lo ejecuta (`git config core.hooksPath .githooks`). `.\scripts\verify-activity.ps1` es un extra para cerrar issues y no lo sustituye.
 
-Cada clase con lógica (repositorio, Cubit, mapper, validador) tiene su prueba en `test/`, espejo de `lib/`, usando los fakes de `test/fakes/`.
+Cada clase con lógica (repositorio, Cubit, mapper, validador) tiene su prueba en `apps/mobile/test/`, espejo de `apps/mobile/lib/`, usando los fakes de `apps/mobile/test/fakes/`.
 
 ## Permisos del dispositivo
 

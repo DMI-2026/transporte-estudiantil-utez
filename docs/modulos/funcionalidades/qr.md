@@ -4,7 +4,7 @@ Estado: pendiente. Features involucradas: `operator` (muestra el QR) y `boarding
 
 ## Almacenamiento
 
-- El secreto del QR vive en el documento `salidas/{salidaId}/privado/qr`. Lo lee el operador asignado o el administrador; la app del estudiante no lo lee y ningún cliente lo escribe (regla `match /privado/{docId}` en `firebase/firestore.rules`).
+- El secreto del QR vive en el documento `salidas/{salidaId}/privado/qr`. Lo lee el operador asignado o el administrador; la app del estudiante no lo lee y ningún cliente lo escribe (regla `match /privado/{docId}` en `apps/firebase/firestore.rules`).
 
 ## Flujos
 

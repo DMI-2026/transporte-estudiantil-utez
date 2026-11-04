@@ -2,7 +2,7 @@
 # Uso: .\scripts\check.ps1
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
-Set-Location $root
+Set-Location (Join-Path $root "apps\mobile")
 
 Write-Host "==> flutter analyze" -ForegroundColor Cyan
 flutter analyze

@@ -35,7 +35,7 @@ Panel web para que el administrador verifique cuentas, gestione el catálogo de 
 
 ```text
 admin-web/         # Pendiente (no está en este repositorio Flutter)
-firebase/
+apps/firebase/
   firestore.rules  # Reglas para administrador
   storage.rules    # Reglas de Storage
 ```

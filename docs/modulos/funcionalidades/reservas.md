@@ -1,6 +1,6 @@
 # Funcionalidad: reservas
 
-Feature: `lib/src/features/reservations/`. Estado: pendiente. Cubre reservar asiento y, cuando hay cobro, la confirmación tras el pago.
+Feature: `apps/mobile/lib/src/features/reservations/`. Estado: pendiente. Cubre reservar asiento y, cuando hay cobro, la confirmación tras el pago.
 
 ## Reglas de negocio
 

@@ -12,7 +12,7 @@ Permite al estudiante mostrar su QR de abordaje y al operador validarlo al subir
 | Rol | Estudiante / Operador |
 | Acceso | Solo con sesión aprobada y reserva activa |
 | Layout | Pantalla con código QR y botón de validar |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -69,7 +69,7 @@ test/
 ar QR).
 5. El cliente nunca marca el pago como aprobado ni escribe el secreto del QR; eso es trabajo de Cloud Functions.
 6. Registrar dependencias en `injection.dart`.
-7. Escribir pruebas en `test/features/boarding/`.
+7. Escribir pruebas en `apps/mobile/test/features/boarding/`.
 8. Registrar la ruta en `app_routes.dart`.
 
 ---

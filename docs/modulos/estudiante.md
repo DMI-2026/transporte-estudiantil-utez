@@ -1,6 +1,6 @@
 # Módulo: estudiante (app Flutter)
 
-Features de `lib/src/features/` orientadas al rol estudiante.
+Features de `apps/mobile/lib/src/features/` orientadas al rol estudiante.
 
 ## auth (activo)
 
@@ -17,7 +17,7 @@ Features de `lib/src/features/` orientadas al rol estudiante.
 
 ## home (activo)
 
-- Archivo: `lib/src/features/home/presentation/home_page.dart`.
+- Archivo: `apps/mobile/lib/src/features/home/presentation/home_page.dart`.
 - Ruta: `AppRoutes.home` (`/inicio`); solo accesible con sesión aprobada.
 - Hoy muestra saludo y botón de cerrar sesión. Pendiente: próxima reserva y tiempo estimado de llegada.
 

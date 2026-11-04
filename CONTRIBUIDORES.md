@@ -10,7 +10,7 @@ Integrantes de la organización de GitHub **DMI-2026** (curso Desarrollo Móvil 
 |:---:|---|---|---|
 | 1 | [@DavidReds7](https://github.com/DavidReds7) | David Rojas | `home`, `trip` |
 | 2 | [@Nadia05Sa](https://github.com/Nadia05Sa) | Nadia Yuridia Salinas Cervantes | Coordinación, `reservations` |
-| 3 | [@JesusDre](https://github.com/JesusDre) | Jesus Juarez | `functions/`, `admin-web` |
+| 3 | [@JesusDre](https://github.com/JesusDre) | Jesus Juarez | `apps/firebase/functions/`, `admin-web` |
 | 4 | [@LARISSA1825alita](https://github.com/LARISSA1825alita) | Alison Larissa Martinez | Firebase rules, Functions |
 | 5 | [@HannaCast](https://github.com/HannaCast) | Hanna Romybsi Pérez Caspeta | `auth`, `profile` |
 | 6 | [@20233tn193](https://github.com/20233tn193) | Juan Manuel Chavez Arredondo | `routes_map` |

@@ -12,7 +12,7 @@ Permite al estudiante ver la combi en el mapa y el tiempo estimado de llegada a 
 | Rol | Estudiante |
 | Acceso | Solo con sesión aprobada y reserva activa |
 | Layout | Pantalla con mapa en tiempo real |
-| Registro de ruta | `lib/src/core/router/app_routes.dart` |
+| Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
@@ -69,7 +69,7 @@ test/
 5. Integrar Google Maps SDK para mostrar la combi y la polilínea.
 6. Agregar permiso de ubicación en primer plano para el operador.
 7. Registrar dependencias en `injection.dart`.
-8. Escribir pruebas en `test/features/trip/`.
+8. Escribir pruebas en `apps/mobile/test/features/trip/`.
 9. Registrar la ruta en `app_routes.dart`.
 
 ---

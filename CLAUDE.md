@@ -4,7 +4,7 @@ Este archivo es el punto de entrada para Claude. Cursor usa el mismo flujo desde
 
 ## Qué es este proyecto
 
-App Flutter de transporte estudiantil para la UTEZ (roles estudiante y operador) con backend en Firebase (proyecto `utebus-4435b`). El panel de administración será una web aparte, aún pendiente. Todo el código Flutter canónico está en `lib/`.
+App Flutter de transporte estudiantil para la UTEZ (roles estudiante y operador) con backend en Firebase (proyecto `utebus-4435b`). El panel de administración será una web aparte, aún pendiente. Todo el código Flutter canónico está en `apps/mobile/lib/`.
 
 ## Cómo empezar una tarea
 
@@ -20,14 +20,14 @@ Normalmente la tarea llega como un issue de GitHub pegado en el chat. Sigue este
 
 ## Reparto de responsabilidades
 
-Alison mantiene `firebase/` (reglas e índices). Jesús trabaja en `functions/` y `admin-web/`. Si tu issue es de backend, no toques `lib/` salvo que el issue lo pida de forma explícita.
+Alison mantiene `apps/firebase/` (reglas e índices). Jesús trabaja en `apps/firebase/functions/` y `admin-web/`. Si tu issue es de backend, no toques `apps/mobile/lib/` salvo que el issue lo pida de forma explícita.
 
 ## Reglas que no se negocian
 
 - El único criterio de "listo" es `.\scripts\check.ps1` (analyze + test). El hook pre-commit lo ejecuta. Nunca uses `--no-verify`.
 - Diff mínimo: implementa solo lo que pide el issue. No refactorices ni agregues dependencias que nadie pidió.
 - No reviertas trabajo del usuario ni borres archivos fuera del alcance.
-- Nunca commitees `google-services.json`, `GoogleService-Info.plist`, `lib/firebase_options.dart`, `env/dev.json` ni claves de Mercado Pago o Google Routes.
+- Nunca commitees `google-services.json`, `GoogleService-Info.plist`, `apps/mobile/lib/firebase_options.dart`, `apps/mobile/env/dev.json` ni claves de Mercado Pago o Google Routes.
 - El cliente Flutter nunca marca un pago como aprobado ni escribe el secreto del QR; eso es trabajo de Cloud Functions.
 
 ## Cómo cerrar una tarea

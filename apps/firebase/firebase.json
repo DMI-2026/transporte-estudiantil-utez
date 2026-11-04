@@ -1,0 +1,22 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules",
+    "bucket": "utebus-4435b.firebasestorage.app"
+  },
+  "emulators": {
+    "firestore": {
+      "port": 8781
+    },
+    "storage": {
+      "port": 9781
+    },
+    "ui": {
+      "enabled": false
+    },
+    "singleProjectMode": true
+  }
+}

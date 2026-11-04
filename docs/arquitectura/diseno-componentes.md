@@ -11,12 +11,12 @@ La app combina dos ideas:
 1. **Arquitectura por capas (feature-first)** — `presentation/` → `domain/` → `data/`.
 2. **Niveles de composición UI** — átomo → molécula → organismo → template → page.
 
-Cada feature vive en `lib/src/features/<nombre>/` con las capas `domain/`, `data/` y `presentation/`. Los widgets van en `presentation/`.
+Cada feature vive en `apps/mobile/lib/src/features/<nombre>/` con las capas `domain/`, `data/` y `presentation/`. Los widgets van en `presentation/`.
 
 | Nivel | Ubicación | Responsabilidad |
 |-------|-----------|-----------------|
 | Átomos | `presentation/widgets/atoms/` | Elementos mínimos de UI, sin lógica de negocio |
-| Compartidos | `lib/src/core/widgets/` | Componentes base del sistema de diseño reutilizables entre features (`AppButton`, `AppStatusChip`, `AppAlert`, `AppCard`, `AppTripCard`, `AppBottomNav`, `MensajeEstado`, `UiStateView`) |
+| Compartidos | `apps/mobile/lib/src/core/widgets/` | Componentes base del sistema de diseño reutilizables entre features (`AppButton`, `AppStatusChip`, `AppAlert`, `AppCard`, `AppTripCard`, `AppBottomNav`, `MensajeEstado`, `UiStateView`) |
 | Moléculas | `presentation/widgets/molecules/` | Combinaciones simples de átomos con función concreta |
 | Organismos | `presentation/widgets/organisms/` | Secciones completas de interfaz (formularios, listas) |
 | Templates | `presentation/widgets/templates/` | Estructuras con slots, sin datos ni rutas |
@@ -30,7 +30,7 @@ Cada feature vive en `lib/src/features/<nombre>/` con las capas `domain/`, `data
 
 Elementos mínimos de UI. Sin lógica de negocio ni llamadas a repositorio.
 
-**Ubicación:** `lib/src/features/<nombre>/presentation/widgets/atoms/`
+**Ubicación:** `apps/mobile/lib/src/features/<nombre>/presentation/widgets/atoms/`
 
 | Ejemplo | Descripción |
 |---------|-------------|
@@ -41,14 +41,14 @@ Elementos mínimos de UI. Sin lógica de negocio ni llamadas a repositorio.
 **Reglas:**
 - No importan moléculas, organismos ni pages.
 - Props genéricas (label, onPressed, enabled…).
-- Usan colores del tema (`AppColors`, `AppSpacing`, `AppRadii`) de `lib/src/core/theme/`.
-- Los átomos compartidos del sistema de diseño viven en `lib/src/core/widgets/`; los específicos de una sola feature permanecen en su `presentation/widgets/atoms/`.
+- Usan colores del tema (`AppColors`, `AppSpacing`, `AppRadii`) de `apps/mobile/lib/src/core/theme/`.
+- Los átomos compartidos del sistema de diseño viven en `apps/mobile/lib/src/core/widgets/`; los específicos de una sola feature permanecen en su `presentation/widgets/atoms/`.
 
 ### 2.2 Moléculas
 
 Combinaciones simples de átomos con una función UI concreta.
 
-**Ubicación:** `lib/src/features/<nombre>/presentation/widgets/molecules/`
+**Ubicación:** `apps/mobile/lib/src/features/<nombre>/presentation/widgets/molecules/`
 
 | Ejemplo | Descripción |
 |---------|-------------|
@@ -65,7 +65,7 @@ Combinaciones simples de átomos con una función UI concreta.
 
 Secciones completas de interfaz: formularios, tablas, listas con contexto.
 
-**Ubicación:** `lib/src/features/<nombre>/presentation/widgets/organisms/`
+**Ubicación:** `apps/mobile/lib/src/features/<nombre>/presentation/widgets/organisms/`
 
 | Ejemplo | Descripción |
 |---------|-------------|
@@ -82,7 +82,7 @@ Secciones completas de interfaz: formularios, tablas, listas con contexto.
 
 Estructuras de pantalla con slots (`children` o props). No conocen APIs ni rutas.
 
-**Ubicación:** `lib/src/features/<nombre>/presentation/widgets/templates/`
+**Ubicación:** `apps/mobile/lib/src/features/<nombre>/presentation/widgets/templates/`
 
 | Ejemplo | Descripción |
 |---------|-------------|
@@ -97,7 +97,7 @@ Estructuras de pantalla con slots (`children` o props). No conocen APIs ni rutas
 
 Pantallas finales conectadas al router. Orquestan el Cubit, estado local y ensamblan templates/organismos.
 
-**Ubicación:** `lib/src/features/<nombre>/presentation/<feature>_page.dart`
+**Ubicación:** `apps/mobile/lib/src/features/<nombre>/presentation/<feature>_page.dart`
 
 **Reglas:**
 - Importan desde `../widgets/` y `../<feature>_cubit.dart`.
@@ -157,7 +157,7 @@ test/
 | domain | Entidades, contratos de repositorio, validadores | Widgets de Flutter, SDK de Firebase |
 | data | Datasources, mappers, implementación del repositorio | `BuildContext` |
 
-Registrar dependencias nuevas en `lib/src/core/di/injection.dart`.
+Registrar dependencias nuevas en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ---
 
@@ -172,7 +172,7 @@ Registrar dependencias nuevas en `lib/src/core/di/injection.dart`.
 
 ## 7. Responsividad
 
-- Usar `Theme` y `MediaQuery`; paddings y márgenes con `AppSpacing` de `lib/src/core/theme/`.
+- Usar `Theme` y `MediaQuery`; paddings y márgenes con `AppSpacing` de `apps/mobile/lib/src/core/theme/`.
 - Listas largas con `ListView` o `CustomScrollView`; nunca un `Column` sin scroll en pantallas pequeñas.
 - Probar al menos en un ancho de unos 360 píxeles lógicos.
 
@@ -196,10 +196,10 @@ Registrar dependencias nuevas en `lib/src/core/di/injection.dart`.
 - [ ] Identificar nivel de composición (átomo / molécula / organismo / template / page).
 - [ ] Colocar en la carpeta correcta según §4.
 - [ ] Pages solo ensamblan; estado de negocio en el Cubit.
-- [ ] Colores y espaciado desde `lib/src/core/theme/`.
+- [ ] Colores y espaciado desde `apps/mobile/lib/src/core/theme/`.
 - [ ] Pantallas con datos remotos usan `UiState` + `MensajeEstado`.
 - [ ] No crear carpetas `components/` ni `views/` por feature.
-- [ ] Escribir pruebas en `test/features/<nombre>/`.
+- [ ] Escribir pruebas en `apps/mobile/test/features/<nombre>/`.
 - [ ] Documentar la pantalla en `docs/pantallas/`.
 - [ ] Ejecutar `.\scripts\check.ps1`.
 
@@ -207,7 +207,7 @@ Registrar dependencias nuevas en `lib/src/core/di/injection.dart`.
 
 ## 10. Documentación relacionada
 
-- [../arquitectura.md](../arquitectura.md) — Capas, árbol de `lib/`, router, Firestore.
+- [../arquitectura.md](../arquitectura.md) — Capas, árbol de `apps/mobile/lib/`, router, Firestore.
 - [../reglas-desarrollo.md](../reglas-desarrollo.md) — Capas Flutter, nombres de Firestore, seguridad.
 - [../pantallas/](../pantallas/README.md) — Documentación por pantalla.
 - [../flujos/](../flujos/README.md) — Flujos de navegación entre pantallas.

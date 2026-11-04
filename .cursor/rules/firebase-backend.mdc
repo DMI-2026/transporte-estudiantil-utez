@@ -1,6 +1,6 @@
 ---
 description: Firebase — reglas de seguridad, índices y Cloud Functions
-globs: "{firebase/**,functions/**}"
+globs: "apps/firebase/**"
 alwaysApply: false
 ---
 
@@ -17,7 +17,7 @@ alwaysApply: false
 
 ## Secretos
 
-- No hay secretos en el repositorio: ni service accounts, ni client secrets, ni claves de Mercado Pago o Google Routes. Van en variables de entorno o en archivos ignorados por git (`env/firebase-admin-sa.json`).
+- No hay secretos en el repositorio: ni service accounts, ni client secrets, ni claves de Mercado Pago o Google Routes. Van en variables de entorno o en archivos ignorados por git (`apps/mobile/env/firebase-admin-sa.json`).
 - Los scripts de seed usan una service account. Abrir reglas temporalmente es último recurso y requiere la bandera explícita `-AbrirReglas`.
 
 ## Después de cambiar reglas

@@ -71,11 +71,11 @@ pendiente/rechazada                                    aprobada
 
 ## Archivos clave
 
-- `lib/src/core/router/app_routes.dart` — Rutas y redirección por `AuthSessionState`.
-- `lib/src/core/router/app_router.dart` — `GoRouter` con `refreshListenable` (StreamListenable).
-- `lib/src/core/router/stream_listenable.dart` — Adapta el stream del Cubit a GoRouter.
-- `lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global y estado de verificación.
-- `lib/src/core/di/injection.dart` — Inyección de `AuthSessionCubit` y repositorios.
+- `apps/mobile/lib/src/core/router/app_routes.dart` — Rutas y redirección por `AuthSessionState`.
+- `apps/mobile/lib/src/core/router/app_router.dart` — `GoRouter` con `refreshListenable` (StreamListenable).
+- `apps/mobile/lib/src/core/router/stream_listenable.dart` — Adapta el stream del Cubit a GoRouter.
+- `apps/mobile/lib/src/features/auth/presentation/auth_session_cubit.dart` — Sesión global y estado de verificación.
+- `apps/mobile/lib/src/core/di/injection.dart` — Inyección de `AuthSessionCubit` y repositorios.
 
 ---
 

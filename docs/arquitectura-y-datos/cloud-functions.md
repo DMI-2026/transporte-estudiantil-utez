@@ -28,10 +28,10 @@ Este documento define las funciones esperadas, sus triggers y responsabilidades.
 
 ---
 
-## Estructura sugerida de `functions/`
+## Estructura sugerida de `apps/firebase/functions/`
 
 ```text
-functions/
+apps/firebase/functions/
 ├── src/
 │   ├── index.ts            # punto de entrada, exporta todas las funciones
 │   ├── qr.ts               # generarQR
@@ -44,7 +44,7 @@ functions/
 │       └── validaciones.ts # validaciones compartidas
 ├── package.json
 ├── tsconfig.json
-└── firebase.json (configuración de functions en la raíz del repo)
+└── ../firebase.json (configuración en apps/firebase/)
 ```
 
 ---

@@ -1,6 +1,6 @@
 # Módulo: operador (app Flutter)
 
-Feature: `lib/src/features/operator/` (stub).
+Feature: `apps/mobile/lib/src/features/operator/` (stub).
 
 ## Responsabilidades
 
