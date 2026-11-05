@@ -76,7 +76,7 @@ Que los estudiantes de la UTEZ reserven un asiento en la combi del transporte ex
 | Documento | ¿Lo necesitamos? | Por qué | Cuándo se escribiría |
 |-----------|------------------|---------|----------------------|
 | [01 Alcance](01-alcance.md) | Sí | Obligatorio; los demás documentos se apoyan en sus decisiones y fases | Escrito |
-| [02 PRD](02-prd.md) | Sí | Obligatorio; cada historia se apoya en un módulo de este SOW | En curso: tiene la estructura, faltan las historias |
+| [02 PRD](02-prd.md) | Sí | Obligatorio; cada historia se apoya en un módulo de este SOW | Escrito |
 | [03 Integraciones](03-integraciones.md) | Sí | Usamos 3 APIs externas (Google Maps, Google Routes y Mercado Pago) y 5 servicios de Firebase (Auth, Firestore, Storage, Functions y Cloud Messaging) | Escrito |
 | [04 Arquitectura](04-arquitectura.md) | Sí | Hay 4 componentes (app Flutter, Firebase, Cloud Functions y panel web) y 3 roles que se aíslan con las reglas de Firestore | Escrito |
 | [05 Datos](05-datos.md) | Sí | Guardamos 7 colecciones relacionadas: usuarios, rutas, paradas, salidas, reservas, pagos y reportes | Escrito |
