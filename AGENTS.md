@@ -1,37 +1,14 @@
-# Guía para agentes (Cursor)
+# AGENTS.md · Transporte estudiantil UTEZ
 
-Este archivo es el punto de entrada para cualquier agente que trabaje en este repositorio. Claude usa el mismo flujo desde [CLAUDE.md](CLAUDE.md). La arquitectura no se describe aquí: vive en `docs/` y no debe duplicarse.
+Mapa: `apps/mobile/` app Flutter (estudiante y operador) · `apps/firebase/` reglas, pruebas de reglas y Cloud Functions · `docs/` decisiones (01 a 06).
 
-## Qué es este proyecto
-
-App Flutter de transporte estudiantil para la UTEZ (roles estudiante y operador) con backend en Firebase (proyecto `utebus-4435b`). El panel de administración será una web aparte, aún pendiente. Todo el código Flutter canónico está en `apps/mobile/lib/`.
-
-## Cómo empezar una tarea
-
-Normalmente la tarea llega como un issue de GitHub pegado en el chat. Sigue este orden:
-
-1. Lee [docs/README.md](docs/README.md), sección **Protocolo de tarea** (diez pasos). Es obligatorio.
-2. Lee [docs/reglas-desarrollo.md](docs/reglas-desarrollo.md) para capas Flutter, nombres de Firestore y seguridad.
-3. Abre solo la documentación que el issue necesite:
-   - [docs/modulos/README.md](docs/modulos/README.md) para ubicar el módulo por rol o funcionalidad.
-   - [docs/03-integraciones.md](docs/03-integraciones.md) si el issue toca Firebase, paquetes o APIs externas.
-   - [docs/04-arquitectura.md](docs/04-arquitectura.md) si cambia la estructura de carpetas o el modelo de datos.
-   - [docs/referencia-dmi.md](docs/referencia-dmi.md) si el issue cita historias de usuario o requisitos del enunciado.
-
-## Reglas que no se negocian
-
-- El único criterio de "listo" es `.\scripts\check.ps1` (analyze + test). El hook pre-commit lo ejecuta. Nunca uses `--no-verify`.
-- Diff mínimo: implementa solo lo que pide el issue. No refactorices ni agregues dependencias que nadie pidió.
-- No reviertas trabajo del usuario ni borres archivos fuera del alcance.
-- Nunca commitees `google-services.json`, `GoogleService-Info.plist`, `apps/mobile/lib/firebase_options.dart`, `apps/mobile/env/dev.json` ni claves de Mercado Pago o Google Routes.
-- El cliente Flutter nunca marca un pago como aprobado ni escribe el secreto del QR; eso es trabajo de Cloud Functions.
-
-## Cómo cerrar una tarea
-
-- Ejecuta `.\scripts\check.ps1` y, si el issue lo pide, `.\scripts\verify-activity.ps1`. No afirmes que corriste pruebas que no corriste.
-- Entrega el reporte con el formato de [docs/README.md, sección Reporte final](docs/README.md#reporte-final).
-
-## Dónde están las demás reglas
-
-- Convenciones de Git, commits y organización: [docs/06-convenciones.md](docs/06-convenciones.md).
-- Reglas específicas de Cursor por carpeta: [.cursor/rules/](.cursor/rules/).
+- Verifica con `./scripts/check.sh` (en Windows `.\scripts\check.ps1`) antes de cada commit; el hook pre-commit lo ejecuta (C-04).
+- Lee `docs/01-alcance.md` y `docs/06-convenciones.md` antes de proponer; una decisión nueva va a la tabla del documento donde nace.
+- Abre un issue antes de la rama; usa una rama por issue `feat/<n>-<tema>` desde `develop` y nunca hagas push a `main` ni a `develop` (C-01).
+- Cierra el issue en el PR con `Closes #<n>` y pide la aprobación de otra persona del equipo (C-03).
+- Escribe primero la prueba y comprueba que falla; un bug corregido llega con su prueba (C-06).
+- Prueba con `flutter test` y los fakes de `apps/mobile/test/fakes/`; no agregues otro framework de pruebas ni levantes Firebase en una prueba (C-05).
+- Usa Firebase y Cloud Functions como único backend; no crees una API propia (D-03, C-07).
+- Usa el SDK de Firebase solo en `data/` y maneja el estado de UI con Cubits de `flutter_bloc` (C-08, C-10).
+- Aprueba pagos y valida el QR solo en Cloud Functions, nunca en la app (D-05, D-06).
+- Nunca: secretos en el repo (llaves de Mercado Pago o Routes, service accounts, `env/dev.json`), `--no-verify`, ni borrar o debilitar pruebas para que pasen.
