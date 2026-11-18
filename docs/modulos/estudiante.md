@@ -19,12 +19,12 @@ Features de `apps/mobile/lib/src/features/` orientadas al rol estudiante.
 
 - Archivo: `apps/mobile/lib/src/features/home/presentation/home_page.dart`.
 - Ruta: `AppRoutes.home` (`/inicio`); solo accesible con sesión aprobada.
-- Hoy muestra saludo y botón de cerrar sesión. Pendiente: próxima reserva y tiempo estimado de llegada.
+- Muestra saludo, cierre de sesión y barra inferior hacia `/rutas`. Pendiente: próxima reserva y tiempo estimado de llegada.
 
-## routes_map (stub)
+## routes_map (activo, sin mapa)
 
-- Lee `rutas`, `paradas` y `salidas` activas; mapa con Google Maps SDK; ubicación bajo demanda para la parada cercana.
-- La polilínea viene de Firestore (la calcula Google Routes API al crear la ruta desde el panel admin). Ver [funcionalidades/rutas.md](funcionalidades/rutas.md).
+- Lee `rutas` y muestra el permiso denegado si quien no es administrador intenta crear una ruta.
+- El mapa, las paradas y la ubicación siguen pendientes. La polilínea viene de Firestore (la calcula Google Routes API al crear la ruta desde el panel admin). Ver [funcionalidades/rutas.md](funcionalidades/rutas.md).
 
 ## reservations, boarding, trip, incidents (stub)
 

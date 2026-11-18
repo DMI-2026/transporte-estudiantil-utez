@@ -13,7 +13,7 @@ void main() {
       await cubit.submit(email: 'a@utez.edu.mx', password: '123');
 
       expect(cubit.state.status, LoginStatus.failure);
-      expect(cubit.state.message, contains('6 caracteres'));
+      expect(cubit.state.message, contains('8 caracteres'));
       expect(repo.signInCalls, 0);
     });
 
@@ -21,7 +21,7 @@ void main() {
       final repo = FakeAuthRepository();
       final cubit = LoginCubit(repo);
 
-      await cubit.submit(email: 'sin-arroba', password: 'secret1');
+      await cubit.submit(email: 'sin-arroba', password: 'secret12');
 
       expect(cubit.state.status, LoginStatus.failure);
       expect(cubit.state.message, 'Correo no válido.');
@@ -31,16 +31,18 @@ void main() {
     test('éxito deja status success', () async {
       final cubit = LoginCubit(FakeAuthRepository());
 
-      await cubit.submit(email: 'a@utez.edu.mx', password: 'secret1');
+      await cubit.submit(email: 'a@utez.edu.mx', password: 'secret12');
 
       expect(cubit.state.status, LoginStatus.success);
     });
 
     test('un fallo de red deja mensaje sin stack', () async {
-      final repo = FakeAuthRepository(signInFailure: const AuthNetworkFailure());
+      final repo = FakeAuthRepository(
+        signInFailure: const AuthNetworkFailure(),
+      );
       final cubit = LoginCubit(repo);
 
-      await cubit.submit(email: 'a@utez.edu.mx', password: 'secret1');
+      await cubit.submit(email: 'a@utez.edu.mx', password: 'secret12');
 
       expect(cubit.state.status, LoginStatus.failure);
       expect(cubit.state.message, contains('conexión'));

@@ -17,7 +17,7 @@ Decisión D-03 de [01-alcance.md](../../docs/01-alcance.md): un solo backend en 
 | `firebase.json`, `.firebaserc` | Configuración del proyecto y de los emuladores (Firestore 8781, Storage 9781) |
 | `firestore.rules`, `firestore.indexes.json`, `storage.rules` | Reglas e índices que se despliegan |
 | `tests/` | Pruebas de las reglas contra el emulador local |
-| `tools/` | Script para cargar datos de demostración |
+| `tools/seed-demo-data.mjs` | Seed Firestore + usuarios Auth demo (`scripts/seed-firestore.ps1`) |
 | `functions/` | Cloud Functions en TypeScript |
 
 ## Cómo se arranca

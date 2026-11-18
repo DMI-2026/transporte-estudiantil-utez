@@ -6,7 +6,15 @@ import '../../../fakes/fake_auth_repository.dart';
 
 void main() {
   Future<void> montar(WidgetTester tester, FakeAuthRepository repo) async {
+    tester.view.physicalSize = const Size(480, 2200);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(MaterialApp(home: RegisterPage(repository: repo)));
+  }
+
+  Future<void> pulsarRegistro(WidgetTester tester) async {
+    await tester.tap(find.widgetWithText(FilledButton, 'Registrarme'));
   }
 
   Future<void> llenar(
@@ -31,9 +39,9 @@ void main() {
       tester,
       nombre: 'Ana',
       correo: 'ana@utez.edu.mx',
-      contrasena: 'secret1',
+      contrasena: 'secret12',
     );
-    await tester.tap(find.text('Registrarme'));
+    await pulsarRegistro(tester);
     await tester.pumpAndSettle();
 
     expect(repo.signUpCalls, 1);
@@ -50,9 +58,9 @@ void main() {
       tester,
       nombre: 'Ana',
       correo: 'ana@gmail.com',
-      contrasena: 'secret1',
+      contrasena: 'secret12',
     );
-    await tester.tap(find.text('Registrarme'));
+    await pulsarRegistro(tester);
     await tester.pumpAndSettle();
 
     expect(repo.signUpCalls, 0);

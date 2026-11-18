@@ -49,9 +49,8 @@ class MensajeEstado extends StatelessWidget {
             Text(
               detalle,
               textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.muted),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: AppColors.muted),
             ),
             if (textoBoton != null && onBoton != null) ...[
               const SizedBox(height: AppSpacing.lg),

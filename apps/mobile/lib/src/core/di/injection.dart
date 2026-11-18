@@ -8,6 +8,9 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/data/repositories/unavailable_auth_repository.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/presentation/session/auth_session_cubit.dart';
+import '../../features/routes_map/data/datasources/firestore_routes_remote_datasource.dart';
+import '../../features/routes_map/data/repositories/routes_repository_impl.dart';
+import '../../features/routes_map/domain/repositories/routes_repository.dart';
 import '../firebase/firebase_bootstrap.dart';
 import '../router/app_router.dart';
 
@@ -17,6 +20,7 @@ Future<void> configureDependencies() async {
   await FirebaseBootstrap.initialize();
 
   _configureCore();
+  _configureRoutes();
   await _configureAuth();
   _configureRouter();
 }
@@ -28,6 +32,14 @@ void _configureCore() {
     }
     return FirebaseFirestore.instance;
   });
+}
+
+void _configureRoutes() {
+  getIt.registerLazySingleton<RoutesRepository>(
+    () => RoutesRepositoryImpl(
+      FirestoreRoutesRemoteDataSource(getIt<FirebaseFirestore>()),
+    ),
+  );
 }
 
 Future<void> _configureAuth() async {

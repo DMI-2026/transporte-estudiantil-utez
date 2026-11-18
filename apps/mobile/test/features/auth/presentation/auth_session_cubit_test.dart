@@ -89,7 +89,8 @@ void main() {
     test('backendAvailable refleja el repositorio', () {
       expect(cubit.backendAvailable, isTrue);
       expect(
-        AuthSessionCubit(FakeAuthRepository(isAvailable: false)).backendAvailable,
+        AuthSessionCubit(FakeAuthRepository(isAvailable: false))
+            .backendAvailable,
         isFalse,
       );
     });

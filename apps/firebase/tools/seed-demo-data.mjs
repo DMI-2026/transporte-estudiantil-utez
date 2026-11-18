@@ -14,6 +14,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import { initializeApp, applicationDefault, cert } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, Timestamp, GeoPoint } from 'firebase-admin/firestore';
 import { GoogleAuth } from 'google-auth-library';
 import { Firestore } from '@google-cloud/firestore';
@@ -22,6 +23,8 @@ const FIREBASE_CLIENT_ID = process.env.FIREBASE_TOOLS_CLIENT_ID ?? null;
 const FIREBASE_CLIENT_SECRET = process.env.FIREBASE_TOOLS_CLIENT_SECRET ?? null;
 
 const projectId = process.env.FIREBASE_PROJECT_ID ?? 'utebus-4435b';
+const demoPassword = 'Utez.demo8';
+let adminAppReady = false;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const backendRoot = path.resolve(__dirname, '..');
 
@@ -88,6 +91,7 @@ async function createDb() {
       process.env.GOOGLE_APPLICATION_CREDENTIALS = credPath;
       initializeApp({ credential: applicationDefault(), projectId });
     }
+    adminAppReady = true;
     return getFirestore();
   }
 
@@ -128,6 +132,69 @@ const IDS = {
   dispositivo: 'demo-dispositivo-android',
   qr: 'demo-qr-token',
 };
+
+const DEMO_AUTH_USERS = [
+  {
+    uid: IDS.estudiante,
+    email: 'estudiante.demo@utez.edu.mx',
+    displayName: 'Ana Demo Estudiante',
+  },
+  {
+    uid: IDS.operador,
+    email: 'operador.demo@utez.edu.mx',
+    displayName: 'Luis Demo Operador',
+  },
+  {
+    uid: IDS.administrador,
+    email: 'admin.demo@utez.edu.mx',
+    displayName: 'Admin Demo',
+  },
+];
+
+async function ensureDemoAuthUsers() {
+  if (!adminAppReady) {
+    console.warn(
+      'Auth demo omitido: hace falta service account o ADC de firebase login para crear usuarios.',
+    );
+    return;
+  }
+
+  const auth = getAuth();
+  for (const user of DEMO_AUTH_USERS) {
+    try {
+      await auth.getUser(user.uid);
+      await auth.updateUser(user.uid, {
+        email: user.email,
+        password: demoPassword,
+        displayName: user.displayName,
+        emailVerified: true,
+      });
+      console.log('Auth actualizado', user.email);
+    } catch (err) {
+      if (err.code !== 'auth/user-not-found') {
+        throw err;
+      }
+      try {
+        await auth.createUser({
+          uid: user.uid,
+          email: user.email,
+          password: demoPassword,
+          displayName: user.displayName,
+          emailVerified: true,
+        });
+        console.log('Auth creado', user.email);
+      } catch (createErr) {
+        if (createErr.code !== 'auth/email-already-exists') {
+          throw createErr;
+        }
+        const existing = await auth.getUserByEmail(user.email);
+        console.warn(
+          `No se creó ${user.email}: ya existe con uid ${existing.uid}, distinto de ${user.uid}.`,
+        );
+      }
+    }
+  }
+}
 
 async function seed() {
   const db = await createDb();
@@ -252,6 +319,7 @@ async function seed() {
 
   console.log('Seed completado en', projectId);
   console.log(JSON.stringify(IDS, null, 2));
+  await ensureDemoAuthUsers();
 }
 
 seed().catch((err) => {

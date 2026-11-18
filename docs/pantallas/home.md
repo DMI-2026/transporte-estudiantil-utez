@@ -18,7 +18,7 @@ Pantalla principal del estudiante tras iniciar sesión. Muestra saludo y permite
 
 ## Estado de implementación
 
-**Activo** — Muestra saludo y botón de cerrar sesión. Pendiente: próxima reserva y tiempo estimado de llegada.
+**Activo** — Muestra saludo, cierre de sesión y barra de navegación inferior (`StudentBottomNav`) con acceso a Inicio y Rutas (`/rutas`). Pendiente: próxima reserva y tiempo estimado de llegada.
 
 ---
 
@@ -28,6 +28,7 @@ Pantalla principal del estudiante tras iniciar sesión. Muestra saludo y permite
 - Saludo personalizado con el nombre del estudiante.
 - Información de la próxima salida (pendiente de implementar).
 - Botón de cerrar sesión.
+- Navegación inferior: Inicio y Rutas (`apps/mobile/lib/src/core/widgets/student_bottom_nav.dart`).
 - Estados de carga y error mediante `UiState` + `UiStateView` + `MensajeEstado`.
 
 ---

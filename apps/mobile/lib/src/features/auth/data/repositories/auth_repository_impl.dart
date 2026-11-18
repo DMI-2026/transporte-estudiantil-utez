@@ -7,10 +7,7 @@ import '../datasources/user_remote_datasource.dart';
 import '../models/app_user_mapper.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({
-    required this.authGateway,
-    required this.users,
-  });
+  AuthRepositoryImpl({required this.authGateway, required this.users});
 
   final AuthGateway authGateway;
   final UserRemoteDataSource users;

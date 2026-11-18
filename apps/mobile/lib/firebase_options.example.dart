@@ -8,7 +8,9 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError('Web no configurada.');
+      throw UnsupportedError(
+        'Web no configurada. Corre .\\scripts\\setup-local.ps1 -RunFlutterfire.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:

@@ -5,6 +5,9 @@ import '../../features/auth/domain/entities/user_role.dart';
 import '../../features/auth/presentation/auth_routes.dart';
 import '../../features/auth/presentation/session/auth_session_cubit.dart';
 import '../../features/home/presentation/home_page.dart';
+import '../../features/routes_map/presentation/routes_page.dart';
+import '../theme/app_colors.dart';
+import '../widgets/app_button.dart';
 import 'app_routes.dart';
 import 'stream_listenable.dart';
 
@@ -21,6 +24,11 @@ class AppRouter {
             path: AppRoutes.home,
             name: 'inicio',
             builder: (context, state) => const HomePage(),
+          ),
+          GoRoute(
+            path: AppRoutes.routes,
+            name: 'rutas',
+            builder: (context, state) => const RoutesPage(),
           ),
           // Rutas por rol (placeholders hasta que existan features)
           GoRoute(
@@ -47,7 +55,21 @@ class _PlaceholderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('$title - En construcción')),
+      body: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('$title — En construcción'),
+            const SizedBox(height: AppSpacing.lg),
+            AppButton(
+              label: 'Ver rutas',
+              expand: true,
+              onPressed: () => context.push(AppRoutes.routes),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

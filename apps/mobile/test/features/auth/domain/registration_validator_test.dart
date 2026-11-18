@@ -21,5 +21,14 @@ void main() {
         isNull,
       );
     });
+
+    test('la contraseña exige 8 caracteres', () {
+      expect(RegistrationValidator.passwordError('secret1'), isNotNull);
+      expect(
+        RegistrationValidator.passwordError('secret1'),
+        contains('8 caracteres'),
+      );
+      expect(RegistrationValidator.passwordError('secret12'), isNull);
+    });
   });
 }

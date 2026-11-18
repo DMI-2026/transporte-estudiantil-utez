@@ -13,7 +13,7 @@ void main() {
 
       await cubit.submit(
         email: 'a@gmail.com',
-        password: 'secret1',
+        password: 'secret12',
         displayName: 'Ana',
         role: UserRole.estudiante,
       );
@@ -29,7 +29,7 @@ void main() {
 
       await cubit.submit(
         email: 'op@mail.com',
-        password: 'secret1',
+        password: 'secret12',
         displayName: 'Luis',
         role: UserRole.operador,
       );
@@ -48,7 +48,7 @@ void main() {
 
       await cubit.submit(
         email: 'a@utez.edu.mx',
-        password: 'secret1',
+        password: 'secret12',
         displayName: 'Ana',
         role: UserRole.estudiante,
       );

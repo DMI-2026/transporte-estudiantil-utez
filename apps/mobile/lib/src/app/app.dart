@@ -6,6 +6,7 @@ import '../core/router/app_router.dart';
 import '../core/theme/app_theme.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/auth/presentation/session/auth_session_cubit.dart';
+import '../features/routes_map/domain/repositories/routes_repository.dart';
 
 class TransporteApp extends StatelessWidget {
   const TransporteApp({super.key});
@@ -18,12 +19,15 @@ class TransporteApp extends StatelessWidget {
     // sesión); aquí se exponen al árbol para que las pantallas usen context.read.
     return RepositoryProvider<AuthRepository>.value(
       value: getIt<AuthRepository>(),
-      child: BlocProvider.value(
-        value: getIt<AuthSessionCubit>(),
-        child: MaterialApp.router(
-          title: 'Transporte Estudiantil UTEZ',
-          theme: AppTheme.light(),
-          routerConfig: router,
+      child: RepositoryProvider<RoutesRepository>.value(
+        value: getIt<RoutesRepository>(),
+        child: BlocProvider.value(
+          value: getIt<AuthSessionCubit>(),
+          child: MaterialApp.router(
+            title: 'Transporte Estudiantil UTEZ',
+            theme: AppTheme.light(),
+            routerConfig: router,
+          ),
         ),
       ),
     );
