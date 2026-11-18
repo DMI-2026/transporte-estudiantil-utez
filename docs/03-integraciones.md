@@ -58,6 +58,7 @@ Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `apps/mob
 | Storage | Hecho | Bucket `utebus-4435b.firebasestorage.app`; `credenciales/{uid}/`, `documentacion/publico/`, `documentacion/{uid}/`, `reportes/{uid}/` |
 | Cloud Functions | Pendiente | Pagos, QR, notificaciones; carpeta `apps/firebase/functions/` |
 | Emuladores | Pendiente | Carpeta `apps/firebase/tests/` no existe aún; pruebas de reglas contra emulador local pendientes |
+| Chrome | Local | Misma app, para quien no tiene teléfono: `flutter run -d chrome --dart-define-from-file=env/dev.json`. App web de Firebase `Transporte UTEZ` en `utebus-4435b`. No sustituye el alcance móvil (D-02) |
 
 Nunca commitear: `google-services.json`, `GoogleService-Info.plist`, `apps/mobile/lib/firebase_options.dart`, `apps/mobile/env/dev.json`, claves de Mercado Pago o Google Routes, service accounts.
 

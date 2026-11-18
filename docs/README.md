@@ -126,13 +126,15 @@ Entregar al cerrar la tarea, con datos reales y sin relleno:
 ```powershell
 cd transporte-estudiantil-utez
 git checkout develop
-.\scripts\setup-local.ps1
+git config core.hooksPath .githooks
+firebase login
+.\scripts\setup-local.ps1 -RunFlutterfire
+.\scripts\check.ps1
 cd apps/mobile
 flutter pub get
+flutter devices
 flutter run --dart-define-from-file=env/dev.json
 cd ../..
-git config core.hooksPath .githooks
-.\scripts\check.ps1
 .\scripts\verify-activity.ps1 -Tipo base
 ```
 
@@ -158,6 +160,7 @@ Trazabilidad con el enunciado: [referencia-dmi.md](referencia-dmi.md). Necesidad
 |-------------------|-----------|
 | [04-arquitectura.md](04-arquitectura.md) | Capas, árbol de `apps/mobile/lib/`, router, Firestore |
 | [estado.md](estado.md) | Hecho frente a pendiente (Firebase y módulos) |
+| [contribucion-repositorio.md](contribucion-repositorio.md) | Qué versionar, ramas y checklist antes del PR |
 | [arquitectura-y-datos/](arquitectura-y-datos/) | Modelo Firestore, reglas, seed |
 | [06-convenciones.md](06-convenciones.md) | Convenciones C-01 a C-12, mapa con la plantilla del curso, qué no se iguala |
 | [reglas-desarrollo.md](reglas-desarrollo.md) | Reutilización, seguridad, PR |

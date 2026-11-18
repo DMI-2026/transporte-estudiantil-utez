@@ -114,6 +114,12 @@ Definidos en `apps/firebase/firestore.indexes.json` (consultas por ruta, operado
 
 ## Datos de demostración
 
-En **producción** hay documentos `demo-*` (estudiante, operador, admin, ruta, paradas, salida, reserva, pago, reporte). Los uids demo **no** crean usuarios en Authentication automáticamente.
+En el proyecto `utebus-4435b` pueden existir documentos `demo-*` (estudiante, operador, admin, ruta, paradas, salida, reserva, pago, reporte) y tres usuarios en Authentication con uids fijos.
 
-La carga de datos demo requiere un script de seed con service account (pendiente de crear en `scripts/`). No usar reglas abiertas en producción.
+Carga local o en el proyecto compartido:
+
+```powershell
+.\scripts\seed-firestore.ps1
+```
+
+El script `apps/firebase/tools/seed-demo-data.mjs` escribe Firestore y llama a Admin SDK para crear o actualizar las cuentas demo (contraseña común documentada en [pantallas/auth/login.md](pantallas/auth/login.md)). Requiere `apps/firebase/env/firebase-admin-sa.json` o `firebase login`. No usar reglas abiertas en producción.

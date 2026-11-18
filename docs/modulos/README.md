@@ -25,7 +25,7 @@ Elegir un solo documento según el issue:
 | auth | `apps/mobile/lib/src/features/auth/` | Estudiante y operador | activo | Registro, acceso, verificación de cuenta, sesión |
 | home | `apps/mobile/lib/src/features/home/` | Estudiante | activo | Pantalla de inicio (hoy saludo; después próxima salida) |
 | profile | `apps/mobile/lib/src/features/profile/` | Estudiante | stub | Perfil, privacidad, baja de cuenta |
-| routes_map | `apps/mobile/lib/src/features/routes_map/` | Estudiante | stub | Consultar rutas y paradas; mapa; ubicación del operador |
+| routes_map | `apps/mobile/lib/src/features/routes_map/` | Estudiante, operador y admin | activo | Lista de rutas y prueba de permiso al crear. Mapa pendiente |
 | reservations | `apps/mobile/lib/src/features/reservations/` | Estudiante | stub | Reservar asiento |
 | boarding | `apps/mobile/lib/src/features/boarding/` | Estudiante | stub | Abordar con QR |
 | trip | `apps/mobile/lib/src/features/trip/` | Estudiante | stub | Seguimiento del viaje y tiempo estimado |

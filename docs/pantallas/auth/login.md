@@ -81,14 +81,23 @@ Dependencias registradas en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ---
 
+## Si aparece `PASSWORD_LOGIN_DISABLED` en la red
+
+El proyecto Firebase no tiene activo el proveedor **Correo/Contraseña**. En [Firebase Console](https://console.firebase.google.com/) → proyecto `utebus-4435b` → **Authentication** → **Sign-in method** → **Correo electrónico/Contraseña** → **Habilitar** → Guardar.
+
+Sin ese paso, ningún login con correo funcionará aunque las cuentas demo existan.
+
+---
+
 ## Credenciales de prueba
 
 | Rol | Correo | Contraseña | Nota |
 |-----|--------|------------|------|
-| Estudiante | `alumno@utez.edu.mx` | (según datos demo) | Dominio `@utez.edu.mx` |
-| Operador | `operador@ejemplo.com` | (según datos demo) | Correo libre |
+| Estudiante | `estudiante.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-estudiante-001`, cuenta aprobada |
+| Operador | `operador.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-operador-001`, cuenta aprobada |
+| Administrador | `admin.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-admin-001`; el cliente no puede crear este rol |
 
-Los datos demo se cargan con `scripts/seed-firestore-prod.ps1` o `scripts/seed-firestore.ps1`.
+Las tres cuentas se crean en Authentication y en `usuarios/{uid}` con `scripts/seed-firestore.ps1` o `scripts/seed-firestore-prod.ps1`. Hace falta la service account local (no se versiona). La contraseña de la app exige 8 caracteres.
 
 ---
 

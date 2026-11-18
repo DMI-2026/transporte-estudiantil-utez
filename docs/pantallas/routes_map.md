@@ -1,6 +1,6 @@
 # Pantalla: Rutas y mapa (`/rutas`)
 
-Permite al estudiante consultar rutas, paradas y salidas activas, con mapa y ubicación bajo demanda para encontrar la parada más cercana.
+Permite consultar el catálogo de rutas en Firestore. El mapa, paradas en tiempo real y ubicación del usuario siguen pendientes.
 
 ---
 
@@ -9,25 +9,26 @@ Permite al estudiante consultar rutas, paradas y salidas activas, con mapa y ubi
 | Atributo | Valor |
 |----------|-------|
 | Ruta | `/rutas` |
-| Rol | Estudiante |
+| Rol | Estudiante (navegación principal); operador y admin pueden llegar desde sus placeholders |
 | Acceso | Solo con sesión aprobada |
-| Layout | Pantalla con mapa y lista de rutas |
+| Layout | Lista de rutas y acción de prueba de permisos |
 | Registro de ruta | `apps/mobile/lib/src/core/router/app_routes.dart` |
 
 ---
 
 ## Estado de implementación
 
-**Stub** — Carpeta de feature creada, sin código de negocio.
+**Activo (lista)** — Lee la colección `rutas` y ofrece “Agregar ruta de prueba”. Estudiante y operador reciben permiso denegado al crear; solo el rol administrador en reglas puede escribir. Google Maps, paradas cercanas y polilínea: pendientes.
 
 ---
 
 ## Diseño y secciones
 
+- Lista de rutas activas (nombre y metadatos visibles).
+- Botón para intentar crear una ruta de prueba (valida reglas).
 - Mapa con Google Maps SDK (pendiente).
-- Lista de rutas activas con paradas.
-- Ubicación bajo demanda para la parada más cercana.
-- Polilínea de la ruta (calculada por Google Routes API desde el panel admin).
+- Ubicación bajo demanda para la parada más cercana (pendiente).
+- Polilínea de la ruta (calculada por Google Routes API desde el panel admin, pendiente en cliente).
 
 ---
 
@@ -36,19 +37,22 @@ Permite al estudiante consultar rutas, paradas y salidas activas, con mapa y ubi
 ```text
 lib/src/features/routes_map/
 ├── domain/
-│   ├── Ruta.dart                    # Entidad (stub)
-│   ├── Parada.dart                  # Entidad (stub)
-│   └── RoutesMapRepository.dart     # Contrato (stub)
+│   ├── entities/bus_route.dart
+│   └── repositories/routes_repository.dart
 ├── data/
-│   └── RoutesMapRepositoryImpl.dart # Implementación (stub)
+│   ├── datasources/routes_remote_datasource.dart
+│   ├── datasources/firestore_routes_remote_datasource.dart
+│   └── repositories/routes_repository_impl.dart
 ├── presentation/
-│   ├── routes_map_cubit.dart        # Cubit (stub)
-│   ├── routes_map_state.dart        # Estado (stub)
-│   └── routes_map_page.dart         # Widget (stub)
+│   ├── routes_cubit.dart
+│   ├── routes_state.dart
+│   └── routes_page.dart
 test/
 └── features/routes_map/
-    └── routes_map_cubit_test.dart   # Pruebas (stub)
+    └── routes_cubit_test.dart
 ```
+
+Dependencias en `apps/mobile/lib/src/core/di/injection.dart`.
 
 ---
 
@@ -57,28 +61,24 @@ test/
 | Colección | Documento | Campos relevantes |
 |-----------|-----------|-------------------|
 | `rutas` | automático | Catálogo de rutas |
-| `paradas` | automático | Paradas de cada ruta |
+| `paradas` | automático | Paradas de cada ruta (lectura futura) |
 | `salidas` | automático | `programada`, `enCurso`, `finalizada`, `cancelada` |
 
 ---
 
-## Guía de construcción
+## Guía de construcción (pendiente mapa)
 
-1. Copiar el patrón de capas de `auth`.
-2. Agregar dependencias pendientes: `google_maps_flutter`, `geolocator`, `permission_handler`.
-3. Implementar `RoutesMapRepository` con lectura de `rutas`, `paradas` y `salidas`.
-4. Crear `RoutesMapCubit` con estados de carga, datos y error.
-5. Integrar Google Maps SDK para mostrar mapa y marcadores.
-6. Agregar permiso de ubicación en `AndroidManifest.xml` e `Info.plist`.
-7. Registrar dependencias en `injection.dart`.
-8. Escribir pruebas en `apps/mobile/test/features/routes_map/`.
-9. Registrar la ruta en `app_routes.dart`.
+1. Mantener el patrón de capas actual (`RoutesRepository`, `RoutesCubit`).
+2. Agregar dependencias: `google_maps_flutter`, `geolocator`, `permission_handler`.
+3. Extender el repositorio con `paradas` y `salidas`.
+4. Integrar Google Maps SDK y permisos en `AndroidManifest.xml` / `Info.plist`.
+5. Ampliar pruebas en `apps/mobile/test/features/routes_map/`.
 
 ---
 
 ## Documentación relacionada
 
-- [../estado.md](../estado.md) — Feature `routes_map`: stub.
+- [../estado.md](../estado.md) — Feature `routes_map` (lista hecha, mapa pendiente).
 - [../modulos/estudiante.md](../modulos/estudiante.md) — Módulo estudiante, sección routes_map.
 - [../modulos/funcionalidades/rutas.md](../modulos/funcionalidades/rutas.md) — Reglas de rutas y paradas.
 - [../03-integraciones.md](../03-integraciones.md) — Google Maps SDK y Google Routes API (pendientes).

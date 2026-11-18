@@ -98,6 +98,7 @@ admin-web/          # panel de administración (pendiente)
 | `apps/mobile/android/local.properties` | No | `MAPS_API_KEY` (futuro) |
 | `apps/mobile/android/app/google-services.json` | No | Firebase para Android |
 | `apps/mobile/lib/firebase_options.dart` | No | Generado por FlutterFire |
+| `apps/firebase/env/firebase-admin-sa.json` | No | Admin SDK para seed local |
 
 Proyecto Firebase `utebus-4435b` (`.firebaserc` y `firebase.json` en `apps/firebase/`). Detalle del backend: [arquitectura-y-datos/README.md](arquitectura-y-datos/README.md). Qué está hecho y qué falta: [estado.md](estado.md).
 

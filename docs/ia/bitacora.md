@@ -14,5 +14,6 @@ Registro que pide el curso sobre el uso de herramientas de IA. Sin secretos ni d
 | 2026-10-26 | Equipo 1 | Cursor | Auditoría: regla QR (`/privado/{docId}`), `signUp` sin perfil = fallo + cierre de sesión huérfana, rol desconocido = perfil inválido, seed prod exige service account, sin client secret en repo | Reglas redesplegadas; `verify-activity` escanea `.mjs/.js/.ps1`; tests sesión + redirects |
 | 2026-10-27 | Equipo 1 | Cursor | Sesión global como `AuthSessionCubit` (un solo gestor de estado, C-08); `LoginPage` sin dependencia de `FirebaseBootstrap` (`AuthRepository.isAvailable`); cierre de sesión vía Cubit, no desde widgets a `get_it` | `StreamListenable` para `refreshListenable`; 40 pruebas. Documentación reescrita sin símbolos ni códigos del enunciado |
 | 2026-10-27 | Equipo 1 | Cursor | Pendientes de la auditoría: pruebas de reglas contra emulador, `integration_test` del arranque, Storage `documentacion/` partido en público vs por uid | Storage ya no deja leer documentos de otro usuario; reglas se prueban con `npm run test:emulator` |
+| 2026-11-18 | Equipo | Cursor | S1-01: UI auth Figma, contraseña 8, seed Auth demo, `routes_map` lista, docs `contribucion-repositorio.md` | `docs/estado.md` y pantallas actualizadas; sin logs de depuración en `lib/` |
 
 Cada integrante debe poder explicar su parte en defensa.

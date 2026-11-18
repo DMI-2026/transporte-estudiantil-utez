@@ -63,7 +63,11 @@ scripts/check.ps1      sensor único (C-04)
 
 ```powershell
 git config core.hooksPath .githooks
-(cd apps/mobile; flutter pub get)
-.\scripts\setup-local.ps1
+firebase login
+.\scripts\setup-local.ps1 -RunFlutterfire
 .\scripts\check.ps1
+cd apps/mobile
+flutter run --dart-define-from-file=env/dev.json
 ```
+
+`check.ps1` vuelve al directorio donde se lanzó. `flutter run` necesita un dispositivo Android (`flutter devices`).
