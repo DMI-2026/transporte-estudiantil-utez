@@ -15,11 +15,17 @@ void main() {
     await montar(tester, repo);
 
     expect(find.text('Iniciar sesión'), findsOneWidget);
-    expect(find.text('Transporte Estudiantil UTEZ'), findsOneWidget);
+    expect(find.text('Bienvenida de nuevo'), findsOneWidget);
 
-    await tester.enterText(find.byKey(const Key('campo-correo')), 'a@utez.edu.mx');
-    await tester.enterText(find.byKey(const Key('campo-contrasena')), 'secret1');
-    await tester.tap(find.text('Entrar'));
+    await tester.enterText(
+      find.byKey(const Key('campo-correo')),
+      'a@utez.edu.mx',
+    );
+    await tester.enterText(
+      find.byKey(const Key('campo-contrasena')),
+      'secret12',
+    );
+    await tester.tap(find.text('Iniciar sesión'));
     await tester.pumpAndSettle();
 
     expect(repo.signInCalls, 1);
@@ -37,13 +43,21 @@ void main() {
     expect(find.text('Firebase desactivado'), findsNothing);
   });
 
-  testWidgets('si falla la carga muestra el error, no un stack', (tester) async {
+  testWidgets('si falla la carga muestra el error, no un stack', (
+    tester,
+  ) async {
     final repo = FakeAuthRepository(signInFailure: const AuthNetworkFailure());
     await montar(tester, repo);
 
-    await tester.enterText(find.byKey(const Key('campo-correo')), 'a@utez.edu.mx');
-    await tester.enterText(find.byKey(const Key('campo-contrasena')), 'secret1');
-    await tester.tap(find.text('Entrar'));
+    await tester.enterText(
+      find.byKey(const Key('campo-correo')),
+      'a@utez.edu.mx',
+    );
+    await tester.enterText(
+      find.byKey(const Key('campo-contrasena')),
+      'secret12',
+    );
+    await tester.tap(find.text('Iniciar sesión'));
     await tester.pumpAndSettle();
 
     expect(find.text('No pudimos iniciar sesión'), findsOneWidget);

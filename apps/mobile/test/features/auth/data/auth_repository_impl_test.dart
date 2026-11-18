@@ -18,14 +18,12 @@ void main() {
   group('AuthRepositoryImpl', () {
     test('signIn carga el perfil de Firestore', () async {
       final gateway = FakeAuthGateway(uid: 'uid-1');
-      final users = FakeUserRemoteDataSource(
-        perfiles: {'uid-1': perfil()},
-      );
+      final users = FakeUserRemoteDataSource(perfiles: {'uid-1': perfil()});
       final repo = AuthRepositoryImpl(authGateway: gateway, users: users);
 
       final result = await repo.signIn(
         email: 'a@utez.edu.mx',
-        password: 'secret1',
+        password: 'Pass123!',
       );
 
       expect(result.failure, isNull);
@@ -42,7 +40,7 @@ void main() {
         users: FakeUserRemoteDataSource(),
       );
 
-      final result = await repo.signIn(email: 'a@x.com', password: 'secret1');
+      final result = await repo.signIn(email: 'a@x.com', password: 'Pass123!');
 
       expect(result.value, isNull);
       expect(result.failure, isA<AuthNetworkFailure>());
@@ -56,7 +54,7 @@ void main() {
 
       final result = await repo.signUp(
         email: 'a@utez.edu.mx',
-        password: 'secret1',
+        password: 'Pass123!',
         displayName: 'Ana',
         role: UserRole.estudiante,
       );
@@ -74,7 +72,7 @@ void main() {
 
       final result = await repo.signUp(
         email: 'a@utez.edu.mx',
-        password: 'secret1',
+        password: 'Pass123!',
         displayName: 'Ana',
         role: UserRole.estudiante,
       );
@@ -91,7 +89,7 @@ void main() {
 
       final result = await repo.signUp(
         email: 'a@utez.edu.mx',
-        password: 'secret1',
+        password: 'Pass123!',
         displayName: 'Ana',
         role: UserRole.estudiante,
       );
@@ -107,7 +105,7 @@ void main() {
         ..fallaAlLeer = const FirestoreFailure();
       final repo = AuthRepositoryImpl(authGateway: gateway, users: users);
 
-      final result = await repo.signIn(email: 'a@x.com', password: 'secret1');
+      final result = await repo.signIn(email: 'a@x.com', password: 'Pass123!');
 
       expect(result.value, isNull);
       expect(result.failure, isA<FirestoreFailure>());

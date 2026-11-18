@@ -17,13 +17,12 @@ class FakeFactory {
     AuthFailure? signInFailure,
     AuthFailure? signUpFailure,
     bool isAvailable = true,
-  }) =>
-      FakeAuthRepository(
-        session: session,
-        signInFailure: signInFailure,
-        signUpFailure: signUpFailure,
-        isAvailable: isAvailable,
-      );
+  }) => FakeAuthRepository(
+    session: session,
+    signInFailure: signInFailure,
+    signUpFailure: signUpFailure,
+    isAvailable: isAvailable,
+  );
 
   /// Gateway de auth configurable.
   static FakeAuthGateway authGateway({
@@ -31,25 +30,23 @@ class FakeFactory {
     AuthFailure? signInFailure,
     AuthFailure? signUpFailure,
     AuthFailure? signOutFailure,
-  }) =>
-      FakeAuthGateway(
-        currentUid: uid,
-        signInFailure: signInFailure,
-        signUpFailure: signUpFailure,
-        signOutFailure: signOutFailure,
-      );
+  }) => FakeAuthGateway(
+    currentUid: uid,
+    signInFailure: signInFailure,
+    signUpFailure: signUpFailure,
+    signOutFailure: signOutFailure,
+  );
 
   /// Datasource de usuarios configurable.
   static FakeUserRemoteDataSource userRemoteDataSource({
     Map<String, Map<String, dynamic>>? profiles,
     AuthFailure? fetchFailure,
     AuthFailure? saveFailure,
-  }) =>
-      FakeUserRemoteDataSource(
-        profiles: profiles ?? {},
-        fetchFailure: fetchFailure,
-        saveFailure: saveFailure,
-      );
+  }) => FakeUserRemoteDataSource(
+    profiles: profiles ?? {},
+    fetchFailure: fetchFailure,
+    saveFailure: saveFailure,
+  );
 
   /// Usuario estudiante demo aprobado.
   static const AppUser demoEstudiante = AppUser(

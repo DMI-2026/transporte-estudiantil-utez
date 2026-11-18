@@ -27,8 +27,7 @@ class UiStateView<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (state) {
       UiLoading() =>
-        loading ??
-            const Center(child: CircularProgressIndicator.adaptive()),
+        loading ?? const Center(child: CircularProgressIndicator.adaptive()),
       UiError(:final message, :final onRetry) => MensajeEstado(
         icono: Icons.error_outline,
         titulo: 'No pudimos cargar',

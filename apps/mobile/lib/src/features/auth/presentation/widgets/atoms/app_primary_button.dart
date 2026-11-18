@@ -23,10 +23,12 @@ class AppPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppButton(
+      key: key,
       label: label,
       onPressed: onPressed,
       loading: loading,
       icon: icon,
+      expand: true,
     );
   }
 }

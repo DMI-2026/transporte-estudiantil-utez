@@ -3,6 +3,7 @@ abstract final class AppRoutes {
   static const register = '/registro';
   static const verification = '/verificacion';
   static const home = '/inicio';
+  static const routes = '/rutas';
   static const loading = '/cargando';
   // Rutas por rol (pendientes de implementar features)
   static const operatorDashboard = '/operador';

@@ -16,8 +16,8 @@ void main() {
       ),
     );
 
-    expect(find.text('Transporte exclusivo estudiantil'), findsOneWidget);
     expect(find.text('Hola, Ana Demo'), findsOneWidget);
+    expect(find.text('Inicio'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Cerrar sesión'));
     expect(cerro, isTrue);

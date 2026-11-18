@@ -17,8 +17,7 @@ final class NetworkFailure extends AppFailure {
 
 final class UnavailableFailure extends AppFailure {
   const UnavailableFailure([
-    super.userMessage =
-        'Firebase no está activo. Configura USE_FIREBASE y los archivos locales.',
+    super.userMessage = 'Firebase no está activo. Configura USE_FIREBASE y los archivos locales.',
   ]);
 }
 

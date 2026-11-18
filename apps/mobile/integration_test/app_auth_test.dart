@@ -33,7 +33,10 @@ void main() {
       find.byKey(const Key('campo-correo')),
       'a@utez.edu.mx',
     );
-    await tester.enterText(find.byKey(const Key('campo-contrasena')), 'secret1');
+    await tester.enterText(
+      find.byKey(const Key('campo-contrasena')),
+      'secret12',
+    );
     await tester.tap(find.text('Entrar'));
     await tester.pumpAndSettle();
 
@@ -57,7 +60,10 @@ void main() {
       find.byKey(const Key('campo-correo')),
       'ana@gmail.com',
     );
-    await tester.enterText(find.byKey(const Key('campo-contrasena')), 'secret1');
+    await tester.enterText(
+      find.byKey(const Key('campo-contrasena')),
+      'secret12',
+    );
     await tester.tap(find.text('Registrarme'));
     await tester.pumpAndSettle();
 

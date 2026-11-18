@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/failures/auth_failure.dart';
 import 'auth_gateway.dart';
+import 'firebase_auth_errors.dart';
 
 class FirebaseAuthGateway implements AuthGateway {
   FirebaseAuthGateway(this.auth);
@@ -16,17 +17,15 @@ class FirebaseAuthGateway implements AuthGateway {
     required String email,
     required String password,
   }) async {
+    final trimmed = email.trim();
     try {
       final cred = await auth.signInWithEmailAndPassword(
-        email: email.trim(),
+        email: trimmed,
         password: password,
       );
       return cred.user!.uid;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-        throw const AuthGenericFailure();
-      }
-      throw const AuthGenericFailure();
+      throw authFailureDesde(e.code);
     } catch (e) {
       if (e is AppFailure) rethrow;
       throw const AuthNetworkFailure();
@@ -45,10 +44,7 @@ class FirebaseAuthGateway implements AuthGateway {
       );
       return cred.user!.uid;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        throw const AuthInvalidInputFailure('Ese correo ya está registrado.');
-      }
-      throw const AuthGenericFailure();
+      throw authFailureDesde(e.code);
     } catch (e) {
       if (e is AppFailure) rethrow;
       throw const AuthNetworkFailure();
