@@ -8,4 +8,26 @@ abstract final class AppRoutes {
   // Rutas por rol (pendientes de implementar features)
   static const operatorDashboard = '/operador';
   static const adminDashboard = '/admin';
+
+  // Módulo estudiante (reservas, abordaje, viaje, incidentes y perfil)
+  static const reservations = '/reservas';
+  static const salidas = '/reservas/salidas';
+  static const reservaConfirmada = '/reservas/confirmada';
+  static const cancelarReserva = '/reservas/cancelar';
+  static const boarding = '/abordaje';
+  static const trip = '/viaje';
+  static const incidents = '/incidencias';
+  static const myIncidents = '/incidencias/mis-reportes';
+  static const profile = '/perfil';
+  static const settings = '/perfil/ajustes';
+  static const privacy = '/perfil/aviso-privacidad';
+
+  static String reservaConfirmadaFor(String folio) =>
+      '$reservaConfirmada/$folio';
+  static String cancelarReservaFor(String folio) => '$cancelarReserva/$folio';
+  static String boardingFor(String folio) => '$boarding/$folio';
+  static String tripFor(String folio) => '$trip/$folio';
+  static String incidentsFor(String referencia) =>
+      Uri(path: incidents, queryParameters: {'referencia': referencia})
+          .toString();
 }
