@@ -1,4 +1,4 @@
-// Endpoints de Pagos - Mercado Pago
+// Endpoints de Pagos - Mercado Pago (schema canónico docs/05-datos.md)
 import { onCall, onRequest, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import { getFirestore, FieldValue, Transaction } from "firebase-admin/firestore";
@@ -9,8 +9,8 @@ const db = getFirestore();
 const mp = new MercadoPagoService();
 
 /**
- * Crea preferencia de pago en Mercado Pago
- * Cliente llama desde Flutter: FirebaseFunctions.instance.httpsCallable('crearPreferenciaPago')
+ * Crea preferencia de pago en Mercado Pago.
+ * Cliente: FirebaseFunctions.instance.httpsCallable('crearPreferenciaPago')
  */
 export const crearPreferenciaPago = onCall<PaymentPreferenceRequest>(
   async (request) => {
@@ -21,13 +21,12 @@ export const crearPreferenciaPago = onCall<PaymentPreferenceRequest>(
       throw new HttpsError("unauthenticated", "Usuario no autenticado");
     }
 
-    // Verificar que la reserva pertenece al usuario
     const reservaSnap = await db.collection("reservas").doc(reservaId).get();
     if (!reservaSnap.exists) {
       throw new HttpsError("not-found", "Reserva no encontrada");
     }
     const reserva = reservaSnap.data()!;
-    if (reserva.usuarioId !== uid) {
+    if (reserva.estudianteId !== uid) {
       throw new HttpsError("permission-denied", "No autorizado para esta reserva");
     }
 
@@ -43,17 +42,19 @@ export const crearPreferenciaPago = onCall<PaymentPreferenceRequest>(
         },
       });
 
-      // Guardar referencia del pago en Firestore
       await db.collection("pagos").doc(reservaId).set({
         reservaId,
         salidaId: reserva.salidaId,
-        usuarioId: uid,
+        estudianteId: uid,
         monto,
+        moneda: "MXN",
         metodoPago,
         estado: "pendiente",
+        proveedor: "mercadoPago",
+        externalId: preference.id,
         mpPreferenceId: preference.id,
         mpInitPoint: preference.init_point,
-        creadaEn: FieldValue.serverTimestamp(),
+        creadoEn: FieldValue.serverTimestamp(),
       });
 
       return { initPoint: preference.init_point, preferenceId: preference.id };
@@ -65,8 +66,8 @@ export const crearPreferenciaPago = onCall<PaymentPreferenceRequest>(
 );
 
 /**
- * Webhook público de Mercado Pago
- * Recibe notificaciones de cambio de estado de pago
+ * Webhook público de Mercado Pago.
+ * El cupo ya se descuenta al crear la reserva; aquí solo cambia el estado.
  */
 export const mercadoPagoWebhook = onRequest(
   { cors: true, region: "us-central1" },
@@ -111,13 +112,14 @@ export const mercadoPagoWebhook = onRequest(
       return;
     }
 
-    // Transacción atómica: actualizar pago + reserva + cupo salida
     await db.runTransaction(async (tx: Transaction) => {
       const pagoRef = db.collection("pagos").doc(reservaId);
       const reservaRef = db.collection("reservas").doc(reservaId);
       const pagoSnap = await tx.get(pagoRef);
       const reservaSnap = await tx.get(reservaRef);
-      if (!pagoSnap.exists || !reservaSnap.exists) throw new Error("Pago o reserva no encontrado");
+      if (!pagoSnap.exists || !reservaSnap.exists) {
+        throw new Error("Pago o reserva no encontrado");
+      }
 
       const salidaId = reservaSnap.data()?.salidaId;
       if (typeof salidaId !== "string" || salidaId.length === 0) {
@@ -125,20 +127,33 @@ export const mercadoPagoWebhook = onRequest(
       }
       const salidaRef = db.collection("salidas").doc(salidaId);
       const pago = pagoSnap.data()!;
+      const reserva = reservaSnap.data()!;
 
       if (payment.status === "approved") {
         if (pago.estado === "aprobado") return;
         tx.update(pagoRef, {
           estado: "aprobado",
           mpPaymentId: paymentId,
+          externalId: paymentId,
           aprobadoEn: FieldValue.serverTimestamp(),
         });
-        tx.update(reservaRef, { estado: "reservada" });
-        tx.update(salidaRef, { cuposDisponibles: FieldValue.increment(-1) });
+        tx.update(reservaRef, {
+          estado: "reservada",
+          actualizadoEn: FieldValue.serverTimestamp(),
+        });
       } else if (payment.status === "rejected" || payment.status === "cancelled") {
         if (pago.estado === "rechazado") return;
         tx.update(pagoRef, { estado: "rechazado", mpPaymentId: paymentId });
-        tx.update(reservaRef, { estado: "cancelada" });
+        if (reserva.estado === "pendientePago") {
+          tx.update(reservaRef, {
+            estado: "cancelada",
+            actualizadoEn: FieldValue.serverTimestamp(),
+          });
+          tx.update(salidaRef, {
+            asientosDisponibles: FieldValue.increment(1),
+            actualizadoEn: FieldValue.serverTimestamp(),
+          });
+        }
       }
     });
 
@@ -147,7 +162,7 @@ export const mercadoPagoWebhook = onRequest(
 );
 
 /**
- * Reembolso de pago (solo admin/operador)
+ * Reembolso de pago (solo administrador/operador).
  */
 export const reembolsarPago = onCall<{ reservaId: string; motivo: string }>(
   async (request) => {
@@ -156,11 +171,10 @@ export const reembolsarPago = onCall<{ reservaId: string; motivo: string }>(
 
     if (!uid) throw new HttpsError("unauthenticated", "No autenticado");
 
-    // Verificar rol admin/operador (custom claim)
     const userDoc = await db.collection("usuarios").doc(uid).get();
     const role = userDoc.data()?.rol;
-    if (role !== "admin" && role !== "operador") {
-      throw new HttpsError("permission-denied", "Solo admin/operador");
+    if (role !== "administrador" && role !== "operador") {
+      throw new HttpsError("permission-denied", "Solo administrador/operador");
     }
 
     const pagoSnap = await db.collection("pagos").doc(reservaId).get();
@@ -185,9 +199,19 @@ export const reembolsarPago = onCall<{ reservaId: string; motivo: string }>(
         const reservaRef = db.collection("reservas").doc(reservaId);
         const salidaRef = db.collection("salidas").doc(salidaId);
 
-        tx.update(pagoRef, { estado: "reembolsado", reembolsoEn: FieldValue.serverTimestamp(), motivo });
-        tx.update(reservaRef, { estado: "cancelada" });
-        tx.update(salidaRef, { cuposDisponibles: FieldValue.increment(1) });
+        tx.update(pagoRef, {
+          estado: "reembolsado",
+          reembolsoEn: FieldValue.serverTimestamp(),
+          motivoReembolso: motivo,
+        });
+        tx.update(reservaRef, {
+          estado: "cancelada",
+          actualizadoEn: FieldValue.serverTimestamp(),
+        });
+        tx.update(salidaRef, {
+          asientosDisponibles: FieldValue.increment(1),
+          actualizadoEn: FieldValue.serverTimestamp(),
+        });
       });
 
       return { success: true };
