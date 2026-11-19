@@ -19,7 +19,7 @@ export const aprobarUsuario = onCall<{ uid: string }>(
 
     // Verificar que el caller es admin
     const adminDoc = await db.collection("usuarios").doc(adminUid).get();
-    if (adminDoc.data()?.rol !== "admin") {
+    if (adminDoc.data()?.rol !== "administrador") {
       throw new HttpsError("permission-denied", "Solo administradores");
     }
 
@@ -56,7 +56,7 @@ export const rechazarUsuario = onCall<{ uid: string; motivo: string }>(
     if (!adminUid) throw new HttpsError("unauthenticated", "No autenticado");
 
     const adminDoc = await db.collection("usuarios").doc(adminUid).get();
-    if (adminDoc.data()?.rol !== "admin") {
+    if (adminDoc.data()?.rol !== "administrador") {
       throw new HttpsError("permission-denied", "Solo administradores");
     }
 
@@ -84,7 +84,7 @@ export const listarPendientesVerificacion = onCall<{ limite?: number; cursor?: s
     if (!adminUid) throw new HttpsError("unauthenticated", "No autenticado");
 
     const adminDoc = await db.collection("usuarios").doc(adminUid).get();
-    if (adminDoc.data()?.rol !== "admin") {
+    if (adminDoc.data()?.rol !== "administrador") {
       throw new HttpsError("permission-denied", "Solo administradores");
     }
 
