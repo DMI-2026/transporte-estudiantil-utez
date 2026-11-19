@@ -7,6 +7,7 @@ import '../core/theme/app_theme.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/auth/presentation/session/auth_session_cubit.dart';
 import '../features/routes_map/domain/repositories/routes_repository.dart';
+import 'student_providers.dart';
 
 class TransporteApp extends StatelessWidget {
   const TransporteApp({super.key});
@@ -23,10 +24,12 @@ class TransporteApp extends StatelessWidget {
         value: getIt<RoutesRepository>(),
         child: BlocProvider.value(
           value: getIt<AuthSessionCubit>(),
-          child: MaterialApp.router(
-            title: 'Transporte Estudiantil UTEZ',
-            theme: AppTheme.light(),
-            routerConfig: router,
+          child: StudentProviders(
+            child: MaterialApp.router(
+              title: 'Transporte Estudiantil UTEZ',
+              theme: AppTheme.light(),
+              routerConfig: router,
+            ),
           ),
         ),
       ),

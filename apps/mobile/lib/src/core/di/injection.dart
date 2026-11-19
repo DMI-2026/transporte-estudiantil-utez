@@ -11,6 +11,18 @@ import '../../features/auth/presentation/session/auth_session_cubit.dart';
 import '../../features/routes_map/data/datasources/firestore_routes_remote_datasource.dart';
 import '../../features/routes_map/data/repositories/routes_repository_impl.dart';
 import '../../features/routes_map/domain/repositories/routes_repository.dart';
+import '../../features/incidents/data/datasources/demo_incidents_datasource.dart';
+import '../../features/incidents/data/repositories/incidents_repository_impl.dart';
+import '../../features/incidents/domain/repositories/incidents_repository.dart';
+import '../../features/profile/data/datasources/demo_profile_datasource.dart';
+import '../../features/profile/data/repositories/profile_repository_impl.dart';
+import '../../features/profile/domain/repositories/profile_repository.dart';
+import '../../features/reservations/data/datasources/demo_reservations_datasource.dart';
+import '../../features/reservations/data/datasources/reservations_datasource.dart';
+import '../../features/reservations/data/repositories/reservations_repository_impl.dart';
+import '../../features/reservations/domain/repositories/reservations_repository.dart';
+import '../../features/trip/data/repositories/demo_trip_repository.dart';
+import '../../features/trip/domain/repositories/trip_repository.dart';
 import '../firebase/firebase_bootstrap.dart';
 import '../router/app_router.dart';
 
@@ -21,6 +33,7 @@ Future<void> configureDependencies() async {
 
   _configureCore();
   _configureRoutes();
+  _configureEstudiante();
   await _configureAuth();
   _configureRouter();
 }
@@ -39,6 +52,26 @@ void _configureRoutes() {
     () => RoutesRepositoryImpl(
       FirestoreRoutesRemoteDataSource(getIt<FirebaseFirestore>()),
     ),
+  );
+}
+
+/// Módulo estudiante con fuentes de DEMOSTRACIÓN en memoria (sin Firebase).
+/// Cuando exista el backend, se cambia solo la fuente de datos aquí.
+void _configureEstudiante() {
+  getIt.registerLazySingleton<ReservationsDataSource>(
+    DemoReservationsDataSource.new,
+  );
+  getIt.registerLazySingleton<ReservationsRepository>(
+    () => ReservationsRepositoryImpl(getIt<ReservationsDataSource>()),
+  );
+  getIt.registerLazySingleton<TripRepository>(
+    () => DemoTripRepository(getIt<ReservationsDataSource>()),
+  );
+  getIt.registerLazySingleton<IncidentsRepository>(
+    () => IncidentsRepositoryImpl(DemoIncidentsDataSource()),
+  );
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(DemoProfileDataSource()),
   );
 }
 

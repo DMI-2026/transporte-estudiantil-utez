@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../router/app_routes.dart';
 import 'app_bottom_nav.dart';
 
-/// Barra inferior del estudiante: inicio y rutas.
+/// Barra inferior del estudiante: inicio, rutas, reservas y perfil.
 class StudentBottomNav extends StatelessWidget {
   const StudentBottomNav({super.key, required this.currentIndex});
 
@@ -15,8 +15,13 @@ class StudentBottomNav extends StatelessWidget {
     return AppBottomNav(
       currentIndex: currentIndex,
       onSelected: (index) {
-        final location = index == 0 ? AppRoutes.home : AppRoutes.routes;
-        context.go(location);
+        const destinos = [
+          AppRoutes.home,
+          AppRoutes.routes,
+          AppRoutes.reservations,
+          AppRoutes.profile,
+        ];
+        context.go(destinos[index]);
       },
       items: const [
         AppNavItem(
@@ -28,6 +33,16 @@ class StudentBottomNav extends StatelessWidget {
           icon: Icons.alt_route_outlined,
           activeIcon: Icons.alt_route,
           label: 'Rutas',
+        ),
+        AppNavItem(
+          icon: Icons.confirmation_number_outlined,
+          activeIcon: Icons.confirmation_number,
+          label: 'Reservas',
+        ),
+        AppNavItem(
+          icon: Icons.person_outline,
+          activeIcon: Icons.person,
+          label: 'Perfil',
         ),
       ],
     );
