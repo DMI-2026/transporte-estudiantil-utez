@@ -93,9 +93,9 @@ Sin ese paso, ningún login con correo funcionará aunque las cuentas demo exist
 
 | Rol | Correo | Contraseña | Nota |
 |-----|--------|------------|------|
-| Estudiante | `estudiante.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-estudiante-001`, cuenta aprobada |
-| Operador | `operador.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-operador-001`, cuenta aprobada |
-| Administrador | `admin.demo@utez.edu.mx` | `Utez.demo8` | uid `demo-admin-001`; el cliente no puede crear este rol |
+| Estudiante | `estudiante.demo@utez.edu.mx` | `Pass123!` | uid `demo-estudiante-001`, cuenta aprobada |
+| Operador | `operador.demo@utez.edu.mx` | `Pass123!` | uid `demo-operador-001`, cuenta aprobada |
+| Administrador | `admin.demo@utez.edu.mx` | `Pass123!` | uid `demo-admin-001`; el cliente no puede crear este rol |
 
 Las tres cuentas se crean en Authentication y en `usuarios/{uid}` con `scripts/seed-firestore.ps1` o `scripts/seed-firestore-prod.ps1`. Hace falta la service account local (no se versiona). La contraseña de la app exige 8 caracteres.
 
