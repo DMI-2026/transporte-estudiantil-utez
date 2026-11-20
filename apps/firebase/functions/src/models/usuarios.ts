@@ -19,8 +19,9 @@ export interface UserDocument {
     telefono: string;
   };
   preferenciasNotificacion?: {
-    push: boolean;
-    email: boolean;
+    recordatoriosSalida: boolean;
+    estadoReportes: boolean;
+    avisosGenerales: boolean;
   };
   fotoCredencialUrl?: string;
 }
