@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:transporte_estudiantil/src/features/boarding/data/pase_gateway.dart';
 import 'package:transporte_estudiantil/src/features/boarding/presentation/qr_abordaje_page.dart';
 
 import '../../../fakes/fake_reservations_repository.dart';
@@ -12,6 +13,7 @@ void main() {
         home: QrAbordajePage(
           folio: 'UTEZ-1048',
           repository: FakeReservationsRepository(),
+          pase: const DemoPaseGateway(),
         ),
       ),
     );
@@ -29,6 +31,7 @@ void main() {
           repository: FakeReservationsRepository(
             reservas: [FixturesEstudiante.cancelada],
           ),
+          pase: const DemoPaseGateway(),
         ),
       ),
     );
