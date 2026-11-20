@@ -15,9 +15,12 @@ import '../../features/incidents/data/datasources/demo_incidents_datasource.dart
 import '../../features/incidents/data/repositories/incidents_repository_impl.dart';
 import '../../features/incidents/domain/repositories/incidents_repository.dart';
 import '../../features/profile/data/datasources/demo_profile_datasource.dart';
+import '../../features/profile/data/datasources/firestore_profile_datasource.dart';
+import '../../features/profile/data/datasources/profile_datasource.dart';
 import '../../features/profile/data/repositories/profile_repository_impl.dart';
 import '../../features/profile/domain/repositories/profile_repository.dart';
 import '../../features/reservations/data/datasources/demo_reservations_datasource.dart';
+import '../../features/reservations/data/datasources/firestore_reservations_datasource.dart';
 import '../../features/reservations/data/datasources/reservations_datasource.dart';
 import '../../features/reservations/data/repositories/reservations_repository_impl.dart';
 import '../../features/reservations/domain/repositories/reservations_repository.dart';
@@ -55,12 +58,18 @@ void _configureRoutes() {
   );
 }
 
-/// Módulo estudiante con fuentes de DEMOSTRACIÓN en memoria (sin Firebase).
-/// Cuando exista el backend, se cambia solo la fuente de datos aquí.
+/// Módulo estudiante: reservas usan Firestore si Firebase está listo;
+/// el resto sigue en fuentes de demostración hasta su issue de backend.
 void _configureEstudiante() {
-  getIt.registerLazySingleton<ReservationsDataSource>(
-    DemoReservationsDataSource.new,
-  );
+  getIt.registerLazySingleton<ReservationsDataSource>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return DemoReservationsDataSource();
+    }
+    return FirestoreReservationsDataSource(
+      firestore: getIt<FirebaseFirestore>(),
+      currentUid: () => FirebaseAuth.instance.currentUser?.uid,
+    );
+  });
   getIt.registerLazySingleton<ReservationsRepository>(
     () => ReservationsRepositoryImpl(getIt<ReservationsDataSource>()),
   );
@@ -70,8 +79,17 @@ void _configureEstudiante() {
   getIt.registerLazySingleton<IncidentsRepository>(
     () => IncidentsRepositoryImpl(DemoIncidentsDataSource()),
   );
+  getIt.registerLazySingleton<ProfileDataSource>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return DemoProfileDataSource();
+    }
+    return FirestoreProfileDataSource(
+      firestore: getIt<FirebaseFirestore>(),
+      currentUid: () => FirebaseAuth.instance.currentUser?.uid,
+    );
+  });
   getIt.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(DemoProfileDataSource()),
+    () => ProfileRepositoryImpl(getIt<ProfileDataSource>()),
   );
 }
 

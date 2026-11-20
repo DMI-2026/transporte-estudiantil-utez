@@ -1,34 +1,39 @@
-// Modelos compartidos para Usuarios y Roles
-export type UserRole = "estudiante" | "operador" | "admin";
+// Modelos de usuarios alineados a docs/05-datos.md
+export type UserRole = "estudiante" | "operador" | "administrador";
 
 export type VerificationStatus = "pendiente" | "aprobada" | "rechazada";
 
 export interface UserDocument {
-  uid: string;
   email: string;
-  displayName: string | null;
+  nombreCompleto?: string;
   rol: UserRole;
   estadoVerificacion: VerificationStatus;
-  fotoCredencialUrl?: string;
   creadoEn: FirebaseFirestore.Timestamp;
-  actualizadoEn: FirebaseFirestore.Timestamp;
-  aprobadoEn?: FirebaseFirestore.Timestamp;
-  aprobadoPor?: string;
-  rechazadoEn?: FirebaseFirestore.Timestamp;
-  rechazadoPor?: string;
-  motivoRechazo?: string;
+  actualizadoEn?: FirebaseFirestore.Timestamp;
+  telefono?: string;
+  matricula?: string;
+  carrera?: string;
+  contactoEmergencia?: {
+    nombre: string;
+    parentesco: string;
+    telefono: string;
+  };
+  preferenciasNotificacion?: {
+    recordatoriosSalida: boolean;
+    estadoReportes: boolean;
+    avisosGenerales: boolean;
+  };
+  fotoCredencialUrl?: string;
 }
 
 export interface UserCustomClaims {
   rol: UserRole;
   verificado: boolean;
-  operadorSalidaId?: string; // Para reglas de QR privado
+  operadorSalidaId?: string;
 }
 
 export interface DeviceTokenDocument {
-  token: string;
+  fcmToken: string;
   plataforma: "android" | "ios" | "web";
-  appVersion: string;
-  registradoEn: FirebaseFirestore.Timestamp;
-  ultimoUsoEn: FirebaseFirestore.Timestamp;
+  actualizadoEn: FirebaseFirestore.Timestamp;
 }
