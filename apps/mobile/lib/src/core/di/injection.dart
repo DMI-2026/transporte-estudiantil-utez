@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../features/boarding/data/pase_gateway.dart';
 import '../../features/auth/data/datasources/firebase_auth_gateway.dart';
 import '../../features/auth/data/datasources/firestore_user_remote_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
@@ -23,8 +24,10 @@ import '../../features/profile/data/datasources/firestore_profile_datasource.dar
 import '../../features/profile/data/datasources/profile_datasource.dart';
 import '../../features/profile/data/repositories/profile_repository_impl.dart';
 import '../../features/profile/domain/repositories/profile_repository.dart';
+import '../../features/reservations/data/datasources/callable_pagos_gateway.dart';
 import '../../features/reservations/data/datasources/demo_reservations_datasource.dart';
 import '../../features/reservations/data/datasources/firestore_reservations_datasource.dart';
+import '../../features/reservations/data/datasources/pagos_gateway.dart';
 import '../../features/reservations/data/datasources/reservations_datasource.dart';
 import '../../features/reservations/data/repositories/reservations_repository_impl.dart';
 import '../../features/reservations/domain/repositories/reservations_repository.dart';
@@ -75,7 +78,20 @@ void _configureEstudiante() {
     return FirestoreReservationsDataSource(
       firestore: getIt<FirebaseFirestore>(),
       currentUid: () => FirebaseAuth.instance.currentUser?.uid,
+      cobroActivo: true,
     );
+  });
+  getIt.registerLazySingleton<PagosGateway>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return const DemoPagosGateway();
+    }
+    return CallablePagosGateway(FirebaseFunctions.instance);
+  });
+  getIt.registerLazySingleton<PaseGateway>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return const DemoPaseGateway();
+    }
+    return CallablePaseGateway(FirebaseFunctions.instance);
   });
   getIt.registerLazySingleton<ReservationsRepository>(
     () => ReservationsRepositoryImpl(getIt<ReservationsDataSource>()),
