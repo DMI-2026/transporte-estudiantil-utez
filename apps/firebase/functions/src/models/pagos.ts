@@ -1,8 +1,8 @@
-// Modelos compartidos para Pagos (Mercado Pago)
+// Modelos de Pagos alineados a docs/05-datos.md
 export interface PaymentPreferenceRequest {
   reservaId: string;
   monto: number;
-  metodoPago: string; // "credit_card", "debit_card", "ticket", etc.
+  metodoPago: string;
 }
 
 export interface PaymentWebhookPayload {
@@ -32,20 +32,23 @@ export interface MercadoPagoPayment {
 
 export interface RefundRequest {
   paymentId: string;
-  amount?: number; // Parcial si se especifica
+  amount?: number;
 }
 
 export interface PaymentDocument {
   reservaId: string;
   salidaId: string;
-  usuarioId: string;
+  estudianteId: string;
   monto: number;
-  metodoPago: string;
+  moneda: string;
   estado: "pendiente" | "aprobado" | "rechazado" | "reembolsado";
+  proveedor: string;
+  externalId?: string;
+  metodoPago?: string;
   mpPreferenceId?: string;
   mpPaymentId?: string;
   mpInitPoint?: string;
-  creadaEn: FirebaseFirestore.Timestamp;
+  creadoEn: FirebaseFirestore.Timestamp;
   aprobadoEn?: FirebaseFirestore.Timestamp;
   reembolsoEn?: FirebaseFirestore.Timestamp;
   motivoReembolso?: string;

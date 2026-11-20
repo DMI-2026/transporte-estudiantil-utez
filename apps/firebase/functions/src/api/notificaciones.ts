@@ -27,13 +27,15 @@ export const enviarNotificacion = onCall<SendNotificationRequest>(
     // Solo admin/operador puede enviar notificaciones arbitrarias
     const userDoc = await db.collection("usuarios").doc(uid).get();
     const role = userDoc.data()?.rol;
-    if (role !== "admin" && role !== "operador") {
-      throw new HttpsError("permission-denied", "Solo admin/operador");
+    if (role !== "administrador" && role !== "operador") {
+      throw new HttpsError("permission-denied", "Solo administrador/operador");
     }
 
     // Obtener tokens FCM del usuario
     const tokensSnap = await db.collection("usuarios").doc(userId).collection("dispositivos").get();
-    const tokens = tokensSnap.docs.map((doc) => doc.data().token).filter(Boolean);
+    const tokens = tokensSnap.docs
+      .map((doc) => doc.data().fcmToken ?? doc.data().token)
+      .filter(Boolean);
 
     if (tokens.length === 0) {
       return { sent: 0, message: "Usuario sin dispositivos registrados" };
@@ -89,7 +91,8 @@ export const notificarPasajerosSalida = onCall<{ salidaId: string; title: string
     if (!salidaSnap.exists) throw new HttpsError("not-found", "Salida no encontrada");
 
     const salida = salidaSnap.data()!;
-    if (salida.operadorId !== uid && (await db.collection("usuarios").doc(uid).get()).data()?.rol !== "admin") {
+    const callerRol = (await db.collection("usuarios").doc(uid).get()).data()?.rol;
+    if (salida.operadorId !== uid && callerRol !== "administrador") {
       throw new HttpsError("permission-denied", "No autorizado");
     }
 
@@ -100,13 +103,21 @@ export const notificarPasajerosSalida = onCall<{ salidaId: string; title: string
       .where("estado", "==", "reservada")
       .get();
 
-    const userIds = [...new Set(reservasSnap.docs.map((doc) => doc.data().usuarioId))];
+    const userIds = [
+      ...new Set(
+        reservasSnap.docs
+          .map((doc) => doc.data().estudianteId)
+          .filter((id): id is string => typeof id === "string"),
+      ),
+    ];
 
     // Enviar en paralelo (batch de 500 tokens por request FCM)
     let totalSent = 0;
     for (const userId of userIds) {
       const tokensSnap = await db.collection("usuarios").doc(userId).collection("dispositivos").get();
-      const tokens = tokensSnap.docs.map((doc) => doc.data().token).filter(Boolean);
+      const tokens = tokensSnap.docs
+        .map((doc) => doc.data().fcmToken ?? doc.data().token)
+        .filter(Boolean);
       if (tokens.length === 0) continue;
 
       const message: Message = {
