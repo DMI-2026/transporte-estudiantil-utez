@@ -208,6 +208,20 @@ async function seed() {
     nombreCompleto: 'Ana Demo Estudiante',
     rol: 'estudiante',
     estadoVerificacion: 'aprobada',
+    matricula: '202601234',
+    carrera: 'Ingeniería en Desarrollo de Software',
+    telefono: '7770000234',
+    contactoEmergencia: {
+      nombre: 'Ana Hernández Ríos',
+      parentesco: 'Madre',
+      telefono: '7770000235',
+    },
+    preferenciasNotificacion: {
+      recordatoriosSalida: true,
+      estadoReportes: true,
+      avisosGenerales: false,
+    },
+    credencialAprobadaEl: now,
     creadoEn: now,
     actualizadoEn: now,
   });
