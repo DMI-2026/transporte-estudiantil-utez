@@ -23,7 +23,7 @@ const FIREBASE_CLIENT_ID = process.env.FIREBASE_TOOLS_CLIENT_ID ?? null;
 const FIREBASE_CLIENT_SECRET = process.env.FIREBASE_TOOLS_CLIENT_SECRET ?? null;
 
 const projectId = process.env.FIREBASE_PROJECT_ID ?? 'utebus-4435b';
-const demoPassword = 'Utez.demo8';
+const demoPassword = 'Pass123!';
 let adminAppReady = false;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const backendRoot = path.resolve(__dirname, '..');
