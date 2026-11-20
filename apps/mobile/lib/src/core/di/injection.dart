@@ -15,6 +15,8 @@ import '../../features/incidents/data/datasources/demo_incidents_datasource.dart
 import '../../features/incidents/data/repositories/incidents_repository_impl.dart';
 import '../../features/incidents/domain/repositories/incidents_repository.dart';
 import '../../features/profile/data/datasources/demo_profile_datasource.dart';
+import '../../features/profile/data/datasources/firestore_profile_datasource.dart';
+import '../../features/profile/data/datasources/profile_datasource.dart';
 import '../../features/profile/data/repositories/profile_repository_impl.dart';
 import '../../features/profile/domain/repositories/profile_repository.dart';
 import '../../features/reservations/data/datasources/demo_reservations_datasource.dart';
@@ -77,8 +79,17 @@ void _configureEstudiante() {
   getIt.registerLazySingleton<IncidentsRepository>(
     () => IncidentsRepositoryImpl(DemoIncidentsDataSource()),
   );
+  getIt.registerLazySingleton<ProfileDataSource>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return DemoProfileDataSource();
+    }
+    return FirestoreProfileDataSource(
+      firestore: getIt<FirebaseFirestore>(),
+      currentUid: () => FirebaseAuth.instance.currentUser?.uid,
+    );
+  });
   getIt.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(DemoProfileDataSource()),
+    () => ProfileRepositoryImpl(getIt<ProfileDataSource>()),
   );
 }
 
