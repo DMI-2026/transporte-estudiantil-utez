@@ -2,8 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/di/injection.dart';
+import '../features/boarding/data/pase_gateway.dart';
 import '../features/incidents/domain/repositories/incidents_repository.dart';
 import '../features/profile/domain/repositories/profile_repository.dart';
+import '../features/reservations/data/datasources/pagos_gateway.dart';
 import '../features/reservations/domain/repositories/reservations_repository.dart';
 import '../features/trip/domain/repositories/trip_repository.dart';
 
@@ -20,6 +22,12 @@ class StudentProviders extends StatelessWidget {
       providers: [
         RepositoryProvider<ReservationsRepository>.value(
           value: getIt<ReservationsRepository>(),
+        ),
+        RepositoryProvider<PagosGateway>.value(
+          value: getIt<PagosGateway>(),
+        ),
+        RepositoryProvider<PaseGateway>.value(
+          value: getIt<PaseGateway>(),
         ),
         RepositoryProvider<TripRepository>.value(
           value: getIt<TripRepository>(),
