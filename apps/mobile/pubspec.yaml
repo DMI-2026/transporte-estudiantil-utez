@@ -49,6 +49,7 @@ dependencies:
   geolocator: ^14.1.2
   permission_handler: ^13.0.2
   cloud_functions: ^7.1.0
+  url_launcher: ^6.3.3
 
 dev_dependencies:
   flutter_test:
