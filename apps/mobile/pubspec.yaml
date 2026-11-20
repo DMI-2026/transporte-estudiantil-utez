@@ -43,6 +43,11 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   qr_flutter: ^4.1.0
+  firebase_storage: ^14.1.0
+  image_picker: ^1.2.4
+  google_maps_flutter: ^2.19.0
+  geolocator: ^14.1.2
+  permission_handler: ^13.0.2
 
 dev_dependencies:
   flutter_test:
