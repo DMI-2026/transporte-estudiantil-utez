@@ -208,6 +208,20 @@ async function seed() {
     nombreCompleto: 'Ana Demo Estudiante',
     rol: 'estudiante',
     estadoVerificacion: 'aprobada',
+    matricula: '202601234',
+    carrera: 'Ingeniería en Desarrollo de Software',
+    telefono: '7770000234',
+    contactoEmergencia: {
+      nombre: 'Ana Hernández Ríos',
+      parentesco: 'Madre',
+      telefono: '7770000235',
+    },
+    preferenciasNotificacion: {
+      recordatoriosSalida: true,
+      estadoReportes: true,
+      avisosGenerales: false,
+    },
+    credencialAprobadaEl: now,
     creadoEn: now,
     actualizadoEn: now,
   });
@@ -270,9 +284,10 @@ async function seed() {
     rutaId: IDS.ruta,
     operadorId: IDS.operador,
     fechaHoraSalida: tomorrow,
-    estado: 'programada',
+    estado: 'enCurso',
     asientosTotales: 40,
     asientosDisponibles: 39,
+    ubicacionActual: new GeoPoint(18.8601, -99.2055),
     actualizadoEn: now,
   });
 
@@ -282,9 +297,12 @@ async function seed() {
     .collection('privado')
     .doc('qr')
     .set({
-      tokenHash: 'demo-hash-solo-visualizacion',
-      rotacionEn: now,
-      actualizadoEn: now,
+      qrSecret: 'demo-qr-secret-no-usar-en-produccion',
+      qrExpiraEn: Timestamp.fromDate(
+        new Date(Date.now() + 48 * 60 * 60 * 1000),
+      ),
+      generadoEn: now,
+      generadoPor: IDS.operador,
     });
 
   await db.collection('reservas').doc(IDS.reserva).set({

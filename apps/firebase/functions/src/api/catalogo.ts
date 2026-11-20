@@ -1,4 +1,4 @@
-// Endpoints de Catálogo - Salidas, GPS, Rutas (solo lectura desde cliente, escritura admin/operador)
+// Catálogo: salidas y GPS (schema canónico docs/05-datos.md)
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import { getFirestore, FieldValue, GeoPoint } from "firebase-admin/firestore";
@@ -6,53 +6,41 @@ import { getFirestore, FieldValue, GeoPoint } from "firebase-admin/firestore";
 const db = getFirestore();
 
 /**
- * Crea nueva salida programada (solo admin)
+ * Crea nueva salida programada (solo administrador).
  */
 export const crearSalida = onCall<{
   rutaId: string;
-  horaSalida: string; // ISO string
-  cupoTotal: number;
+  fechaHoraSalida: string; // ISO
+  asientosTotales: number;
   operadorId: string;
-  vehiculoId: string;
 }>(async (request) => {
   const adminUid = request.auth?.uid;
   if (!adminUid) throw new HttpsError("unauthenticated", "No autenticado");
 
   const adminDoc = await db.collection("usuarios").doc(adminUid).get();
-  if (adminDoc.data()?.rol !== "admin") {
+  if (adminDoc.data()?.rol !== "administrador") {
     throw new HttpsError("permission-denied", "Solo administradores");
   }
 
-  const { rutaId, horaSalida, cupoTotal, operadorId, vehiculoId } = request.data;
+  const { rutaId, fechaHoraSalida, asientosTotales, operadorId } = request.data;
 
-  // Verificar operador existe y tiene rol operador
   const operadorSnap = await db.collection("usuarios").doc(operadorId).get();
   if (!operadorSnap.exists || operadorSnap.data()?.rol !== "operador") {
     throw new HttpsError("invalid-argument", "Operador inválido");
   }
 
-  // Verificar ruta existe
   const rutaSnap = await db.collection("rutas").doc(rutaId).get();
   if (!rutaSnap.exists) throw new HttpsError("not-found", "Ruta no encontrada");
 
   const salidaRef = db.collection("salidas").doc();
   await salidaRef.set({
     rutaId,
-    horaSalida: new Date(horaSalida),
-    cupoTotal,
-    cuposDisponibles: cupoTotal,
     operadorId,
-    vehiculoId,
+    fechaHoraSalida: new Date(fechaHoraSalida),
     estado: "programada",
-    qrGenerado: false,
-    abordados: 0,
-    creadaEn: FieldValue.serverTimestamp(),
-    creadaPor: adminUid,
-  });
-
-  // Set custom claim para que operador pueda leer QR privado
-  await db.collection("usuarios").doc(operadorId).update({
-    operadorSalidaId: salidaRef.id, // Se usa en reglas Firestore
+    asientosTotales,
+    asientosDisponibles: asientosTotales,
+    actualizadoEn: FieldValue.serverTimestamp(),
   });
 
   logger.info("Salida creada", { salidaId: salidaRef.id, adminUid });
@@ -60,17 +48,14 @@ export const crearSalida = onCall<{
 });
 
 /**
- * Actualiza ubicación de salida en tiempo real (solo operador de esa salida)
- * Se llama cada 5-10 segundos desde app operador
+ * Actualiza ubicación de salida en curso (operador asignado).
  */
 export const actualizarUbicacionSalida = onCall<{
   salidaId: string;
   latitud: number;
   longitud: number;
-  velocidad?: number;
-  rumbo?: number;
 }>(async (request) => {
-  const { salidaId, latitud, longitud, velocidad, rumbo } = request.data;
+  const { salidaId, latitud, longitud } = request.data;
   const uid = request.auth?.uid;
 
   if (!uid) throw new HttpsError("unauthenticated", "No autenticado");
@@ -88,17 +73,15 @@ export const actualizarUbicacionSalida = onCall<{
   }
 
   await db.collection("salidas").doc(salidaId).update({
-    ubicacion: new GeoPoint(latitud, longitud),
-    velocidad: velocidad ?? null,
-    rumbo: rumbo ?? null,
-    ubicacionActualizadaEn: FieldValue.serverTimestamp(),
+    ubicacionActual: new GeoPoint(latitud, longitud),
+    actualizadoEn: FieldValue.serverTimestamp(),
   });
 
   return { success: true };
 });
 
 /**
- * Inicia salida (cambia estado a enCurso) - solo operador
+ * Inicia salida (estado enCurso).
  */
 export const iniciarSalida = onCall<{ salidaId: string }>(async (request) => {
   const { salidaId } = request.data;
@@ -121,13 +104,14 @@ export const iniciarSalida = onCall<{ salidaId: string }>(async (request) => {
   await db.collection("salidas").doc(salidaId).update({
     estado: "enCurso",
     iniciadaEn: FieldValue.serverTimestamp(),
+    actualizadoEn: FieldValue.serverTimestamp(),
   });
 
   return { success: true };
 });
 
 /**
- * Finaliza salida - solo operador
+ * Finaliza salida.
  */
 export const finalizarSalida = onCall<{ salidaId: string }>(async (request) => {
   const { salidaId } = request.data;
@@ -146,6 +130,7 @@ export const finalizarSalida = onCall<{ salidaId: string }>(async (request) => {
   await db.collection("salidas").doc(salidaId).update({
     estado: "finalizada",
     finalizadaEn: FieldValue.serverTimestamp(),
+    actualizadoEn: FieldValue.serverTimestamp(),
   });
 
   return { success: true };
