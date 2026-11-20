@@ -9,6 +9,7 @@ import '../../../../core/widgets/app_alert.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_info_row.dart';
 import '../../../../core/widgets/ui_state_view.dart';
+import '../../data/datasources/pagos_gateway.dart';
 import '../../domain/entities/salida.dart';
 import '../../domain/repositories/reservations_repository.dart';
 import '../widgets/reserva_tiles.dart';
@@ -16,15 +17,27 @@ import 'salidas_cubit.dart';
 
 /// Pantalla 08 · Elegir salida y reservar.
 class SalidasPage extends StatelessWidget {
-  const SalidasPage({super.key, this.repository});
+  const SalidasPage({
+    super.key,
+    this.repository,
+    this.pagos,
+    this.abrirCheckout = true,
+  });
 
   final ReservationsRepository? repository;
+  final PagosGateway? pagos;
+  final bool abrirCheckout;
 
   @override
   Widget build(BuildContext context) {
     final repo = repository ?? context.read<ReservationsRepository>();
+    final gateway = pagos ?? context.read<PagosGateway>();
     return BlocProvider(
-      create: (_) => SalidasCubit(repo)..load(),
+      create: (_) => SalidasCubit(
+        repo,
+        pagos: gateway,
+        abrirCheckout: abrirCheckout,
+      )..load(),
       child: const _SalidasView(),
     );
   }
@@ -112,7 +125,7 @@ class _Resumen extends StatelessWidget {
         const AppAlert(
           title: 'Pago de demostración',
           message:
-              'La reserva queda pendiente de pago hasta la aprobación. En esta versión el pago se simula y se aprueba al instante.',
+              'La reserva queda pendiente de pago. Se abre Mercado Pago; la aprobación la confirma el servidor (webhook), no la app.',
         ),
         if (state.error != null) ...[
           const SizedBox(height: AppSpacing.md),

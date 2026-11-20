@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
@@ -14,7 +15,7 @@ import '../domain/entities/viaje_en_curso.dart';
 import '../domain/repositories/trip_repository.dart';
 import 'viaje_cubit.dart';
 
-/// Pantalla 11 · Viaje en curso. Ubicación y ETA ilustrativas (sin GPS).
+/// Pantalla 11 · Viaje en curso (mapa + ETA vía Functions/ORS).
 class ViajeEnCursoPage extends StatelessWidget {
   const ViajeEnCursoPage({super.key, required this.folio, this.repository});
 
@@ -53,12 +54,30 @@ class _Contenido extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          const AppAlert(
-            tone: AppAlertTone.warning,
-            title: 'Datos de demostración',
-            message: 'Ubicación y ETA de demostración; sin GPS real.',
-          ),
+          if (viaje.ubicacionCombi == null)
+            const AppAlert(
+              tone: AppAlertTone.warning,
+              title: 'Sin ubicación en vivo',
+              message:
+                  'El operador aún no reporta la posición de la unidad.',
+            )
+          else
+            const AppAlert(
+              tone: AppAlertTone.info,
+              title: 'Seguimiento en vivo',
+              message: 'Ubicación de la combi y ETA calculado en el servidor.',
+            ),
           const SizedBox(height: AppSpacing.md),
+          if (viaje.ubicacionCombi != null || viaje.polyline.isNotEmpty) ...[
+            SizedBox(
+              height: 220,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadii.md),
+                child: _MapaViaje(viaje: viaje),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           AppCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,6 +137,61 @@ class _Contenido extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _MapaViaje extends StatelessWidget {
+  const _MapaViaje({required this.viaje});
+
+  final ViajeEnCurso viaje;
+
+  @override
+  Widget build(BuildContext context) {
+    final combi = viaje.ubicacionCombi;
+    final parada = viaje.ubicacionParada;
+    final center = combi ??
+        parada ??
+        (viaje.polyline.isNotEmpty ? viaje.polyline.first : null);
+    if (center == null) {
+      return const ColoredBox(color: AppColors.surface);
+    }
+    final markers = <Marker>{
+      if (combi != null)
+        Marker(
+          markerId: const MarkerId('combi'),
+          position: LatLng(combi.latitud, combi.longitud),
+          infoWindow: const InfoWindow(title: 'Combi'),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        ),
+      if (parada != null)
+        Marker(
+          markerId: const MarkerId('parada'),
+          position: LatLng(parada.latitud, parada.longitud),
+          infoWindow: InfoWindow(title: viaje.reserva.parada.nombre),
+        ),
+    };
+    final polyline = viaje.polyline.isEmpty
+        ? null
+        : Polyline(
+            polylineId: const PolylineId('ruta'),
+            color: AppColors.primary,
+            width: 4,
+            points: [
+              for (final p in viaje.polyline)
+                LatLng(p.latitud, p.longitud),
+            ],
+          );
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: LatLng(center.latitud, center.longitud),
+        zoom: 13,
+      ),
+      markers: markers,
+      polylines: {?polyline},
+      myLocationButtonEnabled: false,
+      zoomControlsEnabled: false,
+      liteModeEnabled: true,
     );
   }
 }

@@ -4,9 +4,10 @@ import '../entities/salida.dart';
 
 typedef ReservasResult<T> = ({T? value, AppFailure? failure});
 
-/// Contrato de reservas del estudiante. Hoy lo implementa una fuente de
-/// demostración en memoria; la versión con Firestore (transacción de cupo)
-/// la agrega quien tenga el issue de backend (#9).
+/// Contrato de reservas del estudiante.
+///
+/// Implementación: `ReservationsRepositoryImpl` + datasource
+/// (`FirestoreReservationsDataSource` si Firebase está listo; si no, demo).
 abstract interface class ReservationsRepository {
   Future<ReservasResult<List<Salida>>> fetchSalidas();
 
