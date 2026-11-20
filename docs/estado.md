@@ -59,7 +59,7 @@ Sin Firebase configurado, la app muestra el login con un aviso y no autentica.
 
 ### Datos demo en Firebase
 
-Para las tres cuentas demo (misma contraseña `Utez.demo8`):
+Para las tres cuentas demo (misma contraseña `Pass123!`):
 
 1. Colocar la service account en `apps/firebase/env/firebase-admin-sa.json` (no versionada), **o** tener `firebase login` activo.
 2. Desde la raíz: `.\scripts\seed-firestore.ps1`
