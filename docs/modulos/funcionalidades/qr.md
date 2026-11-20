@@ -1,13 +1,19 @@
 # Funcionalidad: abordaje con QR
 
-Estado: pendiente. Features involucradas: `operator` (muestra el QR) y `boarding` (lo escanea).
+Estado: Hecho en contrato (Functions + UI estudiante). Features: `boarding` (estudiante muestra pase) y `operator` (escanea/valida).
 
 ## Almacenamiento
 
-- El secreto del QR vive en el documento `salidas/{salidaId}/privado/qr`. Lo lee el operador asignado o el administrador; la app del estudiante no lo lee y ningún cliente lo escribe (regla `match /privado/{docId}` en `apps/firebase/firestore.rules`).
+- El secreto del QR vive en `salidas/{salidaId}/privado/qr` (`qrSecret`, `qrExpiraEn`). Lo genera el operador con `generarQrSalida`. El estudiante **no** lee esa colección.
+- El estudiante obtiene el payload del pase con el callable `obtenerPaseAbordaje` (solo si su reserva está `reservada`).
 
 ## Flujos
 
-- Operador: muestra un QR rotativo o estático según el diseño del issue (pantalla en `operator/`).
-- Estudiante: escanea en `boarding/`; la validación la hace una Cloud Function callable, no el cliente.
-- El cliente no registra el contenido del QR en logs de release ([reglas-desarrollo.md](../../reglas-desarrollo.md)).
+- Estudiante (`boarding/`): muestra un QR con payload `{reservaId}|{salidaId}|{qrSecret}` firmado en servidor. La app no registra el secreto en logs de release.
+- Operador: escanea el QR y llama `validarQrAbordaje` (salidaId, reservaId, qrScaneado). La validación y el cambio a `abordada` son solo en Cloud Functions (D-06).
+- El cliente Flutter nunca escribe `privado/qr` ni marca la reserva como abordada.
+
+## Archivos clave
+
+- Functions: `apps/firebase/functions/src/api/qr.ts`, `pase.ts`
+- App: `apps/mobile/lib/src/features/boarding/`
