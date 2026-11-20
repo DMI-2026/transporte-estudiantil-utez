@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../../core/errors/app_failure.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/formatos.dart';
@@ -16,20 +18,28 @@ import '../../../core/widgets/ui_state_view.dart';
 import '../../reservations/domain/entities/reserva.dart';
 import '../../reservations/domain/repositories/reservations_repository.dart';
 import '../../reservations/presentation/detalle/reserva_detalle_cubit.dart';
+import '../data/pase_gateway.dart';
 
 /// Pantalla 10 · Pase de abordaje con QR.
 ///
-/// El QR de esta versión es de DEMOSTRACIÓN (folio y salida). El secreto
-/// real lo firma la Cloud Function de QR (D-06); la app nunca lo valida.
+/// El payload lo firma Cloud Functions (`obtenerPaseAbordaje`). La app no
+/// valida el secreto ni lo escribe en logs de release (D-06).
 class QrAbordajePage extends StatelessWidget {
-  const QrAbordajePage({super.key, required this.folio, this.repository});
+  const QrAbordajePage({
+    super.key,
+    required this.folio,
+    this.repository,
+    this.pase,
+  });
 
   final String folio;
   final ReservationsRepository? repository;
+  final PaseGateway? pase;
 
   @override
   Widget build(BuildContext context) {
     final repo = repository ?? context.read<ReservationsRepository>();
+    final gateway = pase ?? context.read<PaseGateway>();
     return BlocProvider(
       create: (_) => ReservaDetalleCubit(repo, folio)..load(),
       child: Scaffold(
@@ -38,7 +48,7 @@ class QrAbordajePage extends StatelessWidget {
           builder: (context, state) => UiStateView<Reserva>(
             state: state,
             dataBuilder: (context, r) => r.qrValido
-                ? _PaseValido(reserva: r)
+                ? _PaseValido(reserva: r, pase: gateway)
                 : const MensajeEstado(
                     icono: Icons.qr_code_2,
                     titulo: 'Este QR ya no es válido',
@@ -51,19 +61,34 @@ class QrAbordajePage extends StatelessWidget {
   }
 }
 
-class _PaseValido extends StatelessWidget {
-  const _PaseValido({required this.reserva});
+class _PaseValido extends StatefulWidget {
+  const _PaseValido({required this.reserva, required this.pase});
 
   final Reserva reserva;
+  final PaseGateway pase;
+
+  @override
+  State<_PaseValido> createState() => _PaseValidoState();
+}
+
+class _PaseValidoState extends State<_PaseValido> {
+  late final Future<String> _payloadFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _payloadFuture = widget.pase.obtenerPayload(widget.reserva.folio);
+  }
 
   Future<void> _cancelar(BuildContext context) async {
     final cubit = context.read<ReservaDetalleCubit>();
-    await context.push(AppRoutes.cancelarReservaFor(reserva.folio));
+    await context.push(AppRoutes.cancelarReservaFor(widget.reserva.folio));
     await cubit.load();
   }
 
   @override
   Widget build(BuildContext context) {
+    final reserva = widget.reserva;
     final s = reserva.salida;
     final theme = Theme.of(context);
     return ListView(
@@ -81,29 +106,59 @@ class _PaseValido extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              Semantics(
-                label: 'Código QR de la reserva ${reserva.folio}',
-                image: true,
-                child: QrImageView(
-                  data: '${reserva.folio}|${s.id}',
-                  size: 220,
-                  backgroundColor: AppColors.onPrimary,
-                  eyeStyle: const QrEyeStyle(
-                    eyeShape: QrEyeShape.square,
-                    color: AppColors.ink,
-                  ),
-                  dataModuleStyle: const QrDataModuleStyle(
-                    dataModuleShape: QrDataModuleShape.square,
-                    color: AppColors.ink,
-                  ),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                '${reserva.folio} ↔ ${s.id} · QR de demostración',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.muted,
-                ),
+              FutureBuilder<String>(
+                future: _payloadFuture,
+                builder: (context, snap) {
+                  if (snap.connectionState != ConnectionState.done) {
+                    return const SizedBox(
+                      height: 220,
+                      child: Center(child: CircularProgressIndicator.adaptive()),
+                    );
+                  }
+                  if (snap.hasError) {
+                    final msg = snap.error is AppFailure
+                        ? (snap.error! as AppFailure).userMessage
+                        : 'No se pudo cargar el pase.';
+                    return MensajeEstado(
+                      icono: Icons.qr_code_2,
+                      titulo: 'Pase no disponible',
+                      detalle: msg,
+                    );
+                  }
+                  final payload = snap.data!;
+                  if (kDebugMode) {
+                    // En debug solo el folio; nunca el secreto completo.
+                    debugPrint('Pase listo para folio ${reserva.folio}');
+                  }
+                  return Column(
+                    children: [
+                      Semantics(
+                        label: 'Código QR de la reserva ${reserva.folio}',
+                        image: true,
+                        child: QrImageView(
+                          data: payload,
+                          size: 220,
+                          backgroundColor: AppColors.onPrimary,
+                          eyeStyle: const QrEyeStyle(
+                            eyeShape: QrEyeShape.square,
+                            color: AppColors.ink,
+                          ),
+                          dataModuleStyle: const QrDataModuleStyle(
+                            dataModuleShape: QrDataModuleShape.square,
+                            color: AppColors.ink,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        '${reserva.folio} · Pase de abordaje',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: AppColors.muted,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -123,12 +178,13 @@ class _PaseValido extends StatelessWidget {
               ),
               AppInfoRow(
                 label: 'Parada / Unidad',
-                value: '${reserva.parada.nombre} · ${reserva.parada.hora} / ${s.unidad}',
+                value:
+                    '${reserva.parada.nombre} · ${reserva.parada.hora} / ${s.unidad}',
               ),
               AppInfoRow(
                 label: 'Pago',
                 value:
-                    '${Formatos.dinero(reserva.pago.monto)} · Tarjeta demo · QR de un solo abordaje',
+                    '${Formatos.dinero(reserva.pago.monto)} · Un solo abordaje',
               ),
             ],
           ),
@@ -136,7 +192,8 @@ class _PaseValido extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         const AppAlert(
           title: 'Sube el brillo de tu pantalla',
-          message: 'El operador escanea el código al abordar. Es válido una sola vez.',
+          message:
+              'El operador escanea el código al abordar. Es válido una sola vez.',
         ),
         const SizedBox(height: AppSpacing.lg),
         AppButton(
