@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/router/app_routes.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -90,7 +91,14 @@ class _Formulario extends StatelessWidget {
         ],
       ),
     );
-    if (continuar == true) cubit.adjuntarEvidenciaDemo();
+    if (continuar != true) return;
+    final foto = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 75,
+      maxWidth: 1600,
+    );
+    if (foto == null || !context.mounted) return;
+    cubit.adjuntarEvidencia(foto.path);
   }
 
   @override
