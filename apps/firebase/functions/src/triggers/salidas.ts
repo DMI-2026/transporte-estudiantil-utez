@@ -1,34 +1,40 @@
-// Triggers de Firestore para colección salidas
+// Triggers de Firestore para colección salidas (schema canónico)
 import { onDocumentCreated, onDocumentUpdated } from "firebase-functions/v2/firestore";
-import * as logger from "firebase-functions/logger";
-import { getFirestore, FieldValue } from "firebase-admin/firestore";
+import { getFirestore } from "firebase-admin/firestore";
 import { getMessaging, Message } from "firebase-admin/messaging";
 
 const db = getFirestore();
 const messaging = getMessaging();
 
-/**
- * Cuando se crea una salida -> notificar al operador asignado
- */
 export const onSalidaCreated = onDocumentCreated("salidas/{salidaId}", async (event) => {
   const salida = event.data?.data();
   if (!salida) return;
 
-  const { operadorId, rutaId, horaSalida } = salida;
+  const { operadorId, rutaId, fechaHoraSalida } = salida;
+  if (typeof operadorId !== "string") return;
 
-  // Obtener nombre de ruta
   const rutaSnap = await db.collection("rutas").doc(rutaId).get();
   const rutaNombre = rutaSnap.data()?.nombre || "desconocida";
 
-  // Notificar al operador
-  const tokensSnap = await db.collection("usuarios").doc(operadorId).collection("dispositivos").get();
-  const tokens = tokensSnap.docs.map((doc) => doc.data().token).filter(Boolean);
+  const tokensSnap = await db
+    .collection("usuarios")
+    .doc(operadorId)
+    .collection("dispositivos")
+    .get();
+  const tokens = tokensSnap.docs
+    .map((doc) => doc.data().fcmToken ?? doc.data().token)
+    .filter(Boolean);
+
+  const fechaMs =
+    fechaHoraSalida && typeof fechaHoraSalida.seconds === "number"
+      ? fechaHoraSalida.seconds * 1000
+      : Date.now();
 
   if (tokens.length > 0) {
     const message: Message = {
       notification: {
         title: "Nueva salida asignada",
-        body: `Te asignaron la salida ${rutaNombre} para ${new Date(horaSalida.seconds * 1000).toLocaleString()}`,
+        body: `Te asignaron la salida ${rutaNombre} para ${new Date(fechaMs).toLocaleString()}`,
       },
       data: { salidaId: event.params.salidaId, tipo: "salida_asignada" },
       tokens,
@@ -37,18 +43,14 @@ export const onSalidaCreated = onDocumentCreated("salidas/{salidaId}", async (ev
   }
 });
 
-/**
- * Cuando cambia estado de salida -> notificar a pasajeros y operador
- */
 export const onSalidaUpdated = onDocumentUpdated("salidas/{salidaId}", async (event) => {
   const before = event.data?.before.data();
   const after = event.data?.after.data();
   if (!before || !after) return;
 
-  const { operadorId, rutaId, horaSalida } = after;
+  const { operadorId, rutaId } = after;
   const salidaId = event.params.salidaId;
 
-  // Solo notificar en cambios de estado importantes
   if (before.estado === after.estado) return;
 
   let title = "";
@@ -75,7 +77,6 @@ export const onSalidaUpdated = onDocumentUpdated("salidas/{salidaId}", async (ev
       return;
   }
 
-  // Notificar a pasajeros con reserva confirmada
   if (notifyPasajeros) {
     const reservasSnap = await db
       .collection("reservas")
@@ -83,11 +84,23 @@ export const onSalidaUpdated = onDocumentUpdated("salidas/{salidaId}", async (ev
       .where("estado", "==", "reservada")
       .get();
 
-    const userIds = [...new Set(reservasSnap.docs.map((doc) => doc.data().usuarioId))];
+    const userIds = [
+      ...new Set(
+        reservasSnap.docs
+          .map((doc) => doc.data().estudianteId)
+          .filter((id): id is string => typeof id === "string"),
+      ),
+    ];
 
     for (const userId of userIds) {
-      const tokensSnap = await db.collection("usuarios").doc(userId).collection("dispositivos").get();
-      const tokens = tokensSnap.docs.map((doc) => doc.data().token).filter(Boolean);
+      const tokensSnap = await db
+        .collection("usuarios")
+        .doc(userId)
+        .collection("dispositivos")
+        .get();
+      const tokens = tokensSnap.docs
+        .map((doc) => doc.data().fcmToken ?? doc.data().token)
+        .filter(Boolean);
       if (tokens.length === 0) continue;
 
       const message: Message = {
@@ -99,15 +112,22 @@ export const onSalidaUpdated = onDocumentUpdated("salidas/{salidaId}", async (ev
     }
   }
 
-  // Notificar al operador también
-  const opTokensSnap = await db.collection("usuarios").doc(operadorId).collection("dispositivos").get();
-  const opTokens = opTokensSnap.docs.map((doc) => doc.data().token).filter(Boolean);
-  if (opTokens.length > 0) {
-    const message: Message = {
-      notification: { title, body },
-      data: { salidaId, tipo: "salida_estado_operador" },
-      tokens: opTokens,
-    };
-    await messaging.sendEachForMulticast(message);
+  if (typeof operadorId === "string") {
+    const opTokensSnap = await db
+      .collection("usuarios")
+      .doc(operadorId)
+      .collection("dispositivos")
+      .get();
+    const opTokens = opTokensSnap.docs
+      .map((doc) => doc.data().fcmToken ?? doc.data().token)
+      .filter(Boolean);
+    if (opTokens.length > 0) {
+      const message: Message = {
+        notification: { title, body },
+        data: { salidaId, tipo: "salida_estado_operador" },
+        tokens: opTokens,
+      };
+      await messaging.sendEachForMulticast(message);
+    }
   }
 });

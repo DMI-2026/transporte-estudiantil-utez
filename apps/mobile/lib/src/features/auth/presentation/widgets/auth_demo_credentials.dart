@@ -3,5 +3,5 @@ abstract final class AuthDemoCredentials {
   static const estudianteEmail = 'estudiante.demo@utez.edu.mx';
   static const operadorEmail = 'operador.demo@utez.edu.mx';
   static const administradorEmail = 'admin.demo@utez.edu.mx';
-  static const password = 'Utez.demo8';
+  static const password = 'Pass123!';
 }

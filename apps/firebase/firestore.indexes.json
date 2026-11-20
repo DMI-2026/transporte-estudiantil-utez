@@ -71,7 +71,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "estudianteId", "order": "ASCENDING" },
-        { "fieldPath": "creadaEn", "order": "DESCENDING" }
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
       ]
     },
     {
@@ -80,7 +80,7 @@
       "fields": [
         { "fieldPath": "estudianteId", "order": "ASCENDING" },
         { "fieldPath": "estado", "order": "ASCENDING" },
-        { "fieldPath": "creadaEn", "order": "DESCENDING" }
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
       ]
     },
     {
@@ -88,7 +88,15 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "estado", "order": "ASCENDING" },
-        { "fieldPath": "creadaEn", "order": "ASCENDING" }
+        { "fieldPath": "creadoEn", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "reportes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "reportadoPor", "order": "ASCENDING" },
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
       ]
     },
     {
@@ -97,7 +105,7 @@
       "fields": [
         { "fieldPath": "reportadoPor", "order": "ASCENDING" },
         { "fieldPath": "estado", "order": "ASCENDING" },
-        { "fieldPath": "creadaEn", "order": "ASCENDING" }
+        { "fieldPath": "creadoEn", "order": "DESCENDING" }
       ]
     },
     {
@@ -123,72 +131,6 @@
         { "fieldPath": "rol", "order": "ASCENDING" },
         { "fieldPath": "estadoVerificacion", "order": "ASCENDING" }
       ]
-      "collectionGroup": "usuarios",
-      "fields": [
-        {"field": "rol", "order": "ASCENDING"},
-        {"field": "estadoVerificacion", "order": "ASCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "salidas",
-      "fields": [
-        {"field": "operadorId", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"},
-        {"field": "fechaHoraSalida", "order": "DESCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "reservas",
-      "fields": [
-        {"field": "estudianteId", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"},
-        {"field": "creadaEn", "order": "DESCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "reservas",
-      "fields": [
-        {"field": "salidaId", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "reportes",
-      "fields": [
-        {"field": "reportadoPor", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"},
-        {"field": "creadoEn", "order": "DESCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "reportes",
-      "fields": [
-        {"field": "salidaId", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "paradas",
-      "fields": [
-        {"field": "rutaId", "order": "ASCENDING"},
-        {"field": "orden", "order": "ASCENDING"}
-      ],
-      "queryScope": "COLLECTION"
-    },
-    {
-      "collectionGroup": "pagos",
-      "fields": [
-        {"field": "estudianteId", "order": "ASCENDING"},
-        {"field": "estado", "order": "ASCENDING"},
-        {"field": "creadoEn", "order": "DESCENDING"}
-      ],
-      "queryScope": "COLLECTION"
     }
   ],
   "fieldOverrides": []

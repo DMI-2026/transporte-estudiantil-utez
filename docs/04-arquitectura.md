@@ -93,12 +93,19 @@ admin-web/          # panel de administración (pendiente)
 
 | Archivo | Versionado | Uso |
 |---------|------------|-----|
-| `apps/mobile/env/example.json` | Sí | Plantilla de `USE_FIREBASE` |
-| `apps/mobile/env/dev.json` | No | Defines de arranque |
-| `apps/mobile/android/local.properties` | No | `MAPS_API_KEY` (futuro) |
+| `apps/mobile/env/example.json` | Sí | Plantilla de `USE_FIREBASE` y `ORS_API_KEY` (vacío) |
+| `apps/mobile/env/dev.json` | No | Defines de arranque (`--dart-define-from-file`) |
+| `apps/mobile/android/local.properties` | No | `MAPS_API_KEY=...` (una sola línea; no duplicar el prefijo) |
 | `apps/mobile/android/app/google-services.json` | No | Firebase para Android |
 | `apps/mobile/lib/firebase_options.dart` | No | Generado por FlutterFire |
 | `apps/firebase/env/firebase-admin-sa.json` | No | Admin SDK para seed local |
+
+### Google Maps (Android) y ORS
+
+1. En Google Cloud Console, habilita Maps SDK for Android y crea una clave restringida al paquete `mx.edu.utez.transporte_estudiantil`.
+2. Obtén el SHA-1 de debug en tu máquina (`keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android`) y añádelo a la restricción de la clave. No se versiona.
+3. En `apps/mobile/android/local.properties` (ya ignorado por git) agrega exactamente: `MAPS_API_KEY=tu_clave`. El valor llega al `AndroidManifest` vía `manifestPlaceholders`.
+4. OpenRouteService: la clave de producción vive como secret/env en Cloud Functions. En local, `apps/mobile/env/dev.json` puede tener `ORS_API_KEY` vacío o de desarrollo; el cliente de release no debe llamar ORS directo.
 
 Proyecto Firebase `utebus-4435b` (`.firebaserc` y `firebase.json` en `apps/firebase/`). Detalle del backend: [arquitectura-y-datos/README.md](arquitectura-y-datos/README.md). Qué está hecho y qué falta: [estado.md](estado.md).
 

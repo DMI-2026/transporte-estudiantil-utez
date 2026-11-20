@@ -33,6 +33,13 @@ Proyecto Firebase: **utebus-4435b**. Reglas versionadas en `apps/firebase/firest
 | `estadoVerificacion` | string | `pendiente` \| `aprobada` \| `rechazada` |
 | `creadoEn` | timestamp | |
 | `actualizadoEn` | timestamp | opcional |
+| `matricula` | string | opcional; UI de perfil estudiante |
+| `carrera` | string | opcional; UI de perfil estudiante |
+| `telefono` | string | editable por el propio usuario |
+| `contactoEmergencia` | map | `{ nombre, parentesco, telefono }`; editable |
+| `preferenciasNotificacion` | map | `{ recordatoriosSalida, estadoReportes, avisosGenerales }` (bool) |
+| `credencialAprobadaEl` | timestamp | opcional; informativo en UI |
+| `fotoCredencialUrl` | string | opcional |
 
 El cliente no puede cambiar `rol`, `estadoVerificacion`, `email` ni `creadoEn` de su propio documento (solo el administrador). Un valor desconocido en `rol` o `estadoVerificacion` hace que la app trate el perfil como inválido.
 

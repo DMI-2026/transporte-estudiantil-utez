@@ -15,10 +15,10 @@ Estado en el repositorio: arquitectura base hecha; backend Firestore y Storage h
 | Backend | Firebase, sin API REST propia | Hecho |
 | Autenticación | Firebase Auth con correo y contraseña | Hecho (`firebase_auth` + feature `auth`) |
 | Base de datos | Cloud Firestore | Hecho (`cloud_firestore`; repositorio de `usuarios`; los demás pendientes) |
-| Archivos | Cloud Storage | Hecho en reglas y bucket; pendiente el paquete `firebase_storage` en Flutter |
+| Archivos | Cloud Storage | Hecho (reglas + `firebase_storage` en Flutter para evidencia) |
 | Notificaciones push | Firebase Cloud Messaging + Cloud Functions | Pendiente |
-| Mapa en la app | Google Maps SDK (`google_maps_flutter`) | Pendiente |
-| Rutas y tiempo estimado | Google Routes API, llamada desde servidor o panel admin | Pendiente |
+| Mapa en la app | Google Maps SDK (`google_maps_flutter`) | Hecho (paquete + `MAPS_API_KEY` local) |
+| Rutas y tiempo estimado | ORS vía Cloud Functions (ETA); polilínea en Firestore | Pendiente (callable ETA en rama trip) |
 | Pagos | Mercado Pago Checkout Pro con webhooks en Cloud Functions | Pendiente |
 | Administración | Panel web sobre el mismo Firebase | Pendiente (carpeta `admin-web/`) |
 | Estado de UI | `flutter_bloc` + `UiState` | Hecho (auth y core) |
@@ -39,11 +39,11 @@ Compatibilidad verificada: Flutter SDK `>=3.13.3`; las dependencias de `apps/mob
 | firebase_auth | ^7.0.0 | Hecho, autenticación |
 | flutter_bloc | ^9.1.1 | Hecho, Cubits |
 | equatable | ^2.0.7 | Hecho, estados de Bloc |
-| firebase_storage | — | Pendiente |
+| firebase_storage | ^14.1.0 | Hecho (evidencia de reportes) |
 | firebase_messaging | — | Pendiente |
-| google_maps_flutter | — | Pendiente |
-| geolocator, permission_handler | — | Pendiente (ubicación) |
-| image_picker, mobile_scanner | — | Pendiente (credencial y QR) |
+| google_maps_flutter | ^2.19.0 | Hecho (infra; UI en trip) |
+| geolocator, permission_handler | publicados | Hecho (infra de ubicación) |
+| image_picker | ^1.2.4 | Hecho (evidencia); mobile_scanner pendiente |
 | flutter_local_notifications | — | Pendiente |
 | connectivity_plus | — | Pendiente (modo sin conexión) |
 | cloud_functions (cliente) | — | Pendiente (funciones callable) |
