@@ -15,12 +15,17 @@ class FirestoreReservationsDataSource implements ReservationsDataSource {
   FirestoreReservationsDataSource({
     required this.firestore,
     required this.currentUid,
+    this.cobroActivo = true,
   });
 
   final FirebaseFirestore firestore;
 
   /// Uid de la sesión activa. Si es null, no hay usuario autenticado.
   final String? Function() currentUid;
+
+  /// Si es true, crea la reserva en `pendientePago` (checkout MP).
+  /// Si es false, modo gratuito: `reservada` sin pasar por Mercado Pago.
+  final bool cobroActivo;
 
   CollectionReference<Map<String, dynamic>> get _salidas =>
       firestore.collection('salidas');
@@ -175,12 +180,13 @@ class FirestoreReservationsDataSource implements ReservationsDataSource {
           }
         }
 
-        // Sin checkout aún: modo gratuito (reservada). Pagos llegan con Functions.
+        // Cobro: pendientePago → webhook Function aprueba.
+        // Sin cobro (flag): reservada directa.
         tx.set(reservaRef, {
           'salidaId': salidaId,
           'estudianteId': uid,
           'paradaId': paradaId,
-          'estado': 'reservada',
+          'estado': cobroActivo ? 'pendientePago' : 'reservada',
           'creadaEn': FieldValue.serverTimestamp(),
           'actualizadoEn': FieldValue.serverTimestamp(),
         });
