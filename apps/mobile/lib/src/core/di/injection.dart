@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -27,7 +28,10 @@ import '../../features/reservations/data/datasources/firestore_reservations_data
 import '../../features/reservations/data/datasources/reservations_datasource.dart';
 import '../../features/reservations/data/repositories/reservations_repository_impl.dart';
 import '../../features/reservations/domain/repositories/reservations_repository.dart';
+import '../../features/trip/data/datasources/callable_eta_gateway.dart';
+import '../../features/trip/data/datasources/eta_gateway.dart';
 import '../../features/trip/data/repositories/demo_trip_repository.dart';
+import '../../features/trip/data/repositories/firestore_trip_repository.dart';
 import '../../features/trip/domain/repositories/trip_repository.dart';
 import '../firebase/firebase_bootstrap.dart';
 import '../router/app_router.dart';
@@ -76,9 +80,23 @@ void _configureEstudiante() {
   getIt.registerLazySingleton<ReservationsRepository>(
     () => ReservationsRepositoryImpl(getIt<ReservationsDataSource>()),
   );
-  getIt.registerLazySingleton<TripRepository>(
-    () => DemoTripRepository(getIt<ReservationsDataSource>()),
-  );
+  getIt.registerLazySingleton<EtaGateway>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return const DemoEtaGateway();
+    }
+    return CallableEtaGateway(FirebaseFunctions.instance);
+  });
+  getIt.registerLazySingleton<TripRepository>(() {
+    if (!FirebaseBootstrap.isReady) {
+      return DemoTripRepository(getIt<ReservationsDataSource>());
+    }
+    return FirestoreTripRepository(
+      firestore: getIt<FirebaseFirestore>(),
+      reservas: getIt<ReservationsDataSource>(),
+      eta: getIt<EtaGateway>(),
+      currentUid: () => FirebaseAuth.instance.currentUser?.uid,
+    );
+  });
   getIt.registerLazySingleton<IncidentsDataSource>(() {
     if (!FirebaseBootstrap.isReady) {
       return DemoIncidentsDataSource();
