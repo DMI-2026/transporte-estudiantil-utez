@@ -6,6 +6,8 @@ import '../../features/auth/presentation/auth_routes.dart';
 import '../../features/auth/presentation/session/auth_session_cubit.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/routes_map/presentation/routes_page.dart';
+import '../../features/operator/presentation/salidas/operador_salidas_page.dart';
+import 'operator_routes.dart';
 import 'student_routes.dart';
 import '../theme/app_colors.dart';
 import '../widgets/app_button.dart';
@@ -36,8 +38,9 @@ class AppRouter {
           GoRoute(
             path: AppRoutes.operatorDashboard,
             name: 'operador',
-            builder: (context, state) => const _PlaceholderPage(title: 'Dashboard Operador'),
+            builder: (context, state) => const OperadorSalidasPage(),
           ),
+          ...operatorRoutes(),
           GoRoute(
             path: AppRoutes.adminDashboard,
             name: 'admin',
