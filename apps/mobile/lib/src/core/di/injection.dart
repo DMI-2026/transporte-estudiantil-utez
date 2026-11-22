@@ -12,6 +12,9 @@ import '../../features/routes_map/data/datasources/firestore_routes_remote_datas
 import '../../features/routes_map/data/repositories/routes_repository_impl.dart';
 import '../../features/routes_map/domain/repositories/routes_repository.dart';
 import '../../features/incidents/data/datasources/demo_incidents_datasource.dart';
+import '../../features/operator/data/datasources/demo_operator_datasource.dart';
+import '../../features/operator/data/repositories/operator_repository_impl.dart';
+import '../../features/operator/domain/repositories/operator_repository.dart';
 import '../../features/incidents/data/repositories/incidents_repository_impl.dart';
 import '../../features/incidents/domain/repositories/incidents_repository.dart';
 import '../../features/profile/data/datasources/demo_profile_datasource.dart';
@@ -34,6 +37,7 @@ Future<void> configureDependencies() async {
   _configureCore();
   _configureRoutes();
   _configureEstudiante();
+  _configureOperador();
   await _configureAuth();
   _configureRouter();
 }
@@ -72,6 +76,14 @@ void _configureEstudiante() {
   );
   getIt.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(DemoProfileDataSource()),
+  );
+}
+
+/// Módulo operador con fuente de DEMOSTRACIÓN en memoria (sin Firebase,
+/// GPS ni cámara). El backend real se conecta cambiando esta fuente.
+void _configureOperador() {
+  getIt.registerLazySingleton<OperatorRepository>(
+    () => OperatorRepositoryImpl(DemoOperatorDataSource()),
   );
 }
 

@@ -27,6 +27,28 @@ abstract final class AppRoutes {
   static String cancelarReservaFor(String folio) => '$cancelarReserva/$folio';
   static String boardingFor(String folio) => '$boarding/$folio';
   static String tripFor(String folio) => '$trip/$folio';
+  // Módulo operador (operatorDashboard = Mis salidas)
+  static const operatorRecorrido = '/operador/recorrido';
+  static const operatorAbordaje = '/operador/abordaje';
+  static const operatorReportes = '/operador/reportes';
+  static const operatorNuevoReporte = '/operador/reportes/nuevo';
+  static const operatorPerfil = '/operador/perfil';
+
+  static String operatorRecorridoFor(String salidaId) =>
+      '$operatorRecorrido/$salidaId';
+  static String operatorFinalizarFor(String salidaId) =>
+      '$operatorRecorrido/$salidaId/finalizar';
+  static String operatorListaFor(String salidaId) =>
+      '$operatorAbordaje/$salidaId/lista';
+  static String operatorQrInvalidoFor(String salidaId, String motivo) => Uri(
+    path: '$operatorAbordaje/$salidaId/no-valido',
+    queryParameters: {'motivo': motivo},
+  ).toString();
+  static String operatorNuevoReporteFor(String salidaId) => Uri(
+    path: operatorNuevoReporte,
+    queryParameters: {'salida': salidaId},
+  ).toString();
+
   static String incidentsFor(String referencia) =>
       Uri(path: incidents, queryParameters: {'referencia': referencia})
           .toString();
