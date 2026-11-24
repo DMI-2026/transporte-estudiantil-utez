@@ -4,6 +4,8 @@ import * as functions from "firebase-functions";
 // API endpoints por feature
 export * from "./api/pagos";
 export * from "./api/qr";
+export * from "./api/pase";
+export * from "./api/eta";
 export * from "./api/notificaciones";
 export * from "./api/admin";
 export * from "./api/catalogo";

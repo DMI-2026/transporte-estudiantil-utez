@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/errors/app_failure.dart';
 import '../../../../core/widgets/ui_state.dart';
+import '../../data/datasources/pagos_gateway.dart';
 import '../../domain/entities/reserva.dart';
 import '../../domain/entities/salida.dart';
 import '../../domain/repositories/reservations_repository.dart';
@@ -9,9 +12,19 @@ import '../../domain/repositories/reservations_repository.dart';
 part 'salidas_state.dart';
 
 class SalidasCubit extends Cubit<SalidasState> {
-  SalidasCubit(this._repository) : super(const SalidasState());
+  SalidasCubit(
+    this._repository, {
+    this._pagos = const DemoPagosGateway(),
+    this.montoPasaje = 20,
+    this.abrirCheckout = true,
+  }) : super(const SalidasState());
 
   final ReservationsRepository _repository;
+  final PagosGateway _pagos;
+  final double montoPasaje;
+
+  /// Si es false (pruebas), no abre el navegador de Mercado Pago.
+  final bool abrirCheckout;
 
   Future<void> load() async {
     emit(state.copyWith(salidas: const UiLoading(), clearError: true));
@@ -70,6 +83,31 @@ class SalidasCubit extends Cubit<SalidasState> {
       );
       return;
     }
-    emit(state.copyWith(reservando: false, reservaCreada: result.value));
+    final reserva = result.value!;
+    if (reserva.estado == EstadoReserva.pendientePago) {
+      try {
+        final pago = await _pagos.crearPreferencia(
+          reservaId: reserva.folio,
+          monto: montoPasaje,
+        );
+        // El webhook de Functions marca aprobado; el cliente solo abre checkout.
+        if (abrirCheckout) {
+          final uri = Uri.tryParse(pago.initPoint);
+          if (uri != null) {
+            await launchUrl(uri, mode: LaunchMode.externalApplication);
+          }
+        }
+      } on AppFailure catch (e) {
+        emit(
+          state.copyWith(
+            reservando: false,
+            error: e.userMessage,
+            reservaCreada: reserva,
+          ),
+        );
+        return;
+      }
+    }
+    emit(state.copyWith(reservando: false, reservaCreada: reserva));
   }
 }

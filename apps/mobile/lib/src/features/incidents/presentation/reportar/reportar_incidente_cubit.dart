@@ -60,9 +60,13 @@ class ReportarIncidenteCubit extends Cubit<ReportarIncidenteState> {
   void escribirDescripcion(String texto) =>
       emit(state.copyWith(descripcion: texto, clearError: true));
 
-  /// Evidencia de demostración: no abre la cámara real (pendiente de O7).
+  /// Evidencia de demostración (pruebas de widget sin cámara).
   void adjuntarEvidenciaDemo() =>
       emit(state.copyWith(evidencia: 'evidencia_demo.jpg'));
+
+  /// Ruta local de la foto (image_picker → Storage en el datasource).
+  void adjuntarEvidencia(String rutaLocal) =>
+      emit(state.copyWith(evidencia: rutaLocal, clearError: true));
 
   void quitarEvidencia() => emit(state.copyWith(clearEvidencia: true));
 
